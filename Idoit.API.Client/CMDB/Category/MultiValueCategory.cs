@@ -1,28 +1,49 @@
-﻿using Anemonis.JsonRpc.ServiceClient;
-using Idoit.API.Client.ApiException;
-using Idoit.API.Client.CMDB.Category.Request;
+﻿using Idoit.API.Client.ApiException;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Category
 {
-    public abstract class MultiValueCategory : Category
+    public class MultiValueCategory<T> : Category where T : IMultiValueResponse, new()
     {
-        Dictionary<string, object> parameter;
-        public MultiValueCategory(Client myClient) : base(myClient)
+        private Dictionary<string, object> parameter;
+        private List<T[]> cpuResponse;
+        public T Object { get; }
+
+        public MultiValueCategory(IdoitClient myClient) : base(myClient)
         {
+            Object = new T();
+            category = Object.category_id;
         }
+
+        //Read
+        public List<T[]> Read(int objectId)
+        {
+            Task t = Task.Run(() => { Reading(objectId).Wait(); }); t.Wait();
+            return cpuResponse;
+        }
+
+        private async Task Reading(int objectId)
+        {
+            parameter = client.GetParameter();
+            parameter.Add("objID", objectId);
+            parameter.Add("category", category);
+            cpuResponse = new List<T[]>();
+            cpuResponse.Add(await client.GetConnection().InvokeAsync<T[]>
+            ("cmdb.category.read", parameter));
+        }
+
         //Update
         new public void Update(int objectId, IRequest request)
         {
             if (request.category_id == 0)
-            { 
+            {
                 throw new Exception("CateId is missing");
             }
             base.Update(objectId, request);
         }
+
         //Delete
         public void Delete(int objectId, int entryID)
         {
@@ -32,19 +53,20 @@ namespace Idoit.API.Client.CMDB.Category
             }
             Task t = Task.Run(() => { Deleting(objectId, entryID).Wait(); }); t.Wait();
         }
-        async Task Deleting(int objectId, int entryID)
+
+        private async Task Deleting(int objectId, int entryID)
         {
             //The return Values as Object from diffrence Classes
             parameter = client.GetParameter();
             parameter.Add("objID", objectId);
             parameter.Add("cateID", entryID);
             parameter.Add("category", category);
-            Response.Response result = await client.GetConnection().InvokeAsync<Response.Response>
+            Response result = await client.GetConnection().InvokeAsync<Response>
             ("cmdb.category.delete", parameter);
             if (result.success == false)
             {
-               throw new IdoitAPIClientBadResponseException(result.message);
-            }    
+                throw new IdoitAPIClientBadResponseException(result.message);
+            }
         }
     }
 }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Idoit.API.Client.CMDB.Dialog.Request
+﻿namespace Idoit.API.Client.CMDB.Dialog.Request
 {
-   public class Port
-   {
+    public class Port
+    {
         public const string PortType = "port_type";
         public const string PortMode = "port_mode";
         public const string PlugType = "plug_type";
@@ -13,5 +9,5 @@ namespace Idoit.API.Client.CMDB.Dialog.Request
         public const string Duplex = "duplex";
         public const string SpeedType = "speed_type";
         public const string Standard = "standard";
-   }
+    }
 }

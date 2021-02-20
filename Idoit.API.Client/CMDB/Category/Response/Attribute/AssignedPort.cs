@@ -1,13 +1,10 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Idoit.API.Client.CMDB.Category.Response.Attribute
+namespace Idoit.API.Client.CMDB.Category
 {
-   public class AssignedPort : Attribute
+    public class AssignedPort : IdoitAttribute
     {
         [JsonProperty("reference")]
         public string reference { get; set; }
-     }
+    }
 }

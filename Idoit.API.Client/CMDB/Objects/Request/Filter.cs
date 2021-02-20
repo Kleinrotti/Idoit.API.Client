@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Idoit.API.Client.CMDB.Objects.Request
+﻿namespace Idoit.API.Client.CMDB.Objects.Request
 {
-   public class Filter
-   {
+    public class Filter
+    {
         public int[] ids { get; set; }
         public string type { get; set; }
         public string title { get; set; }
@@ -14,5 +10,5 @@ namespace Idoit.API.Client.CMDB.Objects.Request
         public string first_name { get; set; }
         public string last_name { get; set; }
         public string email { get; set; }
-   }
+    }
 }

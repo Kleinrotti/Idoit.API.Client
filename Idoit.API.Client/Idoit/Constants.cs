@@ -1,17 +1,15 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Idoit.API.Client.Idoit
 {
     public class Constants
     {
-        public Client client;
+        public IdoitClient client;
         private object responseConstants;
-        JObject responseJObject;
+        private JObject responseJObject;
         private string key;
         private JToken value;
         private Dictionary<string, object> parameter;
@@ -19,22 +17,22 @@ namespace Idoit.API.Client.Idoit
         private string childName;
         private string keyName;
         private string valueName;
-        Dictionary<string, string> response;
+        private Dictionary<string, string> response;
 
-        public Constants(Client myClient)
+        public Constants(IdoitClient myClient)
         {
             client = myClient;
         }
 
         //constants
-        async Task constants()
+        private async Task constants()
         {
             parameter = client.GetParameter();
             responseConstants = await client.GetConnection().InvokeAsync<object>("idoit.constants", parameter);
         }
 
         //Read
-        Dictionary<string, string> Read()
+        private Dictionary<string, string> Read()
         {
             responseJObject = (JObject)JsonConvert.DeserializeObject(responseConstants.ToString());
             response = new Dictionary<string, string>();
@@ -47,7 +45,7 @@ namespace Idoit.API.Client.Idoit
                 {
                     foreach (var childGroup in value)
                     {
-                        if(groupName == "categories")
+                        if (groupName == "categories")
                         {
                             valueName = childGroup.ToObject<JProperty>().Name;
                             if (valueName == childName)
@@ -65,13 +63,13 @@ namespace Idoit.API.Client.Idoit
                             keyName = childGroup.First.ToString();
                             valueName = childGroup.ToObject<JProperty>().Name;
                             response.Add(keyName, valueName);
-
                         }
                     }
                 }
             }
             return response;
         }
+
         //ReadGlobalCategories
         public Dictionary<string, string> ReadGlobalCategories()
         {
@@ -80,6 +78,7 @@ namespace Idoit.API.Client.Idoit
             Task t = Task.Run(() => { constants().Wait(); Read(); }); t.Wait();
             return response;
         }
+
         //ReadSpecificCategories
         public Dictionary<string, string> ReadSpecificCategories()
         {
@@ -88,6 +87,7 @@ namespace Idoit.API.Client.Idoit
             Task t = Task.Run(() => { constants().Wait(); Read(); }); t.Wait();
             return response;
         }
+
         //ReadObjectTypes
         public Dictionary<string, string> ReadObjectTypes()
         {
@@ -95,7 +95,8 @@ namespace Idoit.API.Client.Idoit
             Task t = Task.Run(() => { constants().Wait(); Read(); }); t.Wait();
             return response;
         }
-       // ReadRecordStates
+
+        // ReadRecordStates
         public Dictionary<string, string> ReadRecordStates()
         {
             groupName = "recordStates";
@@ -119,7 +120,8 @@ namespace Idoit.API.Client.Idoit
             return response;
         }
     }
-    static class Extensions
+
+    internal static class Extensions
     {
         public static void AddSafe(this Dictionary<string, string> dictionary, string key, string value)
         {
@@ -127,5 +129,4 @@ namespace Idoit.API.Client.Idoit
                 dictionary.Add(key, value);
         }
     }
-
 }

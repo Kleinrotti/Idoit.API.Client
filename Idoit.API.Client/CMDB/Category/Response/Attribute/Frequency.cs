@@ -1,14 +1,10 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Idoit.API.Client.CMDB.Category.Response.Attribute
+namespace Idoit.API.Client.CMDB.Category
 {
-    public class Frequency : Attribute
+    public class Frequency : IdoitAttribute
     {
         [JsonProperty("sysid")]
         public string sysId { get; set; }
-     
     }
 }

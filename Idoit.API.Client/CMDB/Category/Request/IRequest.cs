@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Idoit.API.Client.CMDB.Category.Request
+﻿namespace Idoit.API.Client.CMDB.Category
 {
-   public interface IRequest
-   {
-        int category_id { get; set; }
-   }
+    public interface IRequest
+    {
+        int category_id { get; }
+    }
 }

@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Idoit.API.Client.CMDB.Category.Response.Attribute
+namespace Idoit.API.Client.CMDB.Category
 {
-    public class Address : Attribute
+    public class Address : IdoitAttribute
     {
         [JsonProperty("hostname")]
         public string hostName { get; set; }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Idoit.API.Client.CMDB.Objects.Request
+﻿namespace Idoit.API.Client.CMDB.Objects.Request
 {
-   public class OrderBy
-   {
+    public class OrderBy
+    {
         public const string Type = "type";
         public const string Title = "title";
         public const string TypeTitle = "type_title";
@@ -14,5 +10,5 @@ namespace Idoit.API.Client.CMDB.Objects.Request
         public const string LastName = "last_name";
         public const string Email = "email";
         public const string Id = "id";
-   }
+    }
 }
