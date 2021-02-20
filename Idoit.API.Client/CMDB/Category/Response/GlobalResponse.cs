@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Idoit.API.Client.CMDB.Category
 {
@@ -43,6 +42,6 @@ namespace Idoit.API.Client.CMDB.Category
         [JsonProperty("description")]
         public string description { get; set; }
 
-        public string category_id { get; }="C__CATG__GLOBAL";
+        public string category_id { get; } = "C__CATG__GLOBAL";
     }
 }

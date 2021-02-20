@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Idoit.API.Client.CMDB.Category
 {
@@ -49,6 +48,6 @@ namespace Idoit.API.Client.CMDB.Category
         [JsonProperty("relation_direction")]
         public string relationDirection { get; set; }
 
-        public string category_id { get; }= "C__CATG__NETWORK_PORT";
+        public string category_id { get; } = "C__CATG__NETWORK_PORT";
     }
 }
