@@ -1,6 +1,4 @@
-﻿using Idoit.API.Client.CMDB.Objects.Request;
-using Idoit.API.Client.CMDB.Objects.Response;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Objects
@@ -13,7 +11,7 @@ namespace Idoit.API.Client.CMDB.Objects
         }
 
         private Dictionary<string, object> parameter;
-        private List<IdoitResult[]> response;
+        private List<IdoitObjectsResult[]> response;
         public int id;
         public string type, title, category, purpose, cmdbStatus, description;//Create
         public IdoitClient client;
@@ -21,13 +19,13 @@ namespace Idoit.API.Client.CMDB.Objects
         //Read Objects
         public string limit, orderBy, sort; //ReadObjects
 
-        public List<IdoitResult[]> Read(Filter filter)
+        public List<IdoitObjectsResult[]> Read(IdoitFilter filter)
         {
             Task t = Task.Run(() => { Reading(filter).Wait(); }); t.Wait();
             return response;
         }
 
-        private async Task Reading(Filter filter)
+        private async Task Reading(IdoitFilter filter)
         {
             object data = client.GetData(filter);
             parameter = client.GetParameter();
@@ -35,8 +33,8 @@ namespace Idoit.API.Client.CMDB.Objects
             parameter.Add("sort", sort);
             parameter.Add("limit", limit);
             parameter.Add("order_by", orderBy);
-            response = new List<IdoitResult[]>();
-            response.Add(await client.GetConnection().InvokeAsync<IdoitResult[]>("cmdb.objects.read", parameter));
+            response = new List<IdoitObjectsResult[]>();
+            response.Add(await client.GetConnection().InvokeAsync<IdoitObjectsResult[]>("cmdb.objects.read", parameter));
         }
     }
 }

@@ -1,23 +1,23 @@
 ﻿using Anemonis.JsonRpc.ServiceClient;
 using Idoit.API.Client.CMDB.Category;
+using Idoit.API.Client.CMDB.Objects;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using ObjectsFilter = Idoit.API.Client.CMDB.Objects.Request.Filter;
 
 namespace Idoit.API.Client
 {
     public class IdoitClient
     {
-        public string Url;
-        public string Apikey;
-        public string Language;
-        public string Username;
-        public string Password;
-        public string sessionId;
+        public string Url { get; }
+        public string Apikey { get; }
+        public string Language { get; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string sessionId { get; set; }
         private JsonRpcClient JsonRpcClient;
 
         public IdoitClient(string url, string apikey, string language)
@@ -54,7 +54,7 @@ namespace Idoit.API.Client
             return data;
         }
 
-        public object GetData(ObjectsFilter filter)
+        public object GetData(IdoitFilter filter)
         {
             string Json = JsonConvert.SerializeObject(filter, new JsonSerializerSettings
             { DefaultValueHandling = DefaultValueHandling.Ignore });

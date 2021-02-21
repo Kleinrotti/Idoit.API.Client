@@ -1,6 +1,6 @@
-﻿namespace Idoit.API.Client.CMDB.Objects.Request
+﻿namespace Idoit.API.Client.CMDB.Objects
 {
-    public class Filter
+    public class IdoitFilter
     {
         public int[] ids { get; set; }
         public string type { get; set; }

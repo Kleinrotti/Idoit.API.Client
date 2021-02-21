@@ -1,5 +1,6 @@
 ﻿using Idoit.API.Client.ApiException;
 using Idoit.API.Client.CMDB.Object.Response;
+using Idoit.API.Client.CMDB.Objects;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace Idoit.API.Client.CMDB.Object
         public int id;
         public IdoitClient client;
         public string type, title, category, purpose, cmdbStatus, description;//Create
-        private Result response;
+        private IdoitObjectResult response;
 
         public IdoitObject(IdoitClient myClient)
         {
@@ -43,7 +44,7 @@ namespace Idoit.API.Client.CMDB.Object
             parameter.Add("cmdb_status", cmdbStatus);
             parameter.Add("description", description);
             parameter.Add("category", category);
-            Response.Response response = await client.GetConnection().InvokeAsync<Response.Response>
+            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.create", parameter);
             id = response.id;
             if (response.success == false)
@@ -67,7 +68,7 @@ namespace Idoit.API.Client.CMDB.Object
             parameter = client.GetParameter();
             parameter.Add("id", objectId);
             parameter.Add("title", title);
-            Response.Response response = await client.GetConnection().InvokeAsync<Response.Response>
+            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.update", parameter);
             if (response.success == false)
             {
@@ -86,7 +87,7 @@ namespace Idoit.API.Client.CMDB.Object
             parameter = client.GetParameter();
             parameter.Add("id", objectId);
             parameter.Add("status", "C__RECORD_STATUS__DELETED");
-            Response.Response response = await client.GetConnection().InvokeAsync<Response.Response>
+            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.delete", parameter);
             if (response.success == false)
             {
@@ -106,7 +107,7 @@ namespace Idoit.API.Client.CMDB.Object
             parameter = client.GetParameter();
             parameter.Add("id", objectId);
             parameter.Add("status", "C__RECORD_STATUS__PURGE");
-            Response.Response response = await client.GetConnection().InvokeAsync<Response.Response>
+            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.delete", parameter);
             if (response.success == false)
             {
@@ -125,7 +126,7 @@ namespace Idoit.API.Client.CMDB.Object
             parameter = client.GetParameter();
             parameter.Add("id", objectId);
             parameter.Add("status", "C__RECORD_STATUS__ARCHIVED");
-            Response.Response response = await client.GetConnection().InvokeAsync<Response.Response>
+            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.delete", parameter);
             if (response.success == false)
             {
@@ -134,7 +135,7 @@ namespace Idoit.API.Client.CMDB.Object
         }
 
         //Read
-        public Result Read(int objectId)
+        public IdoitObjectResult Read(int objectId)
         {
             Task t = Task.Run(() => { Reading(objectId).Wait(); }); t.Wait();
             return response;
@@ -144,7 +145,7 @@ namespace Idoit.API.Client.CMDB.Object
         {
             parameter = client.GetParameter();
             parameter.Add("id", objectId);
-            response = await client.GetConnection().InvokeAsync<Result>("cmdb.object.read", parameter);
+            response = await client.GetConnection().InvokeAsync<IdoitObjectResult>("cmdb.object.read", parameter);
         }
     }
 }

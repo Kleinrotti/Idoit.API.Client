@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Idoit.API.Client.CMDB.Objects.Response
+namespace Idoit.API.Client.CMDB
 {
     public class IdoitResponse
     {
@@ -11,6 +11,6 @@ namespace Idoit.API.Client.CMDB.Objects.Response
         public string message { get; set; }
 
         [JsonProperty("success")]
-        public string success { get; set; }
+        public bool success { get; set; }
     }
 }

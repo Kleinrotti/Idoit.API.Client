@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace Idoit.API.Client.CMDB.Objects.Response
+namespace Idoit.API.Client.CMDB.Object.Response
 {
-    public class IdoitResult
+    public class IdoitObjectResult
     {
         [JsonProperty("id")]
         public int id { get; set; }
@@ -13,20 +13,14 @@ namespace Idoit.API.Client.CMDB.Objects.Response
         [JsonProperty("sysid")]
         public string sysId { get; set; }
 
-        [JsonProperty("type")]
-        public string type { get; set; }
-
-        [JsonProperty("created")]
-        public string created { get; set; }
-
-        [JsonProperty("updated")]
-        public string updated { get; set; }
+        [JsonProperty("objecttype")]
+        public string objectType { get; set; }
 
         [JsonProperty("type_title")]
         public string typeTitle { get; set; }
 
-        [JsonProperty("typeGroupTitle")]
-        public string type_group_title { get; set; }
+        [JsonProperty("type_icon")]
+        public string typeIcon { get; set; }
 
         [JsonProperty("status")]
         public string status { get; set; }
@@ -34,8 +28,14 @@ namespace Idoit.API.Client.CMDB.Objects.Response
         [JsonProperty("cmdb_status")]
         public string cmdbStatus { get; set; }
 
-        [JsonProperty("cmdbStatusTitle")]
-        public string cmdb_status_title { get; set; }
+        [JsonProperty("cmdb_status_title")]
+        public string cmdbStatusTitle { get; set; }
+
+        [JsonProperty("created")]
+        public string created { get; set; }
+
+        [JsonProperty("updated")]
+        public string updated { get; set; }
 
         [JsonProperty("image")]
         public string image { get; set; }

@@ -1,6 +1,6 @@
-﻿namespace Idoit.API.Client.CMDB.Objects.Request
+﻿namespace Idoit.API.Client.CMDB.Objects
 {
-    public class OrderBy
+    public class IdoitOrderBy
     {
         public const string Type = "type";
         public const string Title = "title";
