@@ -1,65 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Idoit.API.Client;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using idoit = Idoit.API.Client.Idoit.Idoit;
-using Version = Idoit.API.Client.Idoit.Response.Version;
-using Logout = Idoit.API.Client.Idoit.Response.Logout;
-using Login = Idoit.API.Client.Idoit.Response.Login;
-using Search = Idoit.API.Client.Idoit.Response.Search;
-using Obj = Idoit.API.Client.CMDB.Object.Object;
-using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
-using CmdbStatus = Idoit.API.Client.Contants.CmdbStatus;
-using System.IO;
-using System.Net.Http;
+﻿using Idoit.API.Client.CMDB.Object;
+using Idoit.API.Client.Contants;
 using Idoit.API.Client.Idoit;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
+using Idoit.API.Client.Idoit.Response;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 
-namespace UnitTestApi.Idoit
+namespace IdoitUnitTests
 {
     //[Ignore]
     [TestClass]
-    public class IdoitTest
+    public class IdoitTest : IdoitTestBase
     {
-        string URL;
-        string APIKEY;
-        string LANGUAGE;
-        public IdoitTest()
+        public IdoitTest() : base()
         {
-            string path = Path.Combine(Environment.CurrentDirectory, @"Data\", "Api.env");
-            DotNetEnv.Env.Load(path); URL = DotNetEnv.Env.GetString("URL");
-            APIKEY = DotNetEnv.Env.GetString("APIKEY");
-            LANGUAGE = DotNetEnv.Env.GetString("LANGUAGE");
         }
-      
+
         //Version
         [TestMethod]
         public void VersionTest()
         {
             //Arrange
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            idoit idoit = new idoit(myClient);
-            Version request = new Version();
-            Logout logout = new Logout();
-            Login login = new Login();
+            var idoit = new IdoitInstance(idoitClient);
+            var request = new IdoitVersionResponse();
+            var logout = new IdoitLogoutResponse();
+            var login = new IdoitLoginResponse();
 
             //login
             login = idoit.Login();
-            
+
             //Version
-            myClient.sessionId = login.sessionId;
+            idoitClient.sessionId = login.sessionId;
             request = idoit.Version();
 
             //Logout
             logout = idoit.Logout();
-            
-           //Assert
+
+            //Assert
             Assert.IsNotNull(request.version);
             Assert.IsNotNull(request.type);
             Assert.IsNotNull(request.login.language);
@@ -70,11 +47,8 @@ namespace UnitTestApi.Idoit
         public void LogoutTest()
         {
             //Arrange
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            idoit idoit = new idoit(myClient);
-            Logout request = new Logout();
+            var idoit = new IdoitInstance(idoitClient);
+            var request = new IdoitLogoutResponse();
 
             //Act
             request = idoit.Logout();
@@ -83,17 +57,14 @@ namespace UnitTestApi.Idoit
             Assert.IsNotNull(request.message);
             Assert.IsTrue(request.result);
         }
+
         //Login
         [TestMethod]
         public void LoginTest()
         {
-
             //Arrange
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            idoit idoit = new idoit(myClient);
-            Login request = new Login();
+            var idoit = new IdoitInstance(idoitClient);
+            var request = new IdoitLoginResponse();
 
             //Act
             request = idoit.Login();
@@ -109,27 +80,23 @@ namespace UnitTestApi.Idoit
         {
             //Arrange
             int objID;
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            idoit idoit = new idoit(myClient);
-            Obj request = new Obj(myClient);
-            List<Search[]> lists = new List<Search[]>();
+            var idoit = new IdoitInstance(idoitClient);
+            var request = new IdoitObject(idoitClient);
+            var lists = new List<IdoitSearchResponse[]>();
 
             //Act
-            request.type = ObjectType.PRINTER;
+            request.type = IdoitObjectTypes.PRINTER;
             request.title = "Printer 01";
-            request.cmdbStatus = CmdbStatus.DEFECT;
+            request.cmdbStatus = IdoitCmdbStatus.DEFECT;
             objID = request.Create();
 
-
-            //Act:Search 
+            //Act:Search
             lists = idoit.Search(request.title);
 
             //Assert
-            foreach (Search[] row in lists)
+            foreach (IdoitSearchResponse[] row in lists)
             {
-                foreach (Search element in row)
+                foreach (IdoitSearchResponse element in row)
                 {
                     Assert.IsNotNull(element.link);
                     Assert.IsNotNull(element.key);
@@ -144,7 +111,6 @@ namespace UnitTestApi.Idoit
 
             //Act:Delete the Object
             request.Delete(objID);
-
         }
 
         //Constants
@@ -152,10 +118,7 @@ namespace UnitTestApi.Idoit
         public void ConstantsReadObjectTypesTest()
         {
             //Arrange
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Constants constants = new Constants(myClient);
+            Constants constants = new Constants(idoitClient);
             Dictionary<string, string> lists = new Dictionary<string, string>();
 
             lists = constants.ReadObjectTypes();
@@ -171,10 +134,7 @@ namespace UnitTestApi.Idoit
         public void ConstantsReadRecordStatesTest()
         {
             //Arrange
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Constants constants = new Constants(myClient);
+            Constants constants = new Constants(idoitClient);
             Dictionary<string, string> lists = new Dictionary<string, string>();
 
             lists = constants.ReadRecordStates();
@@ -184,15 +144,13 @@ namespace UnitTestApi.Idoit
                 Console.WriteLine(pair.Key, pair.Value);
             }
         }
+
         //Constants
         [TestMethod]
         public void ConstantsReadCategoriesGlobalTest()
         {
             //Arrange
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Constants constants = new Constants(myClient);
+            Constants constants = new Constants(idoitClient);
             Dictionary<string, string> lists = new Dictionary<string, string>();
 
             lists = constants.ReadGlobalCategories();
@@ -203,17 +161,14 @@ namespace UnitTestApi.Idoit
                 Assert.IsNotNull(pair.Key);
                 Assert.IsNotNull(pair.Value);
             }
-
         }
+
         //Constants
         [TestMethod]
         public void ConstantsReadCategoriesSpecificTest()
         {
             //Arrange
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Constants constants = new Constants(myClient);
+            Constants constants = new Constants(idoitClient);
             Dictionary<string, string> lists = new Dictionary<string, string>();
 
             lists = constants.ReadSpecificCategories();
@@ -223,7 +178,7 @@ namespace UnitTestApi.Idoit
                 //Assert
                 Assert.IsNotNull(pair.Key);
                 Assert.IsNotNull(pair.Value);
-             }
+            }
         }
     }
 }

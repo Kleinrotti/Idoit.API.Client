@@ -1,57 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using Idoit.API.Client;
-using Idoit.API.Client.CMDB.Object.Response;
+﻿using Idoit.API.Client.CMDB.Category;
+using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Access = Idoit.API.Client.CMDB.Category.Access;
-using AccessRequset = Idoit.API.Client.CMDB.Category.Request.Access;
-using AccessResponse = Idoit.API.Client.CMDB.Category.Response.Access;
-using IResponse = Idoit.API.Client.CMDB.Category.Response.IResponse;
-using Obj = Idoit.API.Client.CMDB.Object.Object;
-using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
-using CmdbStatus = Idoit.API.Client.Contants.CmdbStatus;
-using System.IO;
+using System.Collections.Generic;
+using Obj = Idoit.API.Client.CMDB.Object.IdoitObject;
 
-namespace UnitTestApi.CMDB.Category.MultiValueCategory
+namespace IdoitUnitTests
 {
-  
     [TestClass]
-    public class AccessCategoryTest
+    public class AccessCategoryTest : IdoitTestBase
     {
- 
-        string URL;
-        string APIKEY;
-        string LANGUAGE;
-        public   AccessCategoryTest()
+        public AccessCategoryTest() : base()
         {
-            /*You can find the Api.env in the following path:-
-             *Idoit.API.Client\UnitTestApi\bin\Debug\Data
-             */
-            string path = Path.Combine(Environment.CurrentDirectory, @"Data\", "Api.env");
-            DotNetEnv.Env.Load(path);
-            URL = DotNetEnv.Env.GetString("URL");
-            APIKEY = DotNetEnv.Env.GetString("APIKEY");
-            LANGUAGE = DotNetEnv.Env.GetString("LANGUAGE");
         }
-
 
         //Create
         [TestMethod]
         public void CreateTest()
         {
             //Arrange
-             int cateId,objectId;
-            List<AccessResponse[]> list = new List<AccessResponse[]>();
-            AccessRequset categoryRequest = new AccessRequset();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            Access access = new Access(myClient);
+            int cateId, objectId;
+            var list = new List<AccessResponse[]>();
+            var categoryRequest = new AccessRequest();
+            Obj objectRequest = new Obj(idoitClient);
+            var access = new MultiValueCategory<AccessResponse>(idoitClient);
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
+            objectRequest.type = IdoitObjectTypes.CLIENT;
             objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -59,7 +34,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             categoryRequest.description = "Web GUI description";
             categoryRequest.type = " ES";
             categoryRequest.formatted_url = "https://swsan.admin.acme-it.example/";
-            cateId = access.Create(objectId,categoryRequest);
+            cateId = access.Create(objectId, categoryRequest);
 
             //Assert
             Assert.IsNotNull(cateId);
@@ -67,7 +42,6 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             //Act: Read the Category
             categoryRequest.category_id = cateId;
             list = access.Read(objectId);
-
 
             //Assert
             foreach (AccessResponse[] row in list)
@@ -88,19 +62,16 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
         public void DeleteTest()
         {
             //Arrange
-             int cateId, objectId;
+            int cateId, objectId;
             List<AccessResponse[]> list = new List<AccessResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            AccessRequset categoryRequest = new AccessRequset();
-            Access access = new Access(myClient);
+            Obj objectRequest = new Obj(idoitClient);
+            var categoryRequest = new AccessRequest();
+            var access = new MultiValueCategory<AccessResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
+            objectRequest.type = IdoitObjectTypes.CLIENT;
             objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -126,27 +97,22 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
                     Assert.IsNotNull(element.id);
                 }
             }
-
         }
 
         //Quickpurge
         [TestMethod]
         public void QuickpurgeTest()
         {
-
             //Arrange
             int cateId, objectId;
-             Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            AccessRequset categoryRequest = new AccessRequset();
-            Access access = new Access(myClient);
+            Obj objectRequest = new Obj(idoitClient);
+            var categoryRequest = new AccessRequest();
+            var access = new MultiValueCategory<AccessResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
+            objectRequest.type = IdoitObjectTypes.CLIENT;
             objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -157,7 +123,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             cateId = access.Create(objectId, categoryRequest);
 
             //Act
-            access.Quickpurge(objectId, cateId); 
+            access.Quickpurge(objectId, cateId);
         }
 
         //Update
@@ -166,18 +132,15 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
         {
             //Arrange
             int cateId, objectId;
-             List<AccessResponse[]> list = new List<AccessResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            AccessRequset categoryRequest = new AccessRequset();
-            Access access = new Access(myClient);
+            List<AccessResponse[]> list = new List<AccessResponse[]>();
+            Obj objectRequest = new Obj(idoitClient);
+            var categoryRequest = new AccessRequest();
+            var access = new MultiValueCategory<AccessResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
+            objectRequest.type = IdoitObjectTypes.CLIENT;
             objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -204,13 +167,12 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             {
                 foreach (AccessResponse element in row)
                 {
-                    Assert.AreEqual("Web GUI 2",categoryRequest.title);
+                    Assert.AreEqual("Web GUI 2", categoryRequest.title);
                 }
             }
 
             //Act:Delete the Object
             objectRequest.Delete(objectId);
-
         }
 
         //Read
@@ -219,18 +181,15 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
         {
             //Arrange
             int cateId, objectId;
-             List<AccessResponse[]> list = new List<AccessResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            AccessRequset categoryRequest = new AccessRequset();
-            Access access = new Access(myClient);
+            List<AccessResponse[]> list = new List<AccessResponse[]>();
+            Obj objectRequest = new Obj(idoitClient);
+            var categoryRequest = new AccessRequest();
+            var access = new MultiValueCategory<AccessResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
+            objectRequest.type = IdoitObjectTypes.CLIENT;
             objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -239,7 +198,7 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             categoryRequest.type = " ES";
             categoryRequest.formatted_url = "https://swsan.admin.acme-it.example/";
             cateId = access.Create(objectId, categoryRequest);
-             
+
             //Act:Read the Category
             categoryRequest.category_id = cateId;
             list = access.Read(objectId);
@@ -256,5 +215,5 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             //Act:Delete the Object
             objectRequest.Delete(objectId);
         }
-        }
+    }
 }

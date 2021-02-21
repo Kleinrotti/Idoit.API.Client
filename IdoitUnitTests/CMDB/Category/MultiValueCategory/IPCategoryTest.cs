@@ -1,34 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using Idoit.API.Client;
-using Idoit.API.Client.CMDB.Object.Response;
+﻿using Idoit.API.Client.CMDB.Category;
+using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using IP = Idoit.API.Client.CMDB.Category.IP;
-using IPRequset = Idoit.API.Client.CMDB.Category.Request.IP;
-using IPResponse = Idoit.API.Client.CMDB.Category.Response.IP;
-using IResponse = Idoit.API.Client.CMDB.Category.Response.IResponse;
-using Obj = Idoit.API.Client.CMDB.Object.Object;
-using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
-using CmdbStatus = Idoit.API.Client.Contants.CmdbStatus;
-using System.IO;
+using System.Collections.Generic;
+using Obj = Idoit.API.Client.CMDB.Object.IdoitObject;
 
-namespace UnitTestApi.CMDB.Category.MultiValueCategory
+namespace IdoitUnitTests
 {
     [TestClass]
-    public class IPCategoryTest
+    public class IPCategoryTest : IdoitTestBase
     {
-        string URL;
-        string APIKEY;
-        string LANGUAGE;
-        public IPCategoryTest()
+        public IPCategoryTest() : base()
         {
-            string path = Path.Combine(Environment.CurrentDirectory, @"Data\", "Api.env");
-            DotNetEnv.Env.Load(path);
-            URL = DotNetEnv.Env.GetString("URL");
-            APIKEY = DotNetEnv.Env.GetString("APIKEY");
-            LANGUAGE = DotNetEnv.Env.GetString("LANGUAGE");
         }
-
 
         //Create
         [TestMethod]
@@ -36,17 +19,14 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
         {
             //Arrange
             int cateId, objectId;
-            List<IPResponse[]> list = new List<IPResponse[]>();
-            IPRequset categoryRequest = new IPRequset();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            IP IP = new IP(myClient);
+            var list = new List<IPResponse[]>();
+            var categoryRequest = new IPRequest();
+            Obj objectRequest = new Obj(idoitClient);
+            var IP = new MultiValueCategory<IPResponse>(idoitClient);
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLUSTER;
+            objectRequest.type = IdoitObjectTypes.CLUSTER;
             objectRequest.title = " My Cluster";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -60,7 +40,6 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             //Act: Read the Category
             categoryRequest.category_id = cateId;
             list = IP.Read(objectId);
-
 
             //Assert
             foreach (IPResponse[] row in list)
@@ -127,7 +106,6 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
         //[TestMethod]
         //public void QuickpurgeTest()
         //{
-
         //    //Arrange
         //    int cateId, objectId;
         //    Client myClient = new Client(URL, APIKEY, LANGUAGE);
@@ -216,18 +194,15 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
         {
             //Arrange
             int cateId, objectId;
-            List<IPResponse[]> list = new List<IPResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            IPRequset categoryRequest = new IPRequset();
-            IP IP = new IP(myClient);
+            var list = new List<IPResponse[]>();
+            Obj objectRequest = new Obj(idoitClient);
+            var categoryRequest = new IPRequest();
+            var IP = new MultiValueCategory<IPResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLUSTER;
+            objectRequest.type = IdoitObjectTypes.CLUSTER;
             objectRequest.title = " My Cluster 2";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -235,7 +210,6 @@ namespace UnitTestApi.CMDB.Category.MultiValueCategory
             categoryRequest.description = "Web GUI description";
             cateId = IP.Create(objectId, categoryRequest);
 
-          
             //Act:Read the Category
             categoryRequest.category_id = cateId;
             list = IP.Read(objectId);

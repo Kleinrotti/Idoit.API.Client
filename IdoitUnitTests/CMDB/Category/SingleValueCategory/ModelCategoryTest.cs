@@ -1,67 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using Idoit.API.Client;
-using Idoit.API.Client.CMDB.Object.Response;
+﻿using Idoit.API.Client.CMDB.Category;
+using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model = Idoit.API.Client.CMDB.Category.Model;
-using ModelRequset = Idoit.API.Client.CMDB.Category.Request.Model;
-using ModelResponse = Idoit.API.Client.CMDB.Category.Response.Model;
-using IResponse = Idoit.API.Client.CMDB.Category.Response.IResponse;
-using Obj = Idoit.API.Client.CMDB.Object.Object;
-using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
-using CmdbStatus = Idoit.API.Client.Contants.CmdbStatus;
-using System.IO;
+using System.Collections.Generic;
+using Obj = Idoit.API.Client.CMDB.Object.IdoitObject;
 
-namespace UnitTestApi.CMDB.Category.SingleValueCategory
+namespace IdoitUnitTests
 {
     //[Ignore]
     [TestClass]
-    public class ModelCategoryTest
+    public class ModelCategoryTest : IdoitTestBase
     {
-        string URL;
-        string APIKEY;
-        string LANGUAGE;
-        public   ModelCategoryTest()
+        public ModelCategoryTest() : base()
         {
-            string path = Path.Combine(Environment.CurrentDirectory, @"Data\", "Api.env");
-            DotNetEnv.Env.Load(path);
-             URL = DotNetEnv.Env.GetString("URL");
-            APIKEY = DotNetEnv.Env.GetString("APIKEY");
-            LANGUAGE = DotNetEnv.Env.GetString("LANGUAGE");
         }
+
         //[Ignore]
         //Create
         [TestMethod]
         public void CreateTest()
         {
             //Arrange
-             int cateId, objectId;
-            List<ModelResponse[]> list = new List<ModelResponse[]>();
-            ModelRequset categoryRequest = new ModelRequset();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            Model model = new Model(myClient);
+            int cateId, objectId;
+            var list = new List<ModelResponse[]>();
+            var categoryRequest = new ModelRequest();
+            Obj objectRequest = new Obj(idoitClient);
+            var model = new SingleValueCategory<ModelResponse>(idoitClient);
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
+            objectRequest.type = IdoitObjectTypes.CLIENT;
             objectRequest.title = " My Client";
- 
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
-            categoryRequest.manufacturer=1;
+            categoryRequest.manufacturer = 1;
             categoryRequest.description = "Web GUI description";
             cateId = model.Create(objectId, categoryRequest);
-           
+
             //Assert
             Assert.IsNotNull(cateId);
 
             //Act: Read the Category
             list = model.Read(objectId);
-
 
             //Assert
             foreach (ModelResponse[] row in list)
@@ -76,26 +57,22 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             //Act:Delete the Object
             objectRequest.Delete(objectId);
         }
-        
+
         //[Ignore]
         //Quickpurge
         [TestMethod]
         public void QuickpurgeTest()
         {
-
             //Arrange
             int cateId, objectId;
-             Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            ModelRequset categoryRequest = new ModelRequset();
-            Model model = new Model(myClient);
+            Obj objectRequest = new Obj(idoitClient);
+            var categoryRequest = new ModelRequest();
+            var model = new SingleValueCategory<ModelResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
+            objectRequest.type = IdoitObjectTypes.CLIENT;
             objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -115,18 +92,15 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
         {
             //Arrange
             int cateId, objectId;
-             List<ModelResponse[]> list = new List<ModelResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            ModelRequset categoryRequest = new ModelRequset();
-            Model model = new Model(myClient);
+            List<ModelResponse[]> list = new List<ModelResponse[]>();
+            Obj objectRequest = new Obj(idoitClient);
+            var categoryRequest = new ModelRequest();
+            var model = new SingleValueCategory<ModelResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
+            objectRequest.type = IdoitObjectTypes.CLIENT;
             objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -143,7 +117,7 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             model.Update(objectId, categoryRequest);
 
             //Act:Read the Category
-             list = model.Read(objectId);
+            list = model.Read(objectId);
 
             //Assert
             foreach (ModelResponse[] row in list)
@@ -155,7 +129,6 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             }
             //Act:Delete the Object
             objectRequest.Delete(objectId);
-
         }
 
         //[Ignore]
@@ -165,18 +138,15 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
         {
             //Arrange
             int cateId, objectId;
-             List<ModelResponse[]> list = new List<ModelResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            ModelRequset categoryRequest = new ModelRequset();
-            Model model = new Model(myClient);
+            List<ModelResponse[]> list = new List<ModelResponse[]>();
+            Obj objectRequest = new Obj(idoitClient);
+            var categoryRequest = new ModelRequest();
+            var model = new SingleValueCategory<ModelResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType. CLIENT;
+            objectRequest.type = IdoitObjectTypes.CLIENT;
             objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -187,7 +157,7 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             cateId = model.Create(objectId, categoryRequest);
 
             //Act:Read the Category
-             list = model.Read(objectId);
+            list = model.Read(objectId);
 
             //Assert
             foreach (ModelResponse[] row in list)

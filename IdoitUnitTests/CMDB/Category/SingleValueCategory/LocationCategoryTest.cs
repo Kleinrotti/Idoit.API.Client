@@ -1,34 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using Idoit.API.Client;
-using Idoit.API.Client.CMDB.Object.Response;
+﻿using Idoit.API.Client.CMDB.Category;
+using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Location = Idoit.API.Client.CMDB.Category.Location;
-using LocationRequset = Idoit.API.Client.CMDB.Category.Request.Location;
-using LocationResponse = Idoit.API.Client.CMDB.Category.Response.Location;
-using IResponse = Idoit.API.Client.CMDB.Category.Response.IResponse;
-using Obj = Idoit.API.Client.CMDB.Object.Object;
-using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
-using CmdbStatus = Idoit.API.Client.Contants.CmdbStatus;
-using System.IO;
+using System.Collections.Generic;
+using Obj = Idoit.API.Client.CMDB.Object.IdoitObject;
 
-namespace UnitTestApi.CMDB.Category.SingleValueCategory
+namespace IdoitUnitTests
 {
     //[Ignore]
     [TestClass]
-    public class LocationCategoryTest
+    public class LocationCategoryTest : IdoitTestBase
     {
-        string URL;
-        string APIKEY;
-        string LANGUAGE;
-        public LocationCategoryTest()
+        public LocationCategoryTest() : base()
         {
-            string path = Path.Combine(Environment.CurrentDirectory, @"Data\", "Api.env");
-            DotNetEnv.Env.Load(path);
-            URL = DotNetEnv.Env.GetString("URL");
-            APIKEY = DotNetEnv.Env.GetString("APIKEY");
-            LANGUAGE = DotNetEnv.Env.GetString("LANGUAGE");
         }
+
         //[Ignore]
         //Create
         [TestMethod]
@@ -36,22 +21,19 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
         {
             //Arrange
             int cateId, objectId;
-            List<LocationResponse[]> list = new List<LocationResponse[]>();
-            LocationRequset categoryRequest = new LocationRequset();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            Location Location = new Location(myClient);
+            var list = new List<LocationResponse[]>();
+            var categoryRequest = new LocationRequest();
+            Obj objectRequest = new Obj(idoitClient);
+            var Location = new SingleValueCategory<LocationResponse>(idoitClient);
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
-            objectRequest.title = " My Client";
+            objectRequest.type = IdoitObjectTypes.CLIENT;
+            objectRequest.title = " My IdoitClient";
 
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
-            
+
             categoryRequest.description = "Web GUI description";
             categoryRequest.latitude = "12";
             categoryRequest.longitude = "323";
@@ -63,7 +45,6 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
 
             //Act: Read the Category
             list = Location.Read(objectId);
-
 
             //Assert
             foreach (LocationResponse[] row in list)
@@ -83,20 +64,16 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
         [TestMethod]
         public void QuickpurgeTest()
         {
-
             //Arrange
             int cateId, objectId;
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            LocationRequset categoryRequest = new LocationRequset();
-            Location Location = new Location(myClient);
+            Obj objectRequest = new Obj(idoitClient);
+            var categoryRequest = new LocationRequest();
+            var Location = new SingleValueCategory<LocationResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType. CLIENT;
-            objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.type = IdoitObjectTypes.CLIENT;
+            objectRequest.title = " My IdoitClient";
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -118,17 +95,14 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             //Arrange
             int cateId, objectId;
             List<LocationResponse[]> list = new List<LocationResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            LocationRequset categoryRequest = new LocationRequset();
-            Location Location = new Location(myClient);
+            Obj objectRequest = new Obj(idoitClient);
+            var categoryRequest = new LocationRequest();
+            var Location = new SingleValueCategory<LocationResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
-            objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.type = IdoitObjectTypes.CLIENT;
+            objectRequest.title = " My IdoitClient";
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -160,7 +134,6 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
             }
             //Act:Delete the Object
             objectRequest.Delete(objectId);
-
         }
 
         //[Ignore]
@@ -170,18 +143,15 @@ namespace UnitTestApi.CMDB.Category.SingleValueCategory
         {
             //Arrange
             int cateId, objectId;
-            List<LocationResponse[]> list = new List<LocationResponse[]>();
-            Client myClient = new Client(URL, APIKEY, LANGUAGE);
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj objectRequest = new Obj(myClient);
-            LocationRequset categoryRequest = new LocationRequset();
-            Location Location = new Location(myClient);
+            var list = new List<LocationResponse[]>();
+            Obj objectRequest = new Obj(idoitClient);
+            var categoryRequest = new LocationRequest();
+            var Location = new SingleValueCategory<LocationResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = ObjectType.CLIENT;
-            objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = CmdbStatus.INOPERATION;
+            objectRequest.type = IdoitObjectTypes.CLIENT;
+            objectRequest.title = " My IdoitClient";
+            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
