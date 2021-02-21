@@ -1,7 +1,7 @@
-﻿using Idoit.API.Client.CMDB.Object.Response;
+﻿using Idoit.API.Client.CMDB.Object;
+using Idoit.API.Client.CMDB.Object.Response;
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Obj = Idoit.API.Client.CMDB.Object.IdoitObject;
 
 namespace IdoitUnitTests
 {
@@ -18,7 +18,7 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            Obj request = new Obj(idoitClient);
+            var request = new IdoitObject(idoitClient);
             //Act
             request.type = IdoitObjectTypes.APPLICATION;
             request.title = "Chrome";
@@ -39,7 +39,7 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            Obj request = new Obj(idoitClient);
+            var request = new IdoitObject(idoitClient);
             //Act:Create the Object
             request.type = IdoitObjectTypes.CLIENT;
             request.title = " My Client";
@@ -57,8 +57,8 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            Result list = new Result();
-            Obj request = new Obj(idoitClient);
+            IdoitObjectResult list = new IdoitObjectResult();
+            var request = new IdoitObject(idoitClient);
             //Act:Create the Object
             request.type = IdoitObjectTypes.CLIENT;
             request.title = "Laptop 001";
@@ -78,7 +78,7 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            Obj request = new Obj(idoitClient);
+            var request = new IdoitObject(idoitClient);
             //Act
             request.type = IdoitObjectTypes.PRINTER;
             request.title = "HQ Printer";
@@ -95,8 +95,8 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            Result list = new Result();
-            Obj request = new Obj(idoitClient);
+            IdoitObjectResult list = new IdoitObjectResult();
+            var request = new IdoitObject(idoitClient);
 
             //Act:Create the Object
             request.type = IdoitObjectTypes.ROUTER;
@@ -120,7 +120,7 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            Obj request = new Obj(idoitClient);
+            var request = new IdoitObject(idoitClient);
 
             //Act:Create the Object
             request.type = IdoitObjectTypes.MONITOR;
@@ -141,8 +141,8 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            Result list = new Result();
-            Obj request = new Obj(idoitClient);
+            IdoitObjectResult list = new IdoitObjectResult();
+            var request = new IdoitObject(idoitClient);
             //Act:Create the Object
             request.type = IdoitObjectTypes.SERVER;
             request.title = " Switch Colo A001 02";
@@ -163,8 +163,8 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            Result list = new Result();
-            Obj request = new Obj(idoitClient);
+            IdoitObjectResult list = new IdoitObjectResult();
+            var request = new IdoitObject(idoitClient);
             //Act:Create the Object
             request.type = IdoitObjectTypes.SERVER;
             request.title = "Ceph Storage Pod A001 01";

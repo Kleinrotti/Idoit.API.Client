@@ -3,7 +3,7 @@ using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using Dia = Idoit.API.Client.CMDB.Dialog.Dialog;
-using Result = Idoit.API.Client.CMDB.Dialog.Response.Result;
+using DialogResult = Idoit.API.Client.CMDB.Dialog.Response.DialogResult;
 
 namespace IdoitUnitTests
 {
@@ -43,15 +43,15 @@ namespace IdoitUnitTests
         {
             //Arrange
             Dia request = new Dia(idoitClient);
-            List<Result[]> lists = new List<Result[]>();
+            List<DialogResult[]> lists = new List<DialogResult[]>();
             //Act:Read
             request.property = Global.Category;
             request.category = IdoitCategory.GLOBAL;
             lists = request.Read();
             //Assert
-            foreach (Result[] row in lists)
+            foreach (DialogResult[] row in lists)
             {
-                foreach (Result element in row)
+                foreach (DialogResult element in row)
                 {
                     Assert.IsNotNull(element.id);
                     Assert.IsNotNull(element.title);
@@ -67,7 +67,7 @@ namespace IdoitUnitTests
             //Arrange
             int objID;
             Dia request = new Dia(idoitClient);
-            List<Result[]> lists = new List<Result[]>();
+            List<DialogResult[]> lists = new List<DialogResult[]>();
             //Act:Create
             request.property = Access.Type;
             request.value = "ES23";
@@ -84,7 +84,7 @@ namespace IdoitUnitTests
             //Arrange
             int objID;
             Dia request = new Dia(idoitClient);
-            List<Result[]> lists = new List<Result[]>();
+            List<DialogResult[]> lists = new List<DialogResult[]>();
             //Act:Create
             request.property = Port.PortType;
             request.value = "WLAN23";
@@ -96,9 +96,9 @@ namespace IdoitUnitTests
             request.category = IdoitCategory.PORT;
             request.Update(objID);
             //Assert
-            foreach (Result[] row in lists)
+            foreach (DialogResult[] row in lists)
             {
-                foreach (Result element in row)
+                foreach (DialogResult element in row)
                 {
                     Assert.IsNotNull(element.id);
                     Assert.IsNotNull(element.title);

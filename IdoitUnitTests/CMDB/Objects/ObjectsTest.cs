@@ -1,10 +1,8 @@
-﻿using Idoit.API.Client.CMDB.Objects;
-using Idoit.API.Client.CMDB.Objects.Request;
-using Idoit.API.Client.CMDB.Objects.Response;
+﻿using Idoit.API.Client.CMDB.Object;
+using Idoit.API.Client.CMDB.Objects;
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using ObjectCreate = Idoit.API.Client.CMDB.Object.IdoitObject;
 
 namespace IdoitUnitTests
 {
@@ -20,10 +18,10 @@ namespace IdoitUnitTests
         public void ReadTest()
         {
             //Arrange
-            var lists = new List<IdoitResult[]>();
+            var lists = new List<IdoitObjectsResult[]>();
             var request = new IdoitObjects(idoitClient);
-            ObjectCreate requestCreate = new ObjectCreate(idoitClient);
-            Filter filter = new Filter();
+            var requestCreate = new IdoitObject(idoitClient);
+            IdoitFilter filter = new IdoitFilter();
             int[] ObjectId = new int[10];
 
             //Act:Create the Objects
@@ -37,17 +35,17 @@ namespace IdoitUnitTests
 
             //Act : Read Objects
             request.limit = "0,10";
-            request.orderBy = OrderBy.Title;
-            request.sort = Sort.Acsending;
+            request.orderBy = IdoitOrderBy.Title;
+            request.sort = IdoitSort.Acsending;
             filter.ids = new int[] { ObjectId[0], ObjectId[8] };
             filter.type = "C__OBJTYPE__SERVICE";
             //filter.title = "SystemService";
             lists = request.Read(filter);
 
             //Assert
-            foreach (IdoitResult[] row in lists)
+            foreach (IdoitObjectsResult[] row in lists)
             {
-                foreach (IdoitResult element in row)
+                foreach (IdoitObjectsResult element in row)
                 {
                     Assert.IsNotNull(element.title);
                     Assert.IsNotNull(element.id);
