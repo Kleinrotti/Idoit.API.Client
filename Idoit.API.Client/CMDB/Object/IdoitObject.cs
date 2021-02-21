@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Object
 {
-    public class Object
+    public class IdoitObject
     {
         private Dictionary<string, object> parameter;
         public string success;
@@ -14,7 +14,7 @@ namespace Idoit.API.Client.CMDB.Object
         public string type, title, category, purpose, cmdbStatus, description;//Create
         private Result response;
 
-        public Object(IdoitClient myClient)
+        public IdoitObject(IdoitClient myClient)
         {
             client = myClient;
         }
