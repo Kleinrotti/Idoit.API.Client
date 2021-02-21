@@ -118,11 +118,11 @@ namespace IdoitUnitTests
         public void ConstantsReadObjectTypesTest()
         {
             //Arrange
-            Constants constants = new Constants(idoitClient);
-            Dictionary<string, string> lists = new Dictionary<string, string>();
+            var constants = new Constants(idoitClient);
+            var lists = new Dictionary<string, string>();
 
             lists = constants.ReadObjectTypes();
-
+            Assert.IsTrue(lists.Count > 0);
             foreach (var pair in lists)
             {
                 Console.WriteLine(pair.Key, pair.Value);
@@ -134,11 +134,11 @@ namespace IdoitUnitTests
         public void ConstantsReadRecordStatesTest()
         {
             //Arrange
-            Constants constants = new Constants(idoitClient);
-            Dictionary<string, string> lists = new Dictionary<string, string>();
+            var constants = new Constants(idoitClient);
+            var lists = new Dictionary<string, string>();
 
             lists = constants.ReadRecordStates();
-
+            Assert.IsTrue(lists.Count > 0);
             foreach (var pair in lists)
             {
                 Console.WriteLine(pair.Key, pair.Value);
@@ -150,16 +150,14 @@ namespace IdoitUnitTests
         public void ConstantsReadCategoriesGlobalTest()
         {
             //Arrange
-            Constants constants = new Constants(idoitClient);
-            Dictionary<string, string> lists = new Dictionary<string, string>();
+            var constants = new Constants(idoitClient);
+            var lists = new Dictionary<string, string>();
 
             lists = constants.ReadGlobalCategories();
-
+            Assert.IsTrue(lists.Count > 0);
             foreach (var pair in lists)
             {
-                //Assert
-                Assert.IsNotNull(pair.Key);
-                Assert.IsNotNull(pair.Value);
+                Console.WriteLine(pair.Key, pair.Value);
             }
         }
 
@@ -168,16 +166,14 @@ namespace IdoitUnitTests
         public void ConstantsReadCategoriesSpecificTest()
         {
             //Arrange
-            Constants constants = new Constants(idoitClient);
-            Dictionary<string, string> lists = new Dictionary<string, string>();
+            var constants = new Constants(idoitClient);
+            var lists = new Dictionary<string, string>();
 
             lists = constants.ReadSpecificCategories();
-
+            Assert.IsTrue(lists.Count > 0);
             foreach (var pair in lists)
             {
-                //Assert
-                Assert.IsNotNull(pair.Key);
-                Assert.IsNotNull(pair.Value);
+                Console.WriteLine(pair.Key, pair.Value);
             }
         }
     }
