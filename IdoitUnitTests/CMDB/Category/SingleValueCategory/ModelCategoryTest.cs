@@ -124,7 +124,7 @@ namespace IdoitUnitTests
             {
                 foreach (ModelResponse element in row)
                 {
-                    Assert.AreEqual("Web GUI 2", categoryRequest.title);
+                    Assert.AreEqual("Web GUI 2", element.title);
                 }
             }
             //Act:Delete the Object
@@ -164,7 +164,7 @@ namespace IdoitUnitTests
             {
                 foreach (ModelResponse element in row)
                 {
-                    Assert.AreEqual("Web GUI", categoryRequest.title);
+                    Assert.AreEqual("Web GUI", element.title);
                 }
             }
 

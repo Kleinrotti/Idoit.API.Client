@@ -167,7 +167,7 @@ namespace IdoitUnitTests
             {
                 foreach (AccessResponse element in row)
                 {
-                    Assert.AreEqual("Web GUI 2", categoryRequest.title);
+                    Assert.AreEqual("Web GUI 2", element.title);
                 }
             }
 
@@ -208,7 +208,7 @@ namespace IdoitUnitTests
             {
                 foreach (AccessResponse element in row)
                 {
-                    Assert.AreEqual("Web GUI", categoryRequest.title);
+                    Assert.AreEqual("Web GUI", element.title);
                 }
             }
 

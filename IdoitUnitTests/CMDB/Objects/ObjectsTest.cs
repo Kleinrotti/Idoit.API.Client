@@ -21,7 +21,7 @@ namespace IdoitUnitTests
             var lists = new List<IdoitObjectsResult[]>();
             var request = new IdoitObjects(idoitClient);
             var requestCreate = new IdoitObject(idoitClient);
-            IdoitFilter filter = new IdoitFilter();
+            var filter = new IdoitFilter();
             int[] ObjectId = new int[10];
 
             //Act:Create the Objects

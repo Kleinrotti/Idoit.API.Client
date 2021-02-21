@@ -129,7 +129,7 @@ namespace IdoitUnitTests
             {
                 foreach (LocationResponse element in row)
                 {
-                    Assert.AreEqual("Web GUI 2 description", categoryRequest.description);
+                    Assert.AreEqual("Web GUI 2 description", element.description);
                 }
             }
             //Act:Delete the Object

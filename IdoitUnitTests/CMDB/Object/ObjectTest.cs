@@ -57,7 +57,7 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            IdoitObjectResult list = new IdoitObjectResult();
+            var list = new IdoitObjectResult();
             var request = new IdoitObject(idoitClient);
             //Act:Create the Object
             request.type = IdoitObjectTypes.CLIENT;
@@ -95,7 +95,7 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            IdoitObjectResult list = new IdoitObjectResult();
+            var list = new IdoitObjectResult();
             var request = new IdoitObject(idoitClient);
 
             //Act:Create the Object
@@ -141,7 +141,7 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            IdoitObjectResult list = new IdoitObjectResult();
+            var list = new IdoitObjectResult();
             var request = new IdoitObject(idoitClient);
             //Act:Create the Object
             request.type = IdoitObjectTypes.SERVER;
@@ -163,7 +163,7 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            IdoitObjectResult list = new IdoitObjectResult();
+            var list = new IdoitObjectResult();
             var request = new IdoitObject(idoitClient);
             //Act:Create the Object
             request.type = IdoitObjectTypes.SERVER;
