@@ -7,7 +7,7 @@ namespace Idoit.API.Client.CMDB.Dialog
 {
     public class Dialog
     {
-        private List<Result[]> result;
+        private List<DialogResult[]> result;
         public int id;
         public IdoitClient client;
         public string property, value, category;//Create
@@ -43,7 +43,7 @@ namespace Idoit.API.Client.CMDB.Dialog
             parameter.Add("value", value);
             parameter.Add("property", property);
             parameter.Add("category", category);
-            Response.Response response = await client.GetConnection().InvokeAsync<Response.Response>
+            var response = await client.GetConnection().InvokeAsync<DialogResponse>
             ("cmdb.dialog.create", parameter);
             id = response.entryId;
         }
@@ -78,7 +78,7 @@ namespace Idoit.API.Client.CMDB.Dialog
             parameter.Add("entry_id", entryId);
             parameter.Add("property", property);
             parameter.Add("category", category);
-            Response.Response response = await client.GetConnection().InvokeAsync<Response.Response>
+            var response = await client.GetConnection().InvokeAsync<DialogResponse>
             ("cmdb.dialog.update", parameter);
         }
 
@@ -108,12 +108,12 @@ namespace Idoit.API.Client.CMDB.Dialog
             parameter.Add("entry_id", entryId);
             parameter.Add("property", property);
             parameter.Add("category", category);
-            Response.Response response = await client.GetConnection().InvokeAsync<Response.Response>
+            var response = await client.GetConnection().InvokeAsync<DialogResponse>
             ("cmdb.dialog.delete", parameter);
         }
 
         //Read
-        public List<Result[]> Read()
+        public List<DialogResult[]> Read()
         {
             Task t = Task.Run(() => { Reading().Wait(); }); t.Wait();
             return result;
@@ -124,8 +124,8 @@ namespace Idoit.API.Client.CMDB.Dialog
             parameter = client.GetParameter();
             parameter.Add("property", property);
             parameter.Add("category", category);
-            result = new List<Result[]>();
-            result.Add(await client.GetConnection().InvokeAsync<Result[]>
+            result = new List<DialogResult[]>();
+            result.Add(await client.GetConnection().InvokeAsync<DialogResult[]>
             ("cmdb.dialog.read", parameter));
         }
     }

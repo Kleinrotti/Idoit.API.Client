@@ -35,7 +35,7 @@ namespace Idoit.API.Client.CMDB.Category
             parameter.Add("data", data);
             parameter.Add("objID", objectId);
             parameter.Add("category", category);
-            Response response = await client.GetConnection().InvokeAsync<Response>
+            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.category.create", parameter);
             id = response.id;
             if (response.success == false)
@@ -62,7 +62,7 @@ namespace Idoit.API.Client.CMDB.Category
             parameter.Add("data", data);
             parameter.Add("objID", objectId);
             parameter.Add("category", category);
-            Response response = await client.GetConnection().InvokeAsync<Response>
+            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
                     ("cmdb.category.update", parameter);
             if (response.success == false)
             {
@@ -86,7 +86,7 @@ namespace Idoit.API.Client.CMDB.Category
             parameter.Add("cateID", entryID);
             parameter.Add("objID", objectId);
             parameter.Add("category", category);
-            Response result = await client.GetConnection().InvokeAsync<Response>
+            var result = await client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.category.quickpurge", parameter);
             if (result.success == false)
             {

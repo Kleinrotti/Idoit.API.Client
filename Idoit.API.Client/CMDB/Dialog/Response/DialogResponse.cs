@@ -2,7 +2,7 @@
 
 namespace Idoit.API.Client.CMDB.Dialog.Response
 {
-    public class Response
+    public class DialogResponse
     {
         [JsonProperty("entry_id")]
         public int entryId { get; set; }

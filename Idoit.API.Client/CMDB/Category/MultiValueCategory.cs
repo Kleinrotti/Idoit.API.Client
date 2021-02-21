@@ -61,7 +61,7 @@ namespace Idoit.API.Client.CMDB.Category
             parameter.Add("objID", objectId);
             parameter.Add("cateID", entryID);
             parameter.Add("category", category);
-            Response result = await client.GetConnection().InvokeAsync<Response>
+            var result = await client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.category.delete", parameter);
             if (result.success == false)
             {
