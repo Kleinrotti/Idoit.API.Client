@@ -5,39 +5,58 @@ using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Category
 {
-    public abstract class Category
+    public abstract class Category<T>
     {
-        public string category;
-        public int id;
-        public IdoitClient client;
-        private Dictionary<string, object> parameter;
+        public string CategoryId { get; protected set; }
+        public int Id { get; protected set; }
+        public IdoitClient Client { get; }
+        protected Dictionary<string, object> parameter;
+        protected List<T[]> response;
+        public T Object { get; protected set; }
 
         public Category(IdoitClient myClient)
         {
-            client = myClient;
+            Client = myClient;
+        }
+
+        //Read
+        public List<T[]> Read(int objectId)
+        {
+            Task t = Task.Run(() => { Reading(objectId).Wait(); }); t.Wait();
+            return response;
+        }
+
+        private async Task Reading(int objectId)
+        {
+            parameter = Client.GetParameter();
+            parameter.Add("objID", objectId);
+            parameter.Add("category", CategoryId);
+            response = new List<T[]>();
+            response.Add(await Client.GetConnection().InvokeAsync<T[]>
+            ("cmdb.category.read", parameter));
         }
 
         //Create
         public int Create(int objectId, IRequest request)
         {
             Task t = Task.Run(() => { Creating(request, objectId).Wait(); }); t.Wait();
-            return id;
+            return Id;
         }
 
         private async Task Creating(IRequest request, int objectId)
         {
-            object data = client.GetData(request);
+            object data = Client.GetData(request);
             if (data == null)
             {
                 throw new Exception("Data is missing");
             }
-            parameter = client.GetParameter();
+            parameter = Client.GetParameter();
             parameter.Add("data", data);
             parameter.Add("objID", objectId);
-            parameter.Add("category", category);
-            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
+            parameter.Add("category", CategoryId);
+            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.category.create", parameter);
-            id = response.id;
+            Id = response.id;
             if (response.success == false)
             {
                 throw new IdoitAPIClientBadResponseException(response.message);
@@ -52,17 +71,17 @@ namespace Idoit.API.Client.CMDB.Category
 
         private async Task Updating(int objectId, IRequest request)
         {
-            object data = client.GetData(request);
+            object data = Client.GetData(request);
 
             if (data == null)
             {
                 throw new Exception("Data is missing");
             }
-            parameter = client.GetParameter();
+            parameter = Client.GetParameter();
             parameter.Add("data", data);
             parameter.Add("objID", objectId);
-            parameter.Add("category", category);
-            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
+            parameter.Add("category", CategoryId);
+            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
                     ("cmdb.category.update", parameter);
             if (response.success == false)
             {
@@ -82,11 +101,11 @@ namespace Idoit.API.Client.CMDB.Category
 
         private async Task QuickPurging(int objectId, int entryID)
         {
-            parameter = client.GetParameter();
+            parameter = Client.GetParameter();
             parameter.Add("cateID", entryID);
             parameter.Add("objID", objectId);
-            parameter.Add("category", category);
-            var result = await client.GetConnection().InvokeAsync<IdoitResponse>
+            parameter.Add("category", CategoryId);
+            var result = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.category.quickpurge", parameter);
             if (result.success == false)
             {
