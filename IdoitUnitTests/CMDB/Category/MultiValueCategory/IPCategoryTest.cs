@@ -2,7 +2,7 @@
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using Obj = Idoit.API.Client.CMDB.Object.IdoitObject;
+using Obj = Idoit.API.Client.CMDB.Object.IdoitObjectInstance;
 
 namespace IdoitUnitTests
 {
@@ -22,11 +22,11 @@ namespace IdoitUnitTests
             var list = new List<IPResponse[]>();
             var categoryRequest = new IPRequest();
             Obj objectRequest = new Obj(idoitClient);
-            var IP = new MultiValueCategory<IPResponse>(idoitClient);
+            var IP = new IdoitMvcInstance<IPResponse>(idoitClient);
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLUSTER;
-            objectRequest.title = " My Cluster";
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLUSTER;
+            objectRequest.Title = " My Cluster";
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -197,12 +197,12 @@ namespace IdoitUnitTests
             var list = new List<IPResponse[]>();
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new IPRequest();
-            var IP = new MultiValueCategory<IPResponse>(idoitClient);
+            var IP = new IdoitMvcInstance<IPResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLUSTER;
-            objectRequest.title = " My Cluster 2";
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLUSTER;
+            objectRequest.Title = " My Cluster 2";
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category

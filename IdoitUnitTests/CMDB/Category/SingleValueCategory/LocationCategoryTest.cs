@@ -2,7 +2,7 @@
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using Obj = Idoit.API.Client.CMDB.Object.IdoitObject;
+using Obj = Idoit.API.Client.CMDB.Object.IdoitObjectInstance;
 
 namespace IdoitUnitTests
 {
@@ -24,12 +24,12 @@ namespace IdoitUnitTests
             var list = new List<LocationResponse[]>();
             var categoryRequest = new LocationRequest();
             Obj objectRequest = new Obj(idoitClient);
-            var Location = new SingleValueCategory<LocationResponse>(idoitClient);
+            var Location = new IdoitSvcInstance<LocationResponse>(idoitClient);
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLIENT;
-            objectRequest.title = " My IdoitClient";
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Title = " My IdoitClient";
 
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -68,12 +68,12 @@ namespace IdoitUnitTests
             int cateId, objectId;
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new LocationRequest();
-            var Location = new SingleValueCategory<LocationResponse>(idoitClient);
+            var Location = new IdoitSvcInstance<LocationResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLIENT;
-            objectRequest.title = " My IdoitClient";
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Title = " My IdoitClient";
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -97,12 +97,12 @@ namespace IdoitUnitTests
             List<LocationResponse[]> list = new List<LocationResponse[]>();
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new LocationRequest();
-            var Location = new SingleValueCategory<LocationResponse>(idoitClient);
+            var Location = new IdoitSvcInstance<LocationResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLIENT;
-            objectRequest.title = " My IdoitClient";
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Title = " My IdoitClient";
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -146,12 +146,12 @@ namespace IdoitUnitTests
             var list = new List<LocationResponse[]>();
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new LocationRequest();
-            var Location = new SingleValueCategory<LocationResponse>(idoitClient);
+            var Location = new IdoitSvcInstance<LocationResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLIENT;
-            objectRequest.title = " My IdoitClient";
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Title = " My IdoitClient";
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category

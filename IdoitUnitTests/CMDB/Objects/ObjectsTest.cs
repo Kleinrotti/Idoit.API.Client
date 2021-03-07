@@ -19,17 +19,17 @@ namespace IdoitUnitTests
         {
             //Arrange
             var lists = new List<IdoitObjectsResult[]>();
-            var request = new IdoitObjects(idoitClient);
-            var requestCreate = new IdoitObject(idoitClient);
+            var request = new IdoitObjectsInstance(idoitClient);
+            var requestCreate = new IdoitObjectInstance(idoitClient);
             var filter = new IdoitFilter();
             int[] ObjectId = new int[10];
 
             //Act:Create the Objects
             for (int i = 0; i < 10; i++)
             {
-                requestCreate.type = IdoitObjectTypes.SYSTEM_SERVICE;
-                requestCreate.title = " System Service " + i;
-                requestCreate.cmdbStatus = IdoitCmdbStatus.PLANNED;
+                requestCreate.Type = IdoitObjectTypes.SYSTEM_SERVICE;
+                requestCreate.Title = " System Service " + i;
+                requestCreate.CmdbStatus = IdoitCmdbStatus.PLANNED;
                 ObjectId[i] = requestCreate.Create();
             }
 

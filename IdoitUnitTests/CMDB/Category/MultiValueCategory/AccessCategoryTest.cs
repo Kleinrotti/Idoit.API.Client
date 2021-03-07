@@ -2,7 +2,7 @@
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using Obj = Idoit.API.Client.CMDB.Object.IdoitObject;
+using Obj = Idoit.API.Client.CMDB.Object.IdoitObjectInstance;
 
 namespace IdoitUnitTests
 {
@@ -22,11 +22,11 @@ namespace IdoitUnitTests
             var list = new List<AccessResponse[]>();
             var categoryRequest = new AccessRequest();
             Obj objectRequest = new Obj(idoitClient);
-            var access = new MultiValueCategory<AccessResponse>(idoitClient);
+            var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLIENT;
-            objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Title = " My Client";
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -66,12 +66,12 @@ namespace IdoitUnitTests
             List<AccessResponse[]> list = new List<AccessResponse[]>();
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new AccessRequest();
-            var access = new MultiValueCategory<AccessResponse>(idoitClient);
+            var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLIENT;
-            objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Title = " My Client";
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -107,12 +107,12 @@ namespace IdoitUnitTests
             int cateId, objectId;
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new AccessRequest();
-            var access = new MultiValueCategory<AccessResponse>(idoitClient);
+            var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLIENT;
-            objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Title = " My Client";
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -135,12 +135,12 @@ namespace IdoitUnitTests
             List<AccessResponse[]> list = new List<AccessResponse[]>();
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new AccessRequest();
-            var access = new MultiValueCategory<AccessResponse>(idoitClient);
+            var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLIENT;
-            objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Title = " My Client";
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -184,12 +184,12 @@ namespace IdoitUnitTests
             List<AccessResponse[]> list = new List<AccessResponse[]>();
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new AccessRequest();
-            var access = new MultiValueCategory<AccessResponse>(idoitClient);
+            var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLIENT;
-            objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Title = " My Client";
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category

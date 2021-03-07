@@ -81,17 +81,17 @@ namespace IdoitUnitTests
             //Arrange
             int objID;
             var idoit = new IdoitInstance(idoitClient);
-            var request = new IdoitObject(idoitClient);
+            var request = new IdoitObjectInstance(idoitClient);
             var lists = new List<IdoitSearchResponse[]>();
 
             //Act
-            request.type = IdoitObjectTypes.PRINTER;
-            request.title = "Printer 01";
-            request.cmdbStatus = IdoitCmdbStatus.DEFECT;
+            request.Type = IdoitObjectTypes.PRINTER;
+            request.Title = "Printer 01";
+            request.CmdbStatus = IdoitCmdbStatus.DEFECT;
             objID = request.Create();
 
             //Act:Search
-            lists = idoit.Search(request.title);
+            lists = idoit.Search(request.Title);
 
             //Assert
             foreach (IdoitSearchResponse[] row in lists)
@@ -105,9 +105,9 @@ namespace IdoitUnitTests
             }
             //Assert
             Assert.IsNotNull(objID);
-            Assert.IsNotNull(request.title);
-            Assert.IsNotNull(request.type);
-            Assert.IsNotNull(request.cmdbStatus);
+            Assert.IsNotNull(request.Title);
+            Assert.IsNotNull(request.Type);
+            Assert.IsNotNull(request.CmdbStatus);
 
             //Act:Delete the Object
             request.Delete(objID);
@@ -118,7 +118,7 @@ namespace IdoitUnitTests
         public void ConstantsReadObjectTypesTest()
         {
             //Arrange
-            var constants = new Constants(idoitClient);
+            var constants = new IdoitConstantsInstance(idoitClient);
             var lists = new Dictionary<string, string>();
 
             lists = constants.ReadObjectTypes();
@@ -134,7 +134,7 @@ namespace IdoitUnitTests
         public void ConstantsReadRecordStatesTest()
         {
             //Arrange
-            var constants = new Constants(idoitClient);
+            var constants = new IdoitConstantsInstance(idoitClient);
             var lists = new Dictionary<string, string>();
 
             lists = constants.ReadRecordStates();
@@ -150,7 +150,7 @@ namespace IdoitUnitTests
         public void ConstantsReadCategoriesGlobalTest()
         {
             //Arrange
-            var constants = new Constants(idoitClient);
+            var constants = new IdoitConstantsInstance(idoitClient);
             var lists = new Dictionary<string, string>();
 
             lists = constants.ReadGlobalCategories();
@@ -166,7 +166,7 @@ namespace IdoitUnitTests
         public void ConstantsReadCategoriesSpecificTest()
         {
             //Arrange
-            var constants = new Constants(idoitClient);
+            var constants = new IdoitConstantsInstance(idoitClient);
             var lists = new Dictionary<string, string>();
 
             lists = constants.ReadSpecificCategories();

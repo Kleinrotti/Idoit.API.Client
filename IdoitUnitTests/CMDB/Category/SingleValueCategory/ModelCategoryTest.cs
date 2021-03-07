@@ -2,7 +2,7 @@
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using Obj = Idoit.API.Client.CMDB.Object.IdoitObject;
+using Obj = Idoit.API.Client.CMDB.Object.IdoitObjectInstance;
 
 namespace IdoitUnitTests
 {
@@ -24,12 +24,12 @@ namespace IdoitUnitTests
             var list = new List<ModelResponse[]>();
             var categoryRequest = new ModelRequest();
             Obj objectRequest = new Obj(idoitClient);
-            var model = new SingleValueCategory<ModelResponse>(idoitClient);
+            var model = new IdoitSvcInstance<ModelResponse>(idoitClient);
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLIENT;
-            objectRequest.title = " My Client";
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Title = " My Client";
 
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -67,12 +67,12 @@ namespace IdoitUnitTests
             int cateId, objectId;
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new ModelRequest();
-            var model = new SingleValueCategory<ModelResponse>(idoitClient);
+            var model = new IdoitSvcInstance<ModelResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLIENT;
-            objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Title = " My Client";
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -95,12 +95,12 @@ namespace IdoitUnitTests
             List<ModelResponse[]> list = new List<ModelResponse[]>();
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new ModelRequest();
-            var model = new SingleValueCategory<ModelResponse>(idoitClient);
+            var model = new IdoitSvcInstance<ModelResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLIENT;
-            objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Title = " My Client";
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category
@@ -141,12 +141,12 @@ namespace IdoitUnitTests
             List<ModelResponse[]> list = new List<ModelResponse[]>();
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new ModelRequest();
-            var model = new SingleValueCategory<ModelResponse>(idoitClient);
+            var model = new IdoitSvcInstance<ModelResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.type = IdoitObjectTypes.CLIENT;
-            objectRequest.title = " My Client";
-            objectRequest.cmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Title = " My Client";
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
             objectId = objectRequest.Create();
 
             //Act: Create the Category

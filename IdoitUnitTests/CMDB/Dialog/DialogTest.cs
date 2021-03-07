@@ -2,7 +2,7 @@
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using Dia = Idoit.API.Client.CMDB.Dialog.Dialog;
+using Dia = Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance;
 using DialogResult = Idoit.API.Client.CMDB.Dialog.Response.DialogResult;
 
 namespace IdoitUnitTests
@@ -21,17 +21,17 @@ namespace IdoitUnitTests
             //Arrange
             int objID;
             Dia request = new Dia(idoitClient);
-            request.property = Cpu.Type;
-            request.value = "Athlon XP";
-            request.category = IdoitCategory.CPU;
+            request.Property = Cpu.Type;
+            request.Value = "Athlon XP";
+            request.Category = IdoitCategory.CPU;
 
             objID = request.Create();
 
             //Assert
             Assert.IsNotNull(objID);
-            Assert.IsNotNull(request.property);
-            Assert.IsNotNull(request.value);
-            Assert.IsNotNull(request.category);
+            Assert.IsNotNull(request.Property);
+            Assert.IsNotNull(request.Value);
+            Assert.IsNotNull(request.Category);
 
             //Act:Delete the Value
             request.Delete(objID);
@@ -45,8 +45,8 @@ namespace IdoitUnitTests
             Dia request = new Dia(idoitClient);
             List<DialogResult[]> lists = new List<DialogResult[]>();
             //Act:Read
-            request.property = Global.Category;
-            request.category = IdoitCategory.GLOBAL;
+            request.Property = Global.Category;
+            request.Category = IdoitCategory.GLOBAL;
             lists = request.Read();
             //Assert
             foreach (DialogResult[] row in lists)
@@ -69,9 +69,9 @@ namespace IdoitUnitTests
             Dia request = new Dia(idoitClient);
             List<DialogResult[]> lists = new List<DialogResult[]>();
             //Act:Create
-            request.property = Access.Type;
-            request.value = "ES23";
-            request.category = IdoitCategory.ACCESS;
+            request.Property = Access.Type;
+            request.Value = "ES23";
+            request.Category = IdoitCategory.ACCESS;
             objID = request.Create();
             //Act:Delete the Value
             request.Delete(objID);
@@ -86,14 +86,14 @@ namespace IdoitUnitTests
             Dia request = new Dia(idoitClient);
             List<DialogResult[]> lists = new List<DialogResult[]>();
             //Act:Create
-            request.property = Port.PortType;
-            request.value = "WLAN23";
-            request.category = IdoitCategory.PORT;
+            request.Property = Port.PortType;
+            request.Value = "WLAN23";
+            request.Category = IdoitCategory.PORT;
             objID = request.Create();
             //Act:Update
-            request.property = Port.PortType;
-            request.value = "WLAN32";
-            request.category = IdoitCategory.PORT;
+            request.Property = Port.PortType;
+            request.Value = "WLAN32";
+            request.Category = IdoitCategory.PORT;
             request.Update(objID);
             //Assert
             foreach (DialogResult[] row in lists)
