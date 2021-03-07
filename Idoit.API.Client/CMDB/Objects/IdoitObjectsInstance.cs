@@ -3,18 +3,16 @@ using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Objects
 {
-    public class IdoitObjects
+    public class IdoitObjectsInstance : IdoitApiBase
     {
-        public IdoitObjects(IdoitClient myClient)
+        public IdoitObjectsInstance(IdoitClient myClient) : base(myClient)
         {
             client = myClient;
         }
 
-        private Dictionary<string, object> parameter;
         private List<IdoitObjectsResult[]> response;
         public int id;
         public string type, title, category, purpose, cmdbStatus, description;//Create
-        public IdoitClient client;
 
         //Read Objects
         public string limit, orderBy, sort; //ReadObjects

@@ -5,13 +5,15 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseUrl>https://github.com/OKT90/Idoit.API.Client/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/OKT90/Idoit.API.Client</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Kleinrotti/Idoit.API.Client</PackageProjectUrl>
     <Copyright>synetics GmbH</Copyright>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Company>synetics GmbH</Company>
-    <Authors>Omar Talaat</Authors>
-    <RepositoryUrl>https://github.com/OKT90/Idoit.API.Client</RepositoryUrl>
-    <Description>To make your i-doit API calls in C#</Description>
+    <Authors>Kleinrotti</Authors>
+    <RepositoryUrl>https://github.com/Kleinrotti/Idoit.API.Client</RepositoryUrl>
+    <Description>Fork from https://github.com/OKT90/Idoit.API.Client
+
+To make your i-doit API calls in C#</Description>
     <PackageTags>cmdb,synetics,client,Api,i-doit,json,i-doit,JSON-RPC 2.0</PackageTags>
   </PropertyGroup>
 

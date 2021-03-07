@@ -41,6 +41,7 @@ namespace Idoit.API.Client.CMDB.Category
         public string primaryFqdn { get; set; }
 
         public Alias[] aliases { get; set; }
+
         [JsonProperty("description")]
         public string description { get; set; }
 

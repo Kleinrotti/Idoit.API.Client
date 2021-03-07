@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Category
 {
-    public abstract class Category<T>
+    public abstract class IdoitCategory<T>
     {
         public string CategoryId { get; protected set; }
         public int Id { get; protected set; }
@@ -14,7 +14,7 @@ namespace Idoit.API.Client.CMDB.Category
         protected List<T[]> response;
         public T Object { get; protected set; }
 
-        public Category(IdoitClient myClient)
+        public IdoitCategory(IdoitClient myClient)
         {
             Client = myClient;
         }

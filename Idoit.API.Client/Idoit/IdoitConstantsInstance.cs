@@ -5,23 +5,20 @@ using System.Threading.Tasks;
 
 namespace Idoit.API.Client.Idoit
 {
-    public class Constants
+    public class IdoitConstantsInstance : IdoitApiBase
     {
-        public IdoitClient client;
         private object responseConstants;
         private JObject responseJObject;
         private string key;
         private JToken value;
-        private Dictionary<string, object> parameter;
         private string groupName;
         private string childName;
         private string keyName;
         private string valueName;
         private Dictionary<string, string> response;
 
-        public Constants(IdoitClient myClient)
+        public IdoitConstantsInstance(IdoitClient myClient) : base(myClient)
         {
-            client = myClient;
         }
 
         //constants

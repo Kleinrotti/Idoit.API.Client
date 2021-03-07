@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Category
 {
-    public class MultiValueCategory<T> : Category<T> where T : IMultiValueResponse, new()
+    public class IdoitMvcInstance<T> : IdoitCategory<T> where T : IMultiValueResponse, new()
     {
-        public MultiValueCategory(IdoitClient myClient) : base(myClient)
+        public IdoitMvcInstance(IdoitClient myClient) : base(myClient)
         {
             Object = new T();
             CategoryId = Object.category_id;

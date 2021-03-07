@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Idoit.API.Client.Idoit.Response;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using IdoitLoginResponse = Idoit.API.Client.Idoit.Response.IdoitLoginResponse;
-using IdoitLogoutResponse = Idoit.API.Client.Idoit.Response.IdoitLogoutResponse;
-using IdoitSearchResponse = Idoit.API.Client.Idoit.Response.IdoitSearchResponse;
-using IdoitVersionResponse = Idoit.API.Client.Idoit.Response.IdoitVersionResponse;
 
 namespace Idoit.API.Client.Idoit
 {

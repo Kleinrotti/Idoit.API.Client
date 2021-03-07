@@ -1,52 +1,69 @@
 ﻿using Idoit.API.Client.ApiException;
 using Idoit.API.Client.CMDB.Object.Response;
-using Idoit.API.Client.CMDB.Objects;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Object
 {
-    public class IdoitObject
+    /// <summary>
+    /// Represents an IdoitObject which can be created, updated, read and archived.
+    /// </summary>
+    public class IdoitObjectInstance : IdoitApiBase
     {
-        private Dictionary<string, object> parameter;
-        public string success;
-        public int id;
-        public IdoitClient client;
-        public string type, title, category, purpose, cmdbStatus, description;//Create
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Type of the object, defined in IdoitObjectTypes.
+        /// </summary>
+        public string Type { get; set; }
+
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Type of the object, defined in IdoitCategory.
+        /// </summary>
+        public string Category { get; set; }
+
+        public string Purpose { get; set; }
+
+        /// <summary>
+        /// Type of the object, defined in IdoitCmdbStatus.
+        /// </summary>
+        public string CmdbStatus { get; set; }
+
+        public string Description { get; set; }
         private IdoitObjectResult response;
 
-        public IdoitObject(IdoitClient myClient)
+        public IdoitObjectInstance(IdoitClient myClient) : base(myClient)
         {
-            client = myClient;
         }
 
         //Create
         public int Create()
         {
-            if (type == null)
+            if (Type == null)
             {
                 throw new IdoitAPIClientBadResponseException("Type is missing");
             }
-            else if (title == null)
+            else if (Title == null)
             {
                 throw new IdoitAPIClientBadResponseException("Title is missing");
             }
             Task t = Task.Run(() => { Creating().Wait(); }); t.Wait();
-            return id;
+            return Id;
         }
 
         private async Task Creating()
         {
             parameter = client.GetParameter();
-            parameter.Add("type", type);
-            parameter.Add("title", title);
-            parameter.Add("purpose", purpose);
-            parameter.Add("cmdb_status", cmdbStatus);
-            parameter.Add("description", description);
-            parameter.Add("category", category);
+            parameter.Add("type", Type);
+            parameter.Add("title", Title);
+            parameter.Add("purpose", Purpose);
+            parameter.Add("cmdb_status", CmdbStatus);
+            parameter.Add("description", Description);
+            parameter.Add("category", Category);
             var response = await client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.create", parameter);
-            id = response.id;
+            Id = response.id;
             if (response.success == false)
             {
                 throw new IdoitAPIClientBadResponseException(response.message);
@@ -56,7 +73,7 @@ namespace Idoit.API.Client.CMDB.Object
         //Update
         public void Update(int objectId)
         {
-            if (title == null)
+            if (Title == null)
             {
                 throw new IdoitAPIClientBadResponseException("Title is missing");
             }
@@ -67,12 +84,12 @@ namespace Idoit.API.Client.CMDB.Object
         {
             parameter = client.GetParameter();
             parameter.Add("id", objectId);
-            parameter.Add("title", title);
+            parameter.Add("title", Title);
             var response = await client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.update", parameter);
             if (response.success == false)
             {
-                throw new IdoitAPIClientBadResponseException("Nope!");
+                throw new IdoitAPIClientBadResponseException(response.message);
             }
         }
 
@@ -91,7 +108,7 @@ namespace Idoit.API.Client.CMDB.Object
             ("cmdb.object.delete", parameter);
             if (response.success == false)
             {
-                throw new IdoitAPIClientBadResponseException("Nope!");
+                throw new IdoitAPIClientBadResponseException(response.message);
             }
         }
 
@@ -111,7 +128,7 @@ namespace Idoit.API.Client.CMDB.Object
             ("cmdb.object.delete", parameter);
             if (response.success == false)
             {
-                throw new IdoitAPIClientBadResponseException("Nope!");
+                throw new IdoitAPIClientBadResponseException(response.message);
             }
         }
 
@@ -130,7 +147,7 @@ namespace Idoit.API.Client.CMDB.Object
             ("cmdb.object.delete", parameter);
             if (response.success == false)
             {
-                throw new IdoitAPIClientBadResponseException("Nope!");
+                throw new IdoitAPIClientBadResponseException(response.message);
             }
         }
 
