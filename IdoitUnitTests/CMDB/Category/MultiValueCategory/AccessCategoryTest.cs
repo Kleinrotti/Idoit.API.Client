@@ -1,7 +1,6 @@
 ﻿using Idoit.API.Client.CMDB.Category;
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using Obj = Idoit.API.Client.CMDB.Object.IdoitObjectInstance;
 
 namespace IdoitUnitTests
@@ -19,15 +18,12 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            var list = new List<AccessResponse[]>();
             var categoryRequest = new AccessRequest();
             Obj objectRequest = new Obj(idoitClient);
             var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLIENT;
-            objectRequest.Title = " My Client";
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
@@ -41,16 +37,13 @@ namespace IdoitUnitTests
 
             //Act: Read the Category
             categoryRequest.category_id = cateId;
-            list = access.Read(objectId);
+            var list = access.Read(objectId);
 
             //Assert
-            foreach (AccessResponse[] row in list)
+            foreach (AccessResponse v in list)
             {
-                foreach (AccessResponse element in row)
-                {
-                    Assert.IsNotNull(element.title);
-                    Assert.IsNotNull(element.id);
-                }
+                Assert.IsNotNull(v.title);
+                Assert.IsNotNull(v.id);
             }
 
             //Act:Delete the Object
@@ -63,16 +56,13 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            List<AccessResponse[]> list = new List<AccessResponse[]>();
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new AccessRequest();
             var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLIENT;
-            objectRequest.Title = " My Client";
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
@@ -86,16 +76,13 @@ namespace IdoitUnitTests
 
             //Act:Read the Category
             categoryRequest.category_id = cateId;
-            list = access.Read(objectId);
+            var list = access.Read(objectId);
 
             //Assert
-            foreach (AccessResponse[] row in list)
+            foreach (AccessResponse v in list)
             {
-                foreach (AccessResponse element in row)
-                {
-                    Assert.IsNotNull(element.title);
-                    Assert.IsNotNull(element.id);
-                }
+                Assert.IsNotNull(v.title);
+                Assert.IsNotNull(v.id);
             }
         }
 
@@ -110,10 +97,8 @@ namespace IdoitUnitTests
             var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLIENT;
-            objectRequest.Title = " My Client";
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
@@ -132,16 +117,13 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            List<AccessResponse[]> list = new List<AccessResponse[]>();
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new AccessRequest();
             var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLIENT;
-            objectRequest.Title = " My Client";
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
@@ -160,15 +142,12 @@ namespace IdoitUnitTests
 
             //Act:Read the Category
             categoryRequest.category_id = cateId;
-            list = access.Read(objectId);
+            var list = access.Read(objectId);
 
             //Assert
-            foreach (AccessResponse[] row in list)
+            foreach (AccessResponse v in list)
             {
-                foreach (AccessResponse element in row)
-                {
-                    Assert.AreEqual("Web GUI 2", element.title);
-                }
+                Assert.AreEqual("Web GUI 2", v.title);
             }
 
             //Act:Delete the Object
@@ -181,16 +160,13 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            List<AccessResponse[]> list = new List<AccessResponse[]>();
             Obj objectRequest = new Obj(idoitClient);
             var categoryRequest = new AccessRequest();
             var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLIENT;
-            objectRequest.Title = " My Client";
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
@@ -201,15 +177,12 @@ namespace IdoitUnitTests
 
             //Act:Read the Category
             categoryRequest.category_id = cateId;
-            list = access.Read(objectId);
+            var list = access.Read(objectId);
 
             //Assert
-            foreach (AccessResponse[] row in list)
+            foreach (AccessResponse v in list)
             {
-                foreach (AccessResponse element in row)
-                {
-                    Assert.AreEqual("Web GUI", element.title);
-                }
+                Assert.AreEqual("Web GUI", v.title);
             }
 
             //Act:Delete the Object

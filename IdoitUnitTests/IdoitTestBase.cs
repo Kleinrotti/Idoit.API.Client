@@ -20,6 +20,7 @@ namespace IdoitUnitTests
                 Username = "admin",
                 Password = "admin"
             };
+            idoitClient.Login();
         }
     }
 }

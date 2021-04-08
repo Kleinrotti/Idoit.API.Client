@@ -1,8 +1,7 @@
 ﻿using Idoit.API.Client.CMDB.Category;
+using Idoit.API.Client.CMDB.Object;
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using Obj = Idoit.API.Client.CMDB.Object.IdoitObjectInstance;
 
 namespace IdoitUnitTests
 {
@@ -21,16 +20,13 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            var list = new List<ModelResponse[]>();
             var categoryRequest = new ModelRequest();
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var model = new IdoitSvcInstance<ModelResponse>(idoitClient);
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLIENT;
-            objectRequest.Title = " My Client";
 
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
@@ -42,16 +38,13 @@ namespace IdoitUnitTests
             Assert.IsNotNull(cateId);
 
             //Act: Read the Category
-            list = model.Read(objectId);
+            var list = model.Read(objectId);
 
             //Assert
-            foreach (ModelResponse[] row in list)
+            foreach (ModelResponse v in list)
             {
-                foreach (ModelResponse element in row)
-                {
-                    Assert.IsNotNull(element.title);
-                    Assert.IsNotNull(element.id);
-                }
+                Assert.IsNotNull(v.title);
+                Assert.IsNotNull(v.id);
             }
 
             //Act:Delete the Object
@@ -65,15 +58,13 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var categoryRequest = new ModelRequest();
             var model = new IdoitSvcInstance<ModelResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLIENT;
-            objectRequest.Title = " My Client";
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
@@ -92,16 +83,13 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            List<ModelResponse[]> list = new List<ModelResponse[]>();
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var categoryRequest = new ModelRequest();
             var model = new IdoitSvcInstance<ModelResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLIENT;
-            objectRequest.Title = " My Client";
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
@@ -117,15 +105,12 @@ namespace IdoitUnitTests
             model.Update(objectId, categoryRequest);
 
             //Act:Read the Category
-            list = model.Read(objectId);
+            var list = model.Read(objectId);
 
             //Assert
-            foreach (ModelResponse[] row in list)
+            foreach (ModelResponse v in list)
             {
-                foreach (ModelResponse element in row)
-                {
-                    Assert.AreEqual("Web GUI 2", element.title);
-                }
+                Assert.AreEqual("Web GUI 2", v.title.title);
             }
             //Act:Delete the Object
             objectRequest.Delete(objectId);
@@ -138,16 +123,13 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            List<ModelResponse[]> list = new List<ModelResponse[]>();
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var categoryRequest = new ModelRequest();
             var model = new IdoitSvcInstance<ModelResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLIENT;
-            objectRequest.Title = " My Client";
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
@@ -157,15 +139,12 @@ namespace IdoitUnitTests
             cateId = model.Create(objectId, categoryRequest);
 
             //Act:Read the Category
-            list = model.Read(objectId);
+            var list = model.Read(objectId);
 
             //Assert
-            foreach (ModelResponse[] row in list)
+            foreach (ModelResponse v in list)
             {
-                foreach (ModelResponse element in row)
-                {
-                    Assert.AreEqual("Web GUI", element.title);
-                }
+                Assert.AreEqual("Web GUI", v.title.title);
             }
 
             //Act:Delete the Object

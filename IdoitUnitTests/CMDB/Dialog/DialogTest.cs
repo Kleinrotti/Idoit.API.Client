@@ -1,9 +1,9 @@
-﻿using Idoit.API.Client.CMDB.Dialog.Request;
+﻿using Idoit.API.Client.CMDB.Dialog;
+using Idoit.API.Client.CMDB.Dialog.Request;
+using Idoit.API.Client.CMDB.Dialog.Response;
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using Dia = Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance;
-using DialogResult = Idoit.API.Client.CMDB.Dialog.Response.DialogResult;
 
 namespace IdoitUnitTests
 {
@@ -20,12 +20,9 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            Dia request = new Dia(idoitClient);
-            request.Property = Cpu.Type;
-            request.Value = "Athlon XP";
-            request.Category = IdoitCategory.CPU;
+            var request = new IdoitDialogInstance(idoitClient);
 
-            objID = request.Create();
+            objID = request.Create("Athlon XP", Cpu.Type, IdoitCategory.CPU);
 
             //Assert
             Assert.IsNotNull(objID);
@@ -34,7 +31,7 @@ namespace IdoitUnitTests
             Assert.IsNotNull(request.Category);
 
             //Act:Delete the Value
-            request.Delete(objID);
+            request.Delete(objID, Cpu.Type, IdoitCategory.CPU);
         }
 
         //Read
@@ -42,21 +39,15 @@ namespace IdoitUnitTests
         public void ReadTest()
         {
             //Arrange
-            Dia request = new Dia(idoitClient);
-            List<DialogResult[]> lists = new List<DialogResult[]>();
+            var request = new IdoitDialogInstance(idoitClient);
             //Act:Read
-            request.Property = Global.Category;
-            request.Category = IdoitCategory.GLOBAL;
-            lists = request.Read();
+            var lists = request.Read(Global.Category, IdoitCategory.GLOBAL);
             //Assert
-            foreach (DialogResult[] row in lists)
+            foreach (DialogResult v in lists)
             {
-                foreach (DialogResult element in row)
-                {
-                    Assert.IsNotNull(element.id);
-                    Assert.IsNotNull(element.title);
-                    Assert.IsNotNull(element.Const);
-                }
+                Assert.IsNotNull(v.id);
+                Assert.IsNotNull(v.title);
+                Assert.IsNotNull(v.Const);
             }
         }
 
@@ -66,15 +57,12 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            Dia request = new Dia(idoitClient);
-            List<DialogResult[]> lists = new List<DialogResult[]>();
+            var request = new IdoitDialogInstance(idoitClient);
+            var lists = new List<DialogResult[]>();
             //Act:Create
-            request.Property = Access.Type;
-            request.Value = "ES23";
-            request.Category = IdoitCategory.ACCESS;
-            objID = request.Create();
+            objID = request.Create("ES23", Access.Type, IdoitCategory.ACCESS);
             //Act:Delete the Value
-            request.Delete(objID);
+            request.Delete(objID, Access.Type, IdoitCategory.ACCESS);
         }
 
         //Update
@@ -83,18 +71,12 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            Dia request = new Dia(idoitClient);
-            List<DialogResult[]> lists = new List<DialogResult[]>();
+            var request = new IdoitDialogInstance(idoitClient);
+            var lists = new List<DialogResult[]>();
             //Act:Create
-            request.Property = Port.PortType;
-            request.Value = "WLAN23";
-            request.Category = IdoitCategory.PORT;
-            objID = request.Create();
+            objID = request.Create("WLAN23", Port.PortType, IdoitCategory.PORT);
             //Act:Update
-            request.Property = Port.PortType;
-            request.Value = "WLAN32";
-            request.Category = IdoitCategory.PORT;
-            request.Update(objID);
+            request.Update(objID, "WLAN32", Port.PortType, IdoitCategory.PORT);
             //Assert
             foreach (DialogResult[] row in lists)
             {
@@ -106,7 +88,7 @@ namespace IdoitUnitTests
                 }
             }
             //Act:Delete the Value
-            request.Delete(objID);
+            request.Delete(objID, Port.PortType, IdoitCategory.PORT);
         }
     }
 }

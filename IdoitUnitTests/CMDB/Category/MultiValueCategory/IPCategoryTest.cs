@@ -1,8 +1,7 @@
 ﻿using Idoit.API.Client.CMDB.Category;
+using Idoit.API.Client.CMDB.Object;
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using Obj = Idoit.API.Client.CMDB.Object.IdoitObjectInstance;
 
 namespace IdoitUnitTests
 {
@@ -19,15 +18,12 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            var list = new List<IPResponse[]>();
             var categoryRequest = new IPRequest();
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var IP = new IdoitMvcInstance<IPResponse>(idoitClient);
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLUSTER;
-            objectRequest.Title = " My Cluster";
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLUSTER, "My Cluster");
 
             //Act: Create the Category
             categoryRequest.ipv4_address = "1.1.1.2";
@@ -39,16 +35,13 @@ namespace IdoitUnitTests
 
             //Act: Read the Category
             categoryRequest.category_id = cateId;
-            list = IP.Read(objectId);
+            var list = IP.Read(objectId);
 
             //Assert
-            foreach (IPResponse[] row in list)
+            foreach (IPResponse v in list)
             {
-                foreach (IPResponse element in row)
-                {
-                    Assert.IsNotNull(element.ipv4_address);
-                    Assert.IsNotNull(element.id);
-                }
+                Assert.IsNotNull(v.ipv4_address);
+                Assert.IsNotNull(v.id);
             }
 
             ////Act:Delete the Object
@@ -194,16 +187,13 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            var list = new List<IPResponse[]>();
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var categoryRequest = new IPRequest();
             var IP = new IdoitMvcInstance<IPResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLUSTER;
-            objectRequest.Title = " My Cluster 2";
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLUSTER, "My Cluster 2");
 
             //Act: Create the Category
             categoryRequest.ipv4_address = "1.1.1.2";
@@ -212,15 +202,12 @@ namespace IdoitUnitTests
 
             //Act:Read the Category
             categoryRequest.category_id = cateId;
-            list = IP.Read(objectId);
+            var list = IP.Read(objectId);
 
             //Assert
-            foreach (IPResponse[] row in list)
+            foreach (IPResponse v in list)
             {
-                foreach (IPResponse element in row)
-                {
-                    Assert.IsNotNull(element.ipv4_address.refTitle);
-                }
+                Assert.IsNotNull(v.ipv4_address.refTitle);
             }
             //Act:Delete the Object
             objectRequest.Delete(objectId);

@@ -27,19 +27,18 @@ namespace IdoitUnitTests
             var login = new IdoitLoginResponse();
 
             //login
-            login = idoit.Login();
+            login = idoitClient.Login();
 
             //Version
-            idoitClient.sessionId = login.sessionId;
             request = idoit.Version();
 
             //Logout
-            logout = idoit.Logout();
+            logout = idoitClient.Logout();
 
             //Assert
             Assert.IsNotNull(request.version);
             Assert.IsNotNull(request.type);
-            Assert.IsNotNull(request.login.language);
+            Assert.IsNotNull(request.Login.language);
         }
 
         //Logout
@@ -47,11 +46,10 @@ namespace IdoitUnitTests
         public void LogoutTest()
         {
             //Arrange
-            var idoit = new IdoitInstance(idoitClient);
             var request = new IdoitLogoutResponse();
 
             //Act
-            request = idoit.Logout();
+            request = idoitClient.Logout();
 
             //Assert
             Assert.IsNotNull(request.message);
@@ -63,11 +61,10 @@ namespace IdoitUnitTests
         public void LoginTest()
         {
             //Arrange
-            var idoit = new IdoitInstance(idoitClient);
             var request = new IdoitLoginResponse();
 
             //Act
-            request = idoit.Login();
+            request = idoitClient.Login();
 
             //Assert
             Assert.IsTrue(request.result);
@@ -82,16 +79,13 @@ namespace IdoitUnitTests
             int objID;
             var idoit = new IdoitInstance(idoitClient);
             var request = new IdoitObjectInstance(idoitClient);
-            var lists = new List<IdoitSearchResponse[]>();
 
             //Act
-            request.Type = IdoitObjectTypes.PRINTER;
-            request.Title = "Printer 01";
             request.CmdbStatus = IdoitCmdbStatus.DEFECT;
-            objID = request.Create();
+            objID = request.Create(IdoitObjectTypes.PRINTER, "Printer 01");
 
             //Act:Search
-            lists = idoit.Search(request.Title);
+            var lists = idoit.Search(request.Title);
 
             //Assert
             foreach (IdoitSearchResponse[] row in lists)
@@ -119,9 +113,8 @@ namespace IdoitUnitTests
         {
             //Arrange
             var constants = new IdoitConstantsInstance(idoitClient);
-            var lists = new Dictionary<string, string>();
 
-            lists = constants.ReadObjectTypes();
+            var lists = constants.ReadObjectTypes();
             Assert.IsTrue(lists.Count > 0);
             foreach (var pair in lists)
             {
@@ -135,9 +128,8 @@ namespace IdoitUnitTests
         {
             //Arrange
             var constants = new IdoitConstantsInstance(idoitClient);
-            var lists = new Dictionary<string, string>();
 
-            lists = constants.ReadRecordStates();
+            var lists  = constants.ReadRecordStates();
             Assert.IsTrue(lists.Count > 0);
             foreach (var pair in lists)
             {
@@ -151,9 +143,8 @@ namespace IdoitUnitTests
         {
             //Arrange
             var constants = new IdoitConstantsInstance(idoitClient);
-            var lists = new Dictionary<string, string>();
 
-            lists = constants.ReadGlobalCategories();
+            var lists = constants.ReadGlobalCategories();
             Assert.IsTrue(lists.Count > 0);
             foreach (var pair in lists)
             {
@@ -167,9 +158,8 @@ namespace IdoitUnitTests
         {
             //Arrange
             var constants = new IdoitConstantsInstance(idoitClient);
-            var lists = new Dictionary<string, string>();
 
-            lists = constants.ReadSpecificCategories();
+            var lists = constants.ReadSpecificCategories();
             Assert.IsTrue(lists.Count > 0);
             foreach (var pair in lists)
             {

@@ -2,7 +2,6 @@
 using Idoit.API.Client.CMDB.Objects;
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 
 namespace IdoitUnitTests
 {
@@ -18,7 +17,6 @@ namespace IdoitUnitTests
         public void ReadTest()
         {
             //Arrange
-            var lists = new List<IdoitObjectsResult[]>();
             var request = new IdoitObjectsInstance(idoitClient);
             var requestCreate = new IdoitObjectInstance(idoitClient);
             var filter = new IdoitFilter();
@@ -27,29 +25,22 @@ namespace IdoitUnitTests
             //Act:Create the Objects
             for (int i = 0; i < 10; i++)
             {
-                requestCreate.Type = IdoitObjectTypes.SYSTEM_SERVICE;
-                requestCreate.Title = " System Service " + i;
                 requestCreate.CmdbStatus = IdoitCmdbStatus.PLANNED;
-                ObjectId[i] = requestCreate.Create();
+                ObjectId[i] = requestCreate.Create(IdoitObjectTypes.SYSTEM_SERVICE, " System Service " + i);
             }
 
             //Act : Read Objects
-            request.limit = "0,10";
-            request.orderBy = IdoitOrderBy.Title;
-            request.sort = IdoitSort.Acsending;
             filter.ids = new int[] { ObjectId[0], ObjectId[8] };
-            filter.type = "C__OBJTYPE__SERVICE";
+            filter.type = IdoitObjectTypes.SERVICE;
             //filter.title = "SystemService";
-            lists = request.Read(filter);
+            var lists = request.Read(filter, IdoitOrderBy.Title, IdoitSort.Acsending, "0,10");
 
             //Assert
-            foreach (IdoitObjectsResult[] row in lists)
+
+            foreach (var v in lists)
             {
-                foreach (IdoitObjectsResult element in row)
-                {
-                    Assert.IsNotNull(element.title);
-                    Assert.IsNotNull(element.id);
-                }
+                Assert.IsNotNull(v.title);
+                Assert.IsNotNull(v.id);
             }
 
             //Act:Delete the Objects

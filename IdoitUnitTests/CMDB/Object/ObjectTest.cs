@@ -1,5 +1,4 @@
 ﻿using Idoit.API.Client.CMDB.Object;
-using Idoit.API.Client.CMDB.Object.Response;
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -20,10 +19,8 @@ namespace IdoitUnitTests
             int objID;
             var request = new IdoitObjectInstance(idoitClient);
             //Act
-            request.Type = IdoitObjectTypes.APPLICATION;
-            request.Title = "Chrome";
             request.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objID = request.Create();
+            objID = request.Create(IdoitObjectTypes.APPLICATION, "Chrome");
             //Assert
             Assert.IsNotNull(objID);
             Assert.IsNotNull(request.Title);
@@ -41,10 +38,8 @@ namespace IdoitUnitTests
             int objID;
             var request = new IdoitObjectInstance(idoitClient);
             //Act:Create the Object
-            request.Type = IdoitObjectTypes.CLIENT;
-            request.Title = " My Client";
             request.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objID = request.Create();
+            objID = request.Create(IdoitObjectTypes.CLIENT, " My Client");
             //Act:Delete the Object
             request.Delete(objID);
             //Assert
@@ -60,10 +55,8 @@ namespace IdoitUnitTests
             var list = new IdoitObjectResult();
             var request = new IdoitObjectInstance(idoitClient);
             //Act:Create the Object
-            request.Type = IdoitObjectTypes.CLIENT;
-            request.Title = "Laptop 001";
             request.CmdbStatus = IdoitCmdbStatus.PLANNED;
-            objID = request.Create();
+            objID = request.Create(IdoitObjectTypes.CLIENT, "Laptop 001");
             //Act:Delete the Object
             request.Delete(objID);
             //Act:Read the Object
@@ -80,10 +73,8 @@ namespace IdoitUnitTests
             int objID;
             var request = new IdoitObjectInstance(idoitClient);
             //Act
-            request.Type = IdoitObjectTypes.PRINTER;
-            request.Title = "HQ Printer";
             request.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objID = request.Create();
+            objID = request.Create(IdoitObjectTypes.PRINTER, "HQ Printer");
             request.Archive(objID);
             //Assert
             Assert.IsNotNull(objID);
@@ -99,10 +90,8 @@ namespace IdoitUnitTests
             var request = new IdoitObjectInstance(idoitClient);
 
             //Act:Create the Object
-            request.Type = IdoitObjectTypes.ROUTER;
-            request.Title = "HQ Gateway";
             request.CmdbStatus = IdoitCmdbStatus.DEFECT;
-            objID = request.Create();
+            objID = request.Create(IdoitObjectTypes.ROUTER, "HQ Gateway");
 
             //Act:Archive the Object
             request.Archive(objID);
@@ -123,10 +112,8 @@ namespace IdoitUnitTests
             var request = new IdoitObjectInstance(idoitClient);
 
             //Act:Create the Object
-            request.Type = IdoitObjectTypes.MONITOR;
-            request.Title = "TFT 001";
             request.CmdbStatus = IdoitCmdbStatus.STORED;
-            objID = request.Create();
+            objID = request.Create(IdoitObjectTypes.MONITOR, "TFT 001");
 
             //Act:Purge the Object
             request.Purge(objID);
@@ -144,13 +131,10 @@ namespace IdoitUnitTests
             var list = new IdoitObjectResult();
             var request = new IdoitObjectInstance(idoitClient);
             //Act:Create the Object
-            request.Type = IdoitObjectTypes.SERVER;
-            request.Title = " Switch Colo A001 02";
             request.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objID = request.Create();
+            objID = request.Create(IdoitObjectTypes.SERVER, " Switch Colo A001 02");
             //Act:Update the Object
-            request.Title = "Switch Colo A001 01";
-            request.Update(objID);
+            request.Update(objID, "Switch Colo A001 01");
             //Act:Read the Object
             list = request.Read(objID);
             //Assert
@@ -166,10 +150,8 @@ namespace IdoitUnitTests
             var list = new IdoitObjectResult();
             var request = new IdoitObjectInstance(idoitClient);
             //Act:Create the Object
-            request.Type = IdoitObjectTypes.SERVER;
-            request.Title = "Ceph Storage Pod A001 01";
             request.CmdbStatus = IdoitCmdbStatus.PLANNED;
-            objID = request.Create();
+            objID = request.Create(IdoitObjectTypes.SERVER, "Ceph Storage Pod A001 01");
             //Act:Read the Object
             list = request.Read(objID);
             //Assert

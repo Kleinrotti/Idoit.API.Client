@@ -1,8 +1,7 @@
 ﻿using Idoit.API.Client.CMDB.Category;
+using Idoit.API.Client.CMDB.Object;
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using Obj = Idoit.API.Client.CMDB.Object.IdoitObjectInstance;
 
 namespace IdoitUnitTests
 {
@@ -21,16 +20,13 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            var list = new List<LocationResponse[]>();
             var categoryRequest = new LocationRequest();
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var Location = new IdoitSvcInstance<LocationResponse>(idoitClient);
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLIENT;
-            objectRequest.Title = " My IdoitClient";
 
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My IdoitClient");
 
             //Act: Create the Category
 
@@ -44,15 +40,12 @@ namespace IdoitUnitTests
             Assert.IsNotNull(cateId);
 
             //Act: Read the Category
-            list = Location.Read(objectId);
+            var list = Location.Read(objectId);
 
             //Assert
-            foreach (LocationResponse[] row in list)
+            foreach (LocationResponse v in list)
             {
-                foreach (LocationResponse element in row)
-                {
-                    Assert.IsNotNull(element.id);
-                }
+                Assert.IsNotNull(v.id);
             }
 
             //Act:Delete the Object
@@ -66,15 +59,13 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var categoryRequest = new LocationRequest();
             var Location = new IdoitSvcInstance<LocationResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLIENT;
-            objectRequest.Title = " My IdoitClient";
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My IdoitClient");
 
             //Act: Create the Category
             categoryRequest.latitude = "12";
@@ -94,16 +85,13 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            List<LocationResponse[]> list = new List<LocationResponse[]>();
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var categoryRequest = new LocationRequest();
             var Location = new IdoitSvcInstance<LocationResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLIENT;
-            objectRequest.Title = " My IdoitClient";
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My IdoitClient");
 
             //Act: Create the Category
             categoryRequest.latitude = "12";
@@ -122,15 +110,12 @@ namespace IdoitUnitTests
             Location.Update(objectId, categoryRequest);
 
             //Act:Read the Category
-            list = Location.Read(objectId);
+            var list = Location.Read(objectId);
 
             //Assert
-            foreach (LocationResponse[] row in list)
+            foreach (LocationResponse v in list)
             {
-                foreach (LocationResponse element in row)
-                {
-                    Assert.AreEqual("Web GUI 2 description", element.description);
-                }
+                Assert.AreEqual("Web GUI 2 description", v.description);
             }
             //Act:Delete the Object
             objectRequest.Delete(objectId);
@@ -143,16 +128,13 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            var list = new List<LocationResponse[]>();
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var categoryRequest = new LocationRequest();
             var Location = new IdoitSvcInstance<LocationResponse>(idoitClient);
 
             //Act:Create the Object
-            objectRequest.Type = IdoitObjectTypes.CLIENT;
-            objectRequest.Title = " My IdoitClient";
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create();
+            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My IdoitClient");
 
             //Act: Create the Category
             categoryRequest.latitude = "12";
@@ -163,15 +145,12 @@ namespace IdoitUnitTests
             cateId = Location.Create(objectId, categoryRequest);
 
             //Act:Read the Category
-            list = Location.Read(objectId);
+            var list = Location.Read(objectId);
 
             //Assert
-            foreach (LocationResponse[] row in list)
+            foreach (LocationResponse v in list)
             {
-                foreach (LocationResponse element in row)
-                {
-                    Assert.AreEqual("Web GUI description", categoryRequest.description);
-                }
+                Assert.AreEqual("Web GUI description", v.description);
             }
 
             //Act:Delete the Object
