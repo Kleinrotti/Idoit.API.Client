@@ -1,14 +1,35 @@
 ﻿namespace Idoit.API.Client.CMDB.Objects
 {
-    public class IdoitOrderBy
+    /// <summary>
+    /// Use the extension method GetStringValue for the actual values!
+    /// </summary>
+    public enum IdoitOrderBy
     {
-        public const string Type = "type";
-        public const string Title = "title";
-        public const string TypeTitle = "type_title";
-        public const string SysId = "sysid";
-        public const string FirstName = "first_name";
-        public const string LastName = "last_name";
-        public const string Email = "email";
-        public const string Id = "id";
+        [StringValue("type")]
+        Type = 0,
+
+        [StringValue("title")]
+        Title,
+
+        [StringValue("type_title")]
+        TypeTitle,
+
+        [StringValue("sysid")]
+        SysId,
+
+        [StringValue("first_name")]
+        FirstNam,
+
+        [StringValue("last_name")]
+        LastName,
+
+        [StringValue("email")]
+        Email,
+
+        [StringValue("id")]
+        Id,
+
+        [StringValue(null)]
+        None,
     }
 }

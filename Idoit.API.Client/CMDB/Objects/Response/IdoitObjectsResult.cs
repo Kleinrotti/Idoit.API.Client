@@ -16,12 +16,6 @@ namespace Idoit.API.Client.CMDB.Objects
         [JsonProperty("type")]
         public string type { get; set; }
 
-        [JsonProperty("created")]
-        public string created { get; set; }
-
-        [JsonProperty("updated")]
-        public string updated { get; set; }
-
         [JsonProperty("type_title")]
         public string typeTitle { get; set; }
 
@@ -36,6 +30,12 @@ namespace Idoit.API.Client.CMDB.Objects
 
         [JsonProperty("cmdbStatusTitle")]
         public string cmdb_status_title { get; set; }
+
+        [JsonProperty("created")]
+        public string created { get; set; }
+
+        [JsonProperty("updated")]
+        public string updated { get; set; }
 
         [JsonProperty("image")]
         public string image { get; set; }

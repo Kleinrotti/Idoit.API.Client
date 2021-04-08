@@ -2,7 +2,10 @@
 
 namespace Idoit.API.Client.Idoit.Response
 {
-    public class IdoitSearchResponse
+    /// <summary>
+    /// Represents a response from idoit when searching for objects.
+    /// </summary>
+    public sealed class IdoitSearchResponse
     {
         [JsonProperty("documentId")]
         public string documentId { get; set; }

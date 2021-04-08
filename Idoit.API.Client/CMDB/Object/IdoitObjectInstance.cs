@@ -1,6 +1,4 @@
-﻿using Idoit.API.Client.ApiException;
-using Idoit.API.Client.CMDB.Object.Response;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Object
 {
@@ -9,91 +7,100 @@ namespace Idoit.API.Client.CMDB.Object
     /// </summary>
     public class IdoitObjectInstance : IdoitApiBase
     {
-        public int Id { get; set; }
-
         /// <summary>
         /// Type of the object, defined in IdoitObjectTypes.
         /// </summary>
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
-        public string Title { get; set; }
+        /// <summary>
+        /// Title of the object
+        /// </summary>
+        public string Title { get; private set; }
 
         /// <summary>
         /// Type of the object, defined in IdoitCategory.
         /// </summary>
-        public string Category { get; set; }
+
+        //public string Category { get; set; }
 
         public string Purpose { get; set; }
 
         /// <summary>
-        /// Type of the object, defined in IdoitCmdbStatus.
+        /// Type of the object, defined in IdoitCmdbStatus. Optional when creating a new object.
         /// </summary>
         public string CmdbStatus { get; set; }
 
+        /// <summary>
+        /// Description of the object. Optional when creating a new object.
+        /// </summary>
         public string Description { get; set; }
+
         private IdoitObjectResult response;
 
         public IdoitObjectInstance(IdoitClient myClient) : base(myClient)
         {
         }
 
-        //Create
-        public int Create()
+        /// <summary>
+        /// Create a new object
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="title"></param>
+        /// <returns>The id of the created object</returns>
+        public int Create(string type, string title)
         {
-            if (Type == null)
-            {
-                throw new IdoitAPIClientBadResponseException("Type is missing");
-            }
-            else if (Title == null)
-            {
-                throw new IdoitAPIClientBadResponseException("Title is missing");
-            }
+            Title = title;
+            Type = type;
             Task t = Task.Run(() => { Creating().Wait(); }); t.Wait();
             return Id;
         }
 
         private async Task Creating()
         {
-            parameter = client.GetParameter();
+            parameter = Client.Parameters;
             parameter.Add("type", Type);
             parameter.Add("title", Title);
             parameter.Add("purpose", Purpose);
             parameter.Add("cmdb_status", CmdbStatus);
             parameter.Add("description", Description);
             parameter.Add("category", Category);
-            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
+            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.create", parameter);
             Id = response.id;
-            if (response.success == false)
+            if (!response.success)
             {
-                throw new IdoitAPIClientBadResponseException(response.message);
+                throw new IdoitBadResponseException(response.message);
             }
         }
 
-        //Update
-        public void Update(int objectId)
+        /// <summary>
+        /// Update the title of an object
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <param name="title"></param>
+        public void Update(int objectId, string title)
         {
-            if (Title == null)
-            {
-                throw new IdoitAPIClientBadResponseException("Title is missing");
-            }
+            Title = title;
             Task t = Task.Run(() => { Updating(objectId).Wait(); }); t.Wait();
         }
 
         private async Task Updating(int objectId)
         {
-            parameter = client.GetParameter();
+            parameter = Client.Parameters;
             parameter.Add("id", objectId);
             parameter.Add("title", Title);
-            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
+            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.update", parameter);
-            if (response.success == false)
+            if (!response.success)
             {
-                throw new IdoitAPIClientBadResponseException(response.message);
+                throw new IdoitBadResponseException(response.message);
             }
         }
 
-        //Delete
+        /// <summary>
+        /// Delete the given object
+        /// </summary>
+        /// <param name="objectId"></param>
         public void Delete(int objectId)
         {
             Task t = Task.Run(() => { Deleting(objectId).Wait(); }); t.Wait();
@@ -101,18 +108,21 @@ namespace Idoit.API.Client.CMDB.Object
 
         private async Task Deleting(int objectId)
         {
-            parameter = client.GetParameter();
+            parameter = Client.Parameters;
             parameter.Add("id", objectId);
             parameter.Add("status", "C__RECORD_STATUS__DELETED");
-            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
+            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.delete", parameter);
-            if (response.success == false)
+            if (!response.success)
             {
-                throw new IdoitAPIClientBadResponseException(response.message);
+                throw new IdoitBadResponseException(response.message);
             }
         }
 
-        //purge
+        /// <summary>
+        /// Purge the given object. This will remove it completely from the database.
+        /// </summary>
+        /// <param name="objectId"></param>
         public void Purge(int objectId)
         {
             Task t = Task.Run(() => { Purging(objectId).Wait(); }); t.Wait();
@@ -121,18 +131,21 @@ namespace Idoit.API.Client.CMDB.Object
         private async Task Purging(int objectId)
         {
             //The return Values as Object from diffrence Classes
-            parameter = client.GetParameter();
+            parameter = Client.Parameters;
             parameter.Add("id", objectId);
             parameter.Add("status", "C__RECORD_STATUS__PURGE");
-            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
+            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.delete", parameter);
-            if (response.success == false)
+            if (!response.success)
             {
-                throw new IdoitAPIClientBadResponseException(response.message);
+                throw new IdoitBadResponseException(response.message);
             }
         }
 
-        //archive
+        /// <summary>
+        /// Archive the given object
+        /// </summary>
+        /// <param name="objectId"></param>
         public void Archive(int objectId)
         {
             Task t = Task.Run(() => { Archiving(objectId).Wait(); }); t.Wait();
@@ -140,18 +153,22 @@ namespace Idoit.API.Client.CMDB.Object
 
         private async Task Archiving(int objectId)
         {
-            parameter = client.GetParameter();
+            parameter = Client.Parameters;
             parameter.Add("id", objectId);
             parameter.Add("status", "C__RECORD_STATUS__ARCHIVED");
-            var response = await client.GetConnection().InvokeAsync<IdoitResponse>
+            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.delete", parameter);
-            if (response.success == false)
+            if (!response.success)
             {
-                throw new IdoitAPIClientBadResponseException(response.message);
+                throw new IdoitBadResponseException(response.message);
             }
         }
 
-        //Read
+        /// <summary>
+        /// Read the given object
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <returns>An <see cref="IdoitObjectResult"/></returns>
         public IdoitObjectResult Read(int objectId)
         {
             Task t = Task.Run(() => { Reading(objectId).Wait(); }); t.Wait();
@@ -160,9 +177,9 @@ namespace Idoit.API.Client.CMDB.Object
 
         private async Task Reading(int objectId)
         {
-            parameter = client.GetParameter();
+            parameter = Client.Parameters;
             parameter.Add("id", objectId);
-            response = await client.GetConnection().InvokeAsync<IdoitObjectResult>("cmdb.object.read", parameter);
+            response = await Client.GetConnection().InvokeAsync<IdoitObjectResult>("cmdb.object.read", parameter);
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿namespace Idoit.API.Client.Contants
 {
-    public class IdoitCmdbStatus
+    /// <summary>
+    /// Represents constants of CMDB states idoit provides.
+    /// </summary>
+    public static class IdoitCmdbStatus
     {
         public const string PLANNED = "C__CMDB_STATUS__PLANNED";
         public const string ORDERED = "C__CMDB_STATUS__ORDERED";

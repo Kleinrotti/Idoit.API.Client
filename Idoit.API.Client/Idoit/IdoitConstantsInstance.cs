@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 
 namespace Idoit.API.Client.Idoit
 {
-    public class IdoitConstantsInstance : IdoitApiBase
+    /// <summary>
+    /// Provides methods to retrieve idoits constant objects. Categories, RecordStates, ObjectTypes, RelationTypes and StaticObjects.
+    /// </summary>
+    public sealed class IdoitConstantsInstance : IdoitApiBase
     {
         private object responseConstants;
         private JObject responseJObject;
@@ -15,7 +18,7 @@ namespace Idoit.API.Client.Idoit
         private string childName;
         private string keyName;
         private string valueName;
-        private Dictionary<string, string> response;
+        private IDictionary<string, string> response;
 
         public IdoitConstantsInstance(IdoitClient myClient) : base(myClient)
         {
@@ -24,12 +27,12 @@ namespace Idoit.API.Client.Idoit
         //constants
         private async Task constants()
         {
-            parameter = client.GetParameter();
-            responseConstants = await client.GetConnection().InvokeAsync<object>("idoit.constants", parameter);
+            parameter = Client.Parameters;
+            responseConstants = await Client.GetConnection().InvokeAsync<object>("idoit.constants", parameter);
         }
 
         //Read
-        private Dictionary<string, string> Read()
+        private IDictionary<string, string> Read()
         {
             responseJObject = (JObject)JsonConvert.DeserializeObject(responseConstants.ToString());
             response = new Dictionary<string, string>();
@@ -67,8 +70,11 @@ namespace Idoit.API.Client.Idoit
             return response;
         }
 
-        //ReadGlobalCategories
-        public Dictionary<string, string> ReadGlobalCategories()
+        /// <summary>
+        /// Read all global idoit categories.
+        /// </summary>
+        /// <returns>A <see cref="IDictionary{TKey, TValue}"/> with all categories.</returns>
+        public IDictionary<string, string> ReadGlobalCategories()
         {
             groupName = "categories";
             childName = "g";
@@ -76,8 +82,11 @@ namespace Idoit.API.Client.Idoit
             return response;
         }
 
-        //ReadSpecificCategories
-        public Dictionary<string, string> ReadSpecificCategories()
+        /// <summary>
+        /// Read all specific idoit categories.
+        /// </summary>
+        /// <returns>A <see cref="IDictionary{TKey, TValue}"/> with all specific idoit categories.</returns>
+        public IDictionary<string, string> ReadSpecificCategories()
         {
             groupName = "categories";
             childName = "s";
@@ -85,32 +94,44 @@ namespace Idoit.API.Client.Idoit
             return response;
         }
 
-        //ReadObjectTypes
-        public Dictionary<string, string> ReadObjectTypes()
+        /// <summary>
+        /// Read all idiot object types.
+        /// </summary>
+        /// <returns>A <see cref="IDictionary{TKey, TValue}"/> with all idoit object types.</returns>
+        public IDictionary<string, string> ReadObjectTypes()
         {
             groupName = "objectTypes";
             Task t = Task.Run(() => { constants().Wait(); Read(); }); t.Wait();
             return response;
         }
 
-        // ReadRecordStates
-        public Dictionary<string, string> ReadRecordStates()
+        /// <summary>
+        /// Read all idoit record states.
+        /// </summary>
+        /// <returns>A <see cref="IDictionary{TKey, TValue}"/> with all idoit record states.</returns>
+        public IDictionary<string, string> ReadRecordStates()
         {
             groupName = "recordStates";
             Task t = Task.Run(() => { constants().Wait(); Read(); }); t.Wait();
             return response;
         }
 
-        //ReadRelationTypes
-        public Dictionary<string, string> ReadRelationTypes()
+        /// <summary>
+        /// Read all idoit relation types.
+        /// </summary>
+        /// <returns>A <see cref="IDictionary{TKey, TValue}"/> with all idoi relation types.</returns>
+        public IDictionary<string, string> ReadRelationTypes()
         {
             groupName = "relationTypes";
             Task t = Task.Run(() => { constants().Wait(); Read(); }); t.Wait();
             return response;
         }
 
-        //ReadStaticObjects
-        public Dictionary<string, string> ReadStaticObjects()
+        /// <summary>
+        /// Read all idoit static objects.
+        /// </summary>
+        /// <returns>A <see cref="IDictionary{TKey, TValue}"/> with all static idoit objects.</returns>
+        public IDictionary<string, string> ReadStaticObjects()
         {
             groupName = "staticObjects";
             Task t = Task.Run(() => { constants().Wait(); Read(); }); t.Wait();
@@ -120,7 +141,7 @@ namespace Idoit.API.Client.Idoit
 
     internal static class Extensions
     {
-        public static void AddSafe(this Dictionary<string, string> dictionary, string key, string value)
+        public static void AddSafe(this IDictionary<string, string> dictionary, string key, string value)
         {
             if (!dictionary.ContainsKey(key))
                 dictionary.Add(key, value);

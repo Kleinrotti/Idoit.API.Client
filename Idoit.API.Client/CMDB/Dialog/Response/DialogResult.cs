@@ -2,7 +2,7 @@
 
 namespace Idoit.API.Client.CMDB.Dialog.Response
 {
-    public class DialogResult
+    public sealed class DialogResult
     {
         [JsonProperty("id")]
         public string id { get; set; }

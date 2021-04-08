@@ -1,5 +1,8 @@
 ﻿namespace Idoit.API.Client.CMDB.Objects
 {
+    /// <summary>
+    /// Provides possible values to filter an idoit request.
+    /// </summary>
     public class IdoitFilter
     {
         public int[] ids { get; set; }

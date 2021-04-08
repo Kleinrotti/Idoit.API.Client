@@ -2,7 +2,7 @@
 
 namespace Idoit.API.Client.Idoit.Response
 {
-    public class IdoitVersionLoginResponse
+    public sealed class IdoitVersionLoginResponse
     {
         [JsonProperty("userid")]
         public string userId { get; set; }

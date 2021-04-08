@@ -1,8 +1,11 @@
 ﻿using Newtonsoft.Json;
 
-namespace Idoit.API.Client.CMDB.Object.Response
+namespace Idoit.API.Client.CMDB.Object
 {
-    public class IdoitObjectResult
+    /// <summary>
+    /// Represents an object which will be received when reading an object from idoit.
+    /// </summary>
+    public sealed class IdoitObjectResult
     {
         [JsonProperty("id")]
         public int id { get; set; }

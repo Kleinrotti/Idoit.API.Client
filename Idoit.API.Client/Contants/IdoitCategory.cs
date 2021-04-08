@@ -1,6 +1,9 @@
 ﻿namespace Idoit.API.Client.Contants
 {
-    public class IdoitCategory
+    /// <summary>
+    /// Represents categories which idoit provides.
+    /// </summary>
+    public static class IdoitCategory
     {
         public const string GLOBAL = "C__CATG__GLOBAL";
         public const string FORMFACTOR = "C__CATG__FORMFACTOR";

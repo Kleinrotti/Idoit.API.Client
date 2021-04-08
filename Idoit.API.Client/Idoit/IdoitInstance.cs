@@ -4,21 +4,22 @@ using System.Threading.Tasks;
 
 namespace Idoit.API.Client.Idoit
 {
-    public class IdoitInstance
+    /// <summary>
+    /// Provides methods to retrieve the idoit version and search for objects.
+    /// </summary>
+    public class IdoitInstance : IdoitApiBase
     {
-        public IdoitClient client;
-        private List<IdoitSearchResponse[]> responseSearch;
-        private IdoitLogoutResponse responseLogout = new IdoitLogoutResponse();
-        private IdoitLoginResponse responseLogin = new IdoitLoginResponse();
+        private IList<IdoitSearchResponse[]> responseSearch;
         private IdoitVersionResponse responseVersion;
-        private Dictionary<string, object> parameter;
 
-        public IdoitInstance(IdoitClient myClient)
+        public IdoitInstance(IdoitClient myClient) : base(myClient)
         {
-            client = myClient;
         }
 
-        //Version
+        /// <summary>
+        /// Retrieve the current idoit version.
+        /// </summary>
+        /// <returns>A <see cref="IdoitVersionResponse"/></returns>
         public IdoitVersionResponse Version()
         {
             Task t = Task.Run(() => { version().Wait(); }); t.Wait();
@@ -28,51 +29,27 @@ namespace Idoit.API.Client.Idoit
         //version
         private async Task version()
         {
-            responseVersion = await client.GetConnection().InvokeAsync<IdoitVersionResponse>("idoit.version", client.GetParameter());
+            responseVersion = await Client.GetConnection().InvokeAsync<IdoitVersionResponse>("idoit.version", Client.Parameters);
         }
 
-        //Search
-        public List<IdoitSearchResponse[]> Search(string q)
+        /// <summary>
+        /// Search for a specific keyword.
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <returns>A <see cref="IList{T}"/> with all objects found.</returns>
+        public IList<IdoitSearchResponse[]> Search(string keyword)
         {
-            Task t = Task.Run(() => { search(q).Wait(); }); t.Wait();
+            Task t = Task.Run(() => { search(keyword).Wait(); }); t.Wait();
             return responseSearch;
         }
 
         //Search
         private async Task search(string q)
         {
-            parameter = client.GetParameter();
+            parameter = Client.Parameters;
             parameter.Add("q", q);
             responseSearch = new List<IdoitSearchResponse[]>();
-            responseSearch.Add(await client.GetConnection().InvokeAsync<IdoitSearchResponse[]>("idoit.search", parameter));
-        }
-
-        //Logout
-        public IdoitLogoutResponse Logout()
-        {
-            Task t = Task.Run(() => { logout().Wait(); }); t.Wait();
-            return responseLogout;
-        }
-
-        //logout
-        private async Task logout()
-        {
-            parameter = client.GetParameter();
-            responseLogout = await client.GetConnection().InvokeAsync<IdoitLogoutResponse>("idoit.logout", parameter);
-        }
-
-        //Login
-        public IdoitLoginResponse Login()
-        {
-            Task t = Task.Run(() => { login().Wait(); }); t.Wait();
-            return responseLogin;
-        }
-
-        //login
-        private async Task login()
-        {
-            parameter = client.GetParameter();
-            responseLogin = await client.GetConnection().InvokeAsync<IdoitLoginResponse>("idoit.login", parameter);
+            responseSearch.Add(await Client.GetConnection().InvokeAsync<IdoitSearchResponse[]>("idoit.search", parameter));
         }
     }
 }

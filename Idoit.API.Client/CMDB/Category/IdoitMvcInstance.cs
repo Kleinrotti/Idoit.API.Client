@@ -1,49 +1,55 @@
-﻿using Idoit.API.Client.ApiException;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Category
 {
-    public class IdoitMvcInstance<T> : IdoitCategory<T> where T : IMultiValueResponse, new()
+    /// <summary>
+    /// Represents a class for Idoit MultiValue items.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public sealed class IdoitMvcInstance<T> : IdoitCategory<T> where T : IMultiValueResponse, new()
     {
+        /// <summary>
+        /// Initializes a new instance of the IdoitMvcInstance class.
+        /// </summary>
+        /// <param name="myClient"></param>
         public IdoitMvcInstance(IdoitClient myClient) : base(myClient)
         {
             Object = new T();
-            CategoryId = Object.category_id;
+            Category = Object.category_id;
         }
 
-        //Update
-        new public void Update(int objectId, IRequest request)
+        public override void Update(int objectId, IRequest request)
         {
             if (request.category_id == 0)
             {
-                throw new Exception("CateId is missing");
+                throw new ArgumentException("CateId is missing");
             }
             base.Update(objectId, request);
         }
 
-        //Delete
+        /// <summary>
+        /// Deletes the given object.
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <param name="entryID"></param>
         public void Delete(int objectId, int entryID)
         {
-            if (entryID == 0)
-            {
-                throw new Exception("EntryID is missing");
-            }
             Task t = Task.Run(() => { Deleting(objectId, entryID).Wait(); }); t.Wait();
         }
 
         private async Task Deleting(int objectId, int entryID)
         {
             //The return Values as Object from diffrence Classes
-            parameter = Client.GetParameter();
+            parameter = Client.Parameters;
             parameter.Add("objID", objectId);
             parameter.Add("cateID", entryID);
-            parameter.Add("category", CategoryId);
+            parameter.Add("category", Category);
             var result = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.category.delete", parameter);
-            if (result.success == false)
+            if (!result.success)
             {
-                throw new IdoitAPIClientBadResponseException(result.message);
+                throw new IdoitBadResponseException(result.message);
             }
         }
     }

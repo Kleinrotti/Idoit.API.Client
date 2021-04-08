@@ -2,7 +2,10 @@
 
 namespace Idoit.API.Client.Idoit.Response
 {
-    public class IdoitLoginResponse
+    /// <summary>
+    /// Represents a response from idoit when logging in.
+    /// </summary>
+    public sealed class IdoitLoginResponse
     {
         [JsonProperty("result")]
         public bool result { get; set; }

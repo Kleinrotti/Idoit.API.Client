@@ -1,8 +1,14 @@
 ﻿namespace Idoit.API.Client.CMDB.Objects
 {
-    public class IdoitSort
+    /// <summary>
+    /// Use the extension method GetStringValue for the actual values!
+    /// </summary>
+    public enum IdoitSort
     {
-        public const string Acsending = "ASC";
-        public const string Deacsending = "DESC";
+        [StringValue("ASC")]
+        Acsending = 0,
+
+        [StringValue("DESC")]
+        Descending = 1
     }
 }

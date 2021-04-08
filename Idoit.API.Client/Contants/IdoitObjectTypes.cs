@@ -2,7 +2,10 @@
 
 namespace Idoit.API.Client.Contants
 {
-    public class IdoitObjectTypes
+    /// <summary>
+    /// Represents object types which idoit provides.
+    /// </summary>
+    public static class IdoitObjectTypes
     {
         /**
         * System Service
