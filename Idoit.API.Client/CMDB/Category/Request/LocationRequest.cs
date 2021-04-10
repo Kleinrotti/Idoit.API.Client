@@ -2,7 +2,7 @@
 {
     public class LocationRequest : IRequest
     {
-        public int category_id { get; set; }
+        public int? category_id { get; set; }
         public string location_path { get; set; }
         public string parent { get; set; }
         public string option { get; set; }

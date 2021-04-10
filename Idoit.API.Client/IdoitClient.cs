@@ -1,8 +1,5 @@
 ﻿using Anemonis.JsonRpc.ServiceClient;
-using Idoit.API.Client.CMDB.Category;
-using Idoit.API.Client.CMDB.Objects;
 using Idoit.API.Client.Idoit.Response;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -15,7 +12,7 @@ namespace Idoit.API.Client
     /// <summary>
     /// Represents an Idoit API client.
     /// </summary>
-    public sealed class IdoitClient
+    public class IdoitClient : IClient
     {
         /// <summary>
         /// Idoit server Url
@@ -32,21 +29,12 @@ namespace Idoit.API.Client
         /// </summary>
         public string Language { get; }
 
-        /// <summary>
-        /// Idoit username
-        /// </summary>
         public string Username { get; set; }
 
-        /// <summary>
-        /// Idoit user password
-        /// </summary>
         public string Password { get; set; }
 
         private static IdoitLoginResponse _lastLoginResponse;
 
-        /// <summary>
-        /// Returns the current used connection parameters
-        /// </summary>
         public Dictionary<string, object> Parameters
         {
             get
@@ -75,10 +63,6 @@ namespace Idoit.API.Client
             Url = url;
         }
 
-        /// <summary>
-        /// Logout the current idoit session.
-        /// </summary>
-        /// <returns></returns>
         public IdoitLogoutResponse Logout()
         {
             var t = Task.Run(() => { return GetConnection().InvokeAsync<IdoitLogoutResponse>("idoit.logout", Parameters); });
@@ -86,10 +70,6 @@ namespace Idoit.API.Client
             return t.Result;
         }
 
-        /// <summary>
-        /// Login to idoit to keep a session connected instead of creating new ones
-        /// </summary>
-        /// <returns></returns>
         public IdoitLoginResponse Login()
         {
             if (_lastLoginResponse != null)
@@ -99,10 +79,6 @@ namespace Idoit.API.Client
             return _lastLoginResponse;
         }
 
-        /// <summary>
-        /// Initialize a rpc connection.
-        /// </summary>
-        /// <returns>The current <see cref="JsonRpcClient"/></returns>
         public JsonRpcClient GetConnection()
         {
             if (RpcClient == null)
@@ -113,36 +89,10 @@ namespace Idoit.API.Client
         }
 
         /// <summary>
-        /// Convert an <see cref="IRequest"/> to an data object
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns>The converted <see cref="IRequest"/> object</returns>
-        public object GetData(IRequest request)
-        {
-            string Json = JsonConvert.SerializeObject(request, new JsonSerializerSettings
-            { DefaultValueHandling = DefaultValueHandling.Ignore });
-            object data = JsonConvert.DeserializeObject(Json);
-            return data;
-        }
-
-        /// <summary>
-        /// Convert an <see cref="IdoitFilter"/> to an data object
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns>The converted <see cref="IdoitFilter"/> object</returns>
-        public object GetData(IdoitFilter filter)
-        {
-            string Json = JsonConvert.SerializeObject(filter, new JsonSerializerSettings
-            { DefaultValueHandling = DefaultValueHandling.Ignore });
-            object data = JsonConvert.DeserializeObject(Json);
-            return data;
-        }
-
-        /// <summary>
         /// Create an authenticated HttpClient
         /// </summary>
         /// <returns>A new <see cref="HttpClient"/></returns>
-        public HttpClient GetClient()
+        protected HttpClient GetClient()
         {
             if (_lastLoginResponse == null)
             {

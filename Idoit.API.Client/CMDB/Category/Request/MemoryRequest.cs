@@ -2,7 +2,7 @@
 {
     public class MemoryRequest : IRequest
     {
-        public int category_id { get; set; }// This Attribut is jsut for the Multi-value category
+        public int? category_id { get; set; }
         public int quantity { get; set; }
         public int title { get; set; }
         public int manufacturer { get; set; }

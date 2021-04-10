@@ -38,7 +38,7 @@ namespace Idoit.API.Client.CMDB.Category
         public string allIps { get; set; }
 
         [JsonProperty("primary_fqdn")]
-        public string primaryFqdn { get; set; }
+        public string[] primaryFqdn { get; set; }
 
         public Alias[] aliases { get; set; }
 

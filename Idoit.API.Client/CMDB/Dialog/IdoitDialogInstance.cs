@@ -3,11 +3,12 @@ using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Dialog
 {
-    public class IdoitDialogInstance : IdoitApiBase
+    public class IdoitDialogInstance : IdoitInstanceBase, IReadable<DialogResult[]>, ICreatable, IUpdatable, IDeletable
     {
         private DialogResult[] result;
-        public string Property { get; private set; }
-        public string Value { get; private set; }
+        public string Property { get; set; }
+        public int EntryId { get; set; }
+        public new string Category { get; set; }
 
         public IdoitDialogInstance(IdoitClient myClient) : base(myClient)
         {
@@ -15,17 +16,11 @@ namespace Idoit.API.Client.CMDB.Dialog
         }
 
         /// <summary>
-        /// Create an idoit dialog object
+        /// Create an idoit dialog object. Property Value, Property and Category has to be set.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="property"></param>
-        /// <param name="category"></param>
         /// <returns>The id of the created object</returns>
-        public int Create(string value, string property, string category)
+        public int Create()
         {
-            Value = value;
-            Property = property;
-            Category = category;
             Task t = Task.Run(() => { Creating().Wait(); }); t.Wait();
             return Id;
         }
@@ -46,26 +41,18 @@ namespace Idoit.API.Client.CMDB.Dialog
         }
 
         /// <summary>
-        /// Update an idoit dialog object
+        /// Update an idoit dialog object. Property EntryId, Value, Property and Category has to be set.
         /// </summary>
-        /// <param name="entryId"></param>
-        /// <param name="value"></param>
-        /// <param name="property"></param>
-        /// <param name="category"></param>
-        public void Update(int entryId, string value, string property, string category)
+        public void Update()
         {
-            Value = value;
-            Property = property;
-            Category = category;
-
-            Task t = Task.Run(() => { Updating(entryId).Wait(); }); t.Wait();
+            Task t = Task.Run(() => { Updating().Wait(); }); t.Wait();
         }
 
-        private async Task Updating(int entryId)
+        private async Task Updating()
         {
             parameter = Client.Parameters;
             parameter.Add("value", Value);
-            parameter.Add("entry_id", entryId);
+            parameter.Add("entry_id", EntryId);
             parameter.Add("property", Property);
             parameter.Add("category", Category);
             var response = await Client.GetConnection().InvokeAsync<DialogResponse>
@@ -77,23 +64,18 @@ namespace Idoit.API.Client.CMDB.Dialog
         }
 
         /// <summary>
-        /// Delete an idoit dialog object
+        /// Delete an idoit dialog object. Property EntryId, Property and Category has to be set.
         /// </summary>
-        /// <param name="entryId"></param>
-        /// <param name="property"></param>
-        /// <param name="category"></param>
-        public void Delete(int entryId, string property, string category)
+        public void Delete()
         {
-            Property = property;
-            Category = category;
-            Task t = Task.Run(() => { Deleting(entryId).Wait(); }); t.Wait();
+            Task t = Task.Run(() => { Deleting().Wait(); }); t.Wait();
         }
 
-        private async Task Deleting(int entryId)
+        private async Task Deleting()
         {
             //The return Values as Object from diffrence Classes
             parameter = Client.Parameters;
-            parameter.Add("entry_id", entryId);
+            parameter.Add("entry_id", EntryId);
             parameter.Add("property", Property);
             parameter.Add("category", Category);
             var response = await Client.GetConnection().InvokeAsync<DialogResponse>
@@ -105,15 +87,11 @@ namespace Idoit.API.Client.CMDB.Dialog
         }
 
         /// <summary>
-        /// Read an idoit dialog object
+        /// Read an idoit dialog object. Property Category and Property has to be set.
         /// </summary>
-        /// <param name="property"></param>
-        /// <param name="category"></param>
         /// <returns>A <see cref="DialogResult[]"/> which contains all found objects</returns>
-        public DialogResult[] Read(string property, string category)
+        public DialogResult[] Read()
         {
-            Property = property;
-            Category = category;
             Task t = Task.Run(() => { Reading().Wait(); }); t.Wait();
             return result;
         }

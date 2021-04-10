@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Category
 {
-    public abstract class IdoitCategory<T> : IdoitApiBase
+    public abstract class IdoitCategoryInstance<T> : IdoitInstanceBase, IReadable<T[]>, IUpdatable, IPurgeable
     {
         protected T[] response;
 
@@ -12,53 +12,56 @@ namespace Idoit.API.Client.CMDB.Category
         /// </summary>
         public T Object { get; protected set; }
 
-        public IdoitCategory(IdoitClient myClient) : base(myClient)
+        public int? ObjectId { get; set; }
+        public IRequest ObjectRequest { get; set; }
+        public int? EntryId { get; set; }
+
+        public IdoitCategoryInstance(IdoitClient myClient) : base(myClient)
         {
             Client = myClient;
         }
 
         /// <summary>
-        /// Reads the given object
+        /// Reads the given object. Property ObjectId has to be set.
         /// </summary>
         /// <param name="objectId"></param>
         /// <returns>A list of that generic data type</returns>
-        public virtual T[] Read(int objectId)
+        public virtual T[] Read()
         {
-            Task t = Task.Run(() => { Reading(objectId).Wait(); }); t.Wait();
+            if (ObjectId == null)
+                throw new ArgumentException("Property was not set.");
+            Task t = Task.Run(() => { Reading().Wait(); }); t.Wait();
             return response;
         }
 
-        private async Task Reading(int objectId)
+        private async Task Reading()
         {
             parameter = Client.Parameters;
-            parameter.Add("objID", objectId);
+            parameter.Add("objID", ObjectId);
             parameter.Add("category", Category);
             response = await Client.GetConnection().InvokeAsync<T[]>
             ("cmdb.category.read", parameter);
         }
 
         /// <summary>
-        /// Create the given object
+        /// Create the given object. Property ObjectId and RequestObject has to be set.
         /// </summary>
         /// <param name="objectId"></param>
         /// <param name="request"></param>
-        /// <returns>An id of that newly created object</returns>
-        public virtual int Create(int objectId, IRequest request)
+        /// <returns>An id of that newly created mvc object</returns>
+        public virtual int Create()
         {
-            Task t = Task.Run(() => { Creating(request, objectId).Wait(); }); t.Wait();
+            if (ObjectId == null || ObjectRequest == null)
+                throw new ArgumentException("Property was not set.");
+            Task t = Task.Run(() => { Creating().Wait(); }); t.Wait();
             return Id;
         }
 
-        private async Task Creating(IRequest request, int objectId)
+        private async Task Creating()
         {
-            object data = Client.GetData(request);
-            if (data == null)
-            {
-                throw new Exception("Data is missing");
-            }
             parameter = Client.Parameters;
-            parameter.Add("data", data);
-            parameter.Add("objID", objectId);
+            parameter.Add("data", ObjectRequest.GetObject());
+            parameter.Add("objID", ObjectId);
             parameter.Add("category", Category);
             var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.category.create", parameter);
@@ -70,26 +73,22 @@ namespace Idoit.API.Client.CMDB.Category
         }
 
         /// <summary>
-        /// Updates the given object
+        /// Updates the given object. Property ObjectId and RequestObject has to be set.
         /// </summary>
         /// <param name="objectId"></param>
         /// <param name="request"></param>
-        public virtual void Update(int objectId, IRequest request)
+        public virtual void Update()
         {
-            Task t = Task.Run(() => { Updating(objectId, request).Wait(); }); t.Wait();
+            if (ObjectId == null || ObjectRequest == null)
+                throw new ArgumentException("Property was not set.");
+            Task t = Task.Run(() => { Updating().Wait(); }); t.Wait();
         }
 
-        private async Task Updating(int objectId, IRequest request)
+        private async Task Updating()
         {
-            object data = Client.GetData(request);
-
-            if (data == null)
-            {
-                throw new Exception("Data is missing");
-            }
             parameter = Client.Parameters;
-            parameter.Add("data", data);
-            parameter.Add("objID", objectId);
+            parameter.Add("data", ObjectRequest.GetObject());
+            parameter.Add("objID", ObjectId);
             parameter.Add("category", Category);
             var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
                     ("cmdb.category.update", parameter);
@@ -100,24 +99,24 @@ namespace Idoit.API.Client.CMDB.Category
         }
 
         /// <summary>
-        /// Purge the given object entry
+        /// Purge the given object entry. Property ObjectId and EntryId has to be set.
         /// </summary>
         /// <param name="objectId"></param>
         /// <param name="entryID"></param>
-        public virtual void Quickpurge(int objectId, int entryID)
+        public virtual void Purge()
         {
-            if (entryID == 0)
+            if (EntryId == null || ObjectId == null)
             {
-                throw new ArgumentException("EntryID is missing");
+                throw new ArgumentException("Property was not set.");
             }
-            Task t = Task.Run(() => { QuickPurging(objectId, entryID).Wait(); }); t.Wait();
+            Task t = Task.Run(() => { QuickPurging().Wait(); }); t.Wait();
         }
 
-        private async Task QuickPurging(int objectId, int entryID)
+        private async Task QuickPurging()
         {
             parameter = Client.Parameters;
-            parameter.Add("cateID", entryID);
-            parameter.Add("objID", objectId);
+            parameter.Add("cateID", EntryId);
+            parameter.Add("objID", ObjectId);
             parameter.Add("category", Category);
             var result = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.category.quickpurge", parameter);

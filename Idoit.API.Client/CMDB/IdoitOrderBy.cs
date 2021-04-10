@@ -1,12 +1,15 @@
-﻿namespace Idoit.API.Client.CMDB.Objects
+﻿namespace Idoit.API.Client.CMDB
 {
     /// <summary>
     /// Use the extension method GetStringValue for the actual values!
     /// </summary>
     public enum IdoitOrderBy
     {
+        [StringValue(null)]
+        None = 0,
+
         [StringValue("type")]
-        Type = 0,
+        Type,
 
         [StringValue("title")]
         Title,
@@ -18,7 +21,7 @@
         SysId,
 
         [StringValue("first_name")]
-        FirstNam,
+        FirstName,
 
         [StringValue("last_name")]
         LastName,
@@ -27,9 +30,6 @@
         Email,
 
         [StringValue("id")]
-        Id,
-
-        [StringValue(null)]
-        None,
+        Id
     }
 }

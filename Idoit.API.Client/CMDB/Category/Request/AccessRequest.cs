@@ -2,7 +2,7 @@
 {
     public class AccessRequest : IRequest
     {
-        public int category_id { get; set; }// This Attribut is jsut for the Multivalue Category
+        public int? category_id { get; set; }
         public string primary_url { get; set; }
         public string title { get; set; }
         public string type { get; set; }

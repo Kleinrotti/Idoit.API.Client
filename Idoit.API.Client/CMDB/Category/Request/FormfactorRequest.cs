@@ -2,7 +2,7 @@
 {
     public class FormfactorRequest : IRequest
     {
-        public int category_id { get; set; }
+        public int? category_id { get; set; }
         public int formfactor { get; set; }
         public int rackunits { get; set; }
         public int unit { get; set; }

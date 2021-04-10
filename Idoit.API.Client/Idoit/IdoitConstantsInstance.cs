@@ -8,7 +8,7 @@ namespace Idoit.API.Client.Idoit
     /// <summary>
     /// Provides methods to retrieve idoits constant objects. Categories, RecordStates, ObjectTypes, RelationTypes and StaticObjects.
     /// </summary>
-    public sealed class IdoitConstantsInstance : IdoitApiBase
+    public sealed class IdoitConstantsInstance : IdoitInstanceBase
     {
         private object responseConstants;
         private JObject responseJObject;

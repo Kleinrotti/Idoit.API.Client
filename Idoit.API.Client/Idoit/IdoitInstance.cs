@@ -7,9 +7,9 @@ namespace Idoit.API.Client.Idoit
     /// <summary>
     /// Provides methods to retrieve the idoit version and search for objects.
     /// </summary>
-    public class IdoitInstance : IdoitApiBase
+    public class IdoitInstance : IdoitInstanceBase
     {
-        private IList<IdoitSearchResponse[]> responseSearch;
+        private IdoitSearchResponse[] responseSearch;
         private IdoitVersionResponse responseVersion;
 
         public IdoitInstance(IdoitClient myClient) : base(myClient)
@@ -37,7 +37,7 @@ namespace Idoit.API.Client.Idoit
         /// </summary>
         /// <param name="keyword"></param>
         /// <returns>A <see cref="IList{T}"/> with all objects found.</returns>
-        public IList<IdoitSearchResponse[]> Search(string keyword)
+        public IdoitSearchResponse[] Search(string keyword)
         {
             Task t = Task.Run(() => { search(keyword).Wait(); }); t.Wait();
             return responseSearch;
@@ -48,8 +48,7 @@ namespace Idoit.API.Client.Idoit
         {
             parameter = Client.Parameters;
             parameter.Add("q", q);
-            responseSearch = new List<IdoitSearchResponse[]>();
-            responseSearch.Add(await Client.GetConnection().InvokeAsync<IdoitSearchResponse[]>("idoit.search", parameter));
+            responseSearch = await Client.GetConnection().InvokeAsync<IdoitSearchResponse[]>("idoit.search", parameter);
         }
     }
 }

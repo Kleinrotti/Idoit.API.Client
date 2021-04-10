@@ -2,7 +2,7 @@
 {
     public class ContactAssignmentRequest : IRequest
     {
-        public int category_id { get; set; }// This Attribut is jsut for the Multivalue Category
+        public int? category_id { get; set; }
         public string contact { get; set; }
         public string primary_contact { get; set; }
         public string contact_object { get; set; }

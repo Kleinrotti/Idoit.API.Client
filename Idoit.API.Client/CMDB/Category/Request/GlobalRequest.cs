@@ -2,7 +2,7 @@
 {
     public class GlobalRequest : IRequest
     {
-        public int category_id { get; set; }
+        public int? category_id { get; set; }
         public string id { get; set; }
         public string title { get; set; }
         public int status { get; set; }

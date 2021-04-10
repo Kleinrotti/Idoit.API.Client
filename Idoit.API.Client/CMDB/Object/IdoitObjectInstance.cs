@@ -5,24 +5,16 @@ namespace Idoit.API.Client.CMDB.Object
     /// <summary>
     /// Represents an IdoitObject which can be created, updated, read and archived.
     /// </summary>
-    public class IdoitObjectInstance : IdoitApiBase
+    public class IdoitObjectInstance : IdoitInstanceBase, IReadable<IdoitObjectResult>, ICreatable, IUpdatable, IDeletable, IPurgeable, IArchiveable
     {
         /// <summary>
         /// Type of the object, defined in IdoitObjectTypes.
         /// </summary>
-        public string Type { get; private set; }
-
-        /// <summary>
-        /// Title of the object
-        /// </summary>
-        public string Title { get; private set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Type of the object, defined in IdoitCategory.
         /// </summary>
-
-        //public string Category { get; set; }
-
         public string Purpose { get; set; }
 
         /// <summary>
@@ -35,6 +27,8 @@ namespace Idoit.API.Client.CMDB.Object
         /// </summary>
         public string Description { get; set; }
 
+        public int ObjectId { get; set; }
+
         private IdoitObjectResult response;
 
         public IdoitObjectInstance(IdoitClient myClient) : base(myClient)
@@ -42,15 +36,11 @@ namespace Idoit.API.Client.CMDB.Object
         }
 
         /// <summary>
-        /// Create a new object
+        /// Create a new object. Property Type and Value has to be set.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="title"></param>
         /// <returns>The id of the created object</returns>
-        public int Create(string type, string title)
+        public int Create()
         {
-            Title = title;
-            Type = type;
             Task t = Task.Run(() => { Creating().Wait(); }); t.Wait();
             return Id;
         }
@@ -59,7 +49,7 @@ namespace Idoit.API.Client.CMDB.Object
         {
             parameter = Client.Parameters;
             parameter.Add("type", Type);
-            parameter.Add("title", Title);
+            parameter.Add("title", Value);
             parameter.Add("purpose", Purpose);
             parameter.Add("cmdb_status", CmdbStatus);
             parameter.Add("description", Description);
@@ -74,21 +64,18 @@ namespace Idoit.API.Client.CMDB.Object
         }
 
         /// <summary>
-        /// Update the title of an object
+        /// Update the title of an object. Property ObjectId and Value has to be set.
         /// </summary>
-        /// <param name="objectId"></param>
-        /// <param name="title"></param>
-        public void Update(int objectId, string title)
+        public void Update()
         {
-            Title = title;
-            Task t = Task.Run(() => { Updating(objectId).Wait(); }); t.Wait();
+            Task t = Task.Run(() => { Updating().Wait(); }); t.Wait();
         }
 
-        private async Task Updating(int objectId)
+        private async Task Updating()
         {
             parameter = Client.Parameters;
-            parameter.Add("id", objectId);
-            parameter.Add("title", Title);
+            parameter.Add("id", ObjectId);
+            parameter.Add("title", Value);
             var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.update", parameter);
             if (!response.success)
@@ -98,18 +85,17 @@ namespace Idoit.API.Client.CMDB.Object
         }
 
         /// <summary>
-        /// Delete the given object
+        /// Delete the given object. Property ObjectId has to be set.
         /// </summary>
-        /// <param name="objectId"></param>
-        public void Delete(int objectId)
+        public void Delete()
         {
-            Task t = Task.Run(() => { Deleting(objectId).Wait(); }); t.Wait();
+            Task t = Task.Run(() => { Deleting().Wait(); }); t.Wait();
         }
 
-        private async Task Deleting(int objectId)
+        private async Task Deleting()
         {
             parameter = Client.Parameters;
-            parameter.Add("id", objectId);
+            parameter.Add("id", ObjectId);
             parameter.Add("status", "C__RECORD_STATUS__DELETED");
             var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.delete", parameter);
@@ -120,19 +106,18 @@ namespace Idoit.API.Client.CMDB.Object
         }
 
         /// <summary>
-        /// Purge the given object. This will remove it completely from the database.
+        /// Purge the given object. This will remove it completely from the database. Property ObjectId has to be set.
         /// </summary>
-        /// <param name="objectId"></param>
-        public void Purge(int objectId)
+        public void Purge()
         {
-            Task t = Task.Run(() => { Purging(objectId).Wait(); }); t.Wait();
+            Task t = Task.Run(() => { Purging().Wait(); }); t.Wait();
         }
 
-        private async Task Purging(int objectId)
+        private async Task Purging()
         {
             //The return Values as Object from diffrence Classes
             parameter = Client.Parameters;
-            parameter.Add("id", objectId);
+            parameter.Add("id", ObjectId);
             parameter.Add("status", "C__RECORD_STATUS__PURGE");
             var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.delete", parameter);
@@ -143,18 +128,17 @@ namespace Idoit.API.Client.CMDB.Object
         }
 
         /// <summary>
-        /// Archive the given object
+        /// Archive the given object. Property ObjectId has to be set.
         /// </summary>
-        /// <param name="objectId"></param>
-        public void Archive(int objectId)
+        public void Archive()
         {
-            Task t = Task.Run(() => { Archiving(objectId).Wait(); }); t.Wait();
+            Task t = Task.Run(() => { Archiving().Wait(); }); t.Wait();
         }
 
-        private async Task Archiving(int objectId)
+        private async Task Archiving()
         {
             parameter = Client.Parameters;
-            parameter.Add("id", objectId);
+            parameter.Add("id", ObjectId);
             parameter.Add("status", "C__RECORD_STATUS__ARCHIVED");
             var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.object.delete", parameter);
@@ -165,20 +149,19 @@ namespace Idoit.API.Client.CMDB.Object
         }
 
         /// <summary>
-        /// Read the given object
+        /// Read the given object. Property ObjectId has to be set.
         /// </summary>
-        /// <param name="objectId"></param>
         /// <returns>An <see cref="IdoitObjectResult"/></returns>
-        public IdoitObjectResult Read(int objectId)
+        public IdoitObjectResult Read()
         {
-            Task t = Task.Run(() => { Reading(objectId).Wait(); }); t.Wait();
+            Task t = Task.Run(() => { Reading().Wait(); }); t.Wait();
             return response;
         }
 
-        private async Task Reading(int objectId)
+        private async Task Reading()
         {
             parameter = Client.Parameters;
-            parameter.Add("id", objectId);
+            parameter.Add("id", ObjectId);
             response = await Client.GetConnection().InvokeAsync<IdoitObjectResult>("cmdb.object.read", parameter);
         }
     }

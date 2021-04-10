@@ -2,7 +2,7 @@
 {
     public class PortRequest : IRequest
     {
-        public int category_id { get; set; }// This Attribut is jsut for the Multivalue Category
+        public int? category_id { get; set; }
         public string title { get; set; }
         public int Interface { get; set; }
         public int port_type { get; set; }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Category
 {
@@ -7,7 +6,7 @@ namespace Idoit.API.Client.CMDB.Category
     /// Represents a class for Idoit MultiValue items.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class IdoitMvcInstance<T> : IdoitCategory<T> where T : IMultiValueResponse, new()
+    public sealed class IdoitMvcInstance<T> : IdoitCategoryInstance<T>, IDeletable where T : IMultiValueResponse, new()
     {
         /// <summary>
         /// Initializes a new instance of the IdoitMvcInstance class.
@@ -19,31 +18,20 @@ namespace Idoit.API.Client.CMDB.Category
             Category = Object.category_id;
         }
 
-        public override void Update(int objectId, IRequest request)
-        {
-            if (request.category_id == 0)
-            {
-                throw new ArgumentException("CateId is missing");
-            }
-            base.Update(objectId, request);
-        }
-
         /// <summary>
-        /// Deletes the given object.
+        /// Deletes the given object. Property ObejectId and EntryId has to be set.
         /// </summary>
-        /// <param name="objectId"></param>
-        /// <param name="entryID"></param>
-        public void Delete(int objectId, int entryID)
+        public void Delete()
         {
-            Task t = Task.Run(() => { Deleting(objectId, entryID).Wait(); }); t.Wait();
+            Task t = Task.Run(() => { Deleting().Wait(); }); t.Wait();
         }
 
-        private async Task Deleting(int objectId, int entryID)
+        private async Task Deleting()
         {
             //The return Values as Object from diffrence Classes
             parameter = Client.Parameters;
-            parameter.Add("objID", objectId);
-            parameter.Add("cateID", entryID);
+            parameter.Add("objID", ObjectId);
+            parameter.Add("cateID", EntryId);
             parameter.Add("category", Category);
             var result = await Client.GetConnection().InvokeAsync<IdoitResponse>
             ("cmdb.category.delete", parameter);
