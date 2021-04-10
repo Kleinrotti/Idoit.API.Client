@@ -1,4 +1,5 @@
-﻿using Idoit.API.Client.CMDB.Object;
+﻿using Idoit.API.Client.CMDB;
+using Idoit.API.Client.CMDB.Object;
 using Idoit.API.Client.CMDB.Objects;
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -19,22 +20,28 @@ namespace IdoitUnitTests
             //Arrange
             var request = new IdoitObjectsInstance(idoitClient);
             var requestCreate = new IdoitObjectInstance(idoitClient);
-            var filter = new IdoitFilter();
+            var filter = new IdoitObjectsFilter();
             int[] ObjectId = new int[10];
 
             //Act:Create the Objects
             for (int i = 0; i < 10; i++)
             {
                 requestCreate.CmdbStatus = IdoitCmdbStatus.PLANNED;
-                ObjectId[i] = requestCreate.Create(IdoitObjectTypes.SYSTEM_SERVICE, " System Service " + i);
+                requestCreate.Type = IdoitObjectTypes.SYSTEM_SERVICE;
+                requestCreate.Value = " System Service " + i;
+                ObjectId[i] = requestCreate.Create();
             }
 
             //Act : Read Objects
             filter.ids = new int[] { ObjectId[0], ObjectId[8] };
             filter.type = IdoitObjectTypes.SERVICE;
             //filter.title = "SystemService";
-            var lists = request.Read(filter, IdoitOrderBy.Title, IdoitSort.Acsending, "0,10");
-
+            request.Filter = filter;
+            request.OrderBy = IdoitOrderBy.Title;
+            request.Sort = IdoitSort.Acsending;
+            request.Limit = "0,10";
+            var lists = request.Read();
+            Assert.IsTrue(lists.Length > 0, "No objects found");
             //Assert
 
             foreach (var v in lists)
@@ -46,7 +53,8 @@ namespace IdoitUnitTests
             //Act:Delete the Objects
             for (int i = 0; i < 10; i++)
             {
-                requestCreate.Purge(ObjectId[i]);
+                requestCreate.ObjectId = ObjectId[i];
+                requestCreate.Purge();
             }
         }
     }

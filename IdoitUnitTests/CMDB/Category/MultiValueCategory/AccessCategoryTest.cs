@@ -1,7 +1,7 @@
 ﻿using Idoit.API.Client.CMDB.Category;
+using Idoit.API.Client.CMDB.Object;
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Obj = Idoit.API.Client.CMDB.Object.IdoitObjectInstance;
 
 namespace IdoitUnitTests
 {
@@ -12,78 +12,45 @@ namespace IdoitUnitTests
         {
         }
 
-        //Create
-        [TestMethod]
-        public void CreateTest()
-        {
-            //Arrange
-            int cateId, objectId;
-            var categoryRequest = new AccessRequest();
-            Obj objectRequest = new Obj(idoitClient);
-            var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
-            //Act:Create the Object
-            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
-
-            //Act: Create the Category
-            categoryRequest.title = "Web GUI";
-            categoryRequest.description = "Web GUI description";
-            categoryRequest.type = " ES";
-            categoryRequest.formatted_url = "https://swsan.admin.acme-it.example/";
-            cateId = access.Create(objectId, categoryRequest);
-
-            //Assert
-            Assert.IsNotNull(cateId);
-
-            //Act: Read the Category
-            categoryRequest.category_id = cateId;
-            var list = access.Read(objectId);
-
-            //Assert
-            foreach (AccessResponse v in list)
-            {
-                Assert.IsNotNull(v.title);
-                Assert.IsNotNull(v.id);
-            }
-
-            //Act:Delete the Object
-            objectRequest.Delete(objectId);
-        }
-
         //Delete
         [TestMethod]
         public void DeleteTest()
         {
             //Arrange
             int cateId, objectId;
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var categoryRequest = new AccessRequest();
             var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
 
             //Act:Create the Object
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Value = "My Client";
+            objectId = objectRequest.Create();
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
             categoryRequest.description = "Web GUI description";
             categoryRequest.type = " ES";
             categoryRequest.formatted_url = "https://swsan.admin.acme-it.example/";
-            cateId = access.Create(objectId, categoryRequest);
-
-            //Act
-            access.Delete(objectId, cateId);
+            access.ObjectId = objectId;
+            access.ObjectRequest = categoryRequest;
+            cateId = access.Create();
 
             //Act:Read the Category
-            categoryRequest.category_id = cateId;
-            var list = access.Read(objectId);
 
+            var list = access.Read();
+            Assert.IsFalse(list.Length == 0, "No objects found");
             //Assert
             foreach (AccessResponse v in list)
             {
                 Assert.IsNotNull(v.title);
                 Assert.IsNotNull(v.id);
             }
+            access.EntryId = cateId;
+            access.Delete();
+            objectRequest.ObjectId = objectId;
+            objectRequest.Delete();
         }
 
         //Quickpurge
@@ -92,23 +59,31 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var categoryRequest = new AccessRequest();
             var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
 
             //Act:Create the Object
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Value = "My Client";
+            objectId = objectRequest.Create();
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
             categoryRequest.description = "Web GUI description";
             categoryRequest.type = " ES";
             categoryRequest.formatted_url = "https://swsan.admin.acme-it.example/";
-            cateId = access.Create(objectId, categoryRequest);
+            access.ObjectId = objectId;
+            access.ObjectRequest = categoryRequest;
+            cateId = access.Create();
 
             //Act
-            access.Quickpurge(objectId, cateId);
+            access.EntryId = cateId;
+            access.Purge();
+
+            objectRequest.ObjectId = objectId;
+            objectRequest.Purge();
         }
 
         //Update
@@ -117,20 +92,24 @@ namespace IdoitUnitTests
         {
             //Arrange
             int cateId, objectId;
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var categoryRequest = new AccessRequest();
             var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
 
             //Act:Create the Object
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Value = "My Client";
+            objectId = objectRequest.Create();
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
             categoryRequest.description = "Web GUI description";
             categoryRequest.type = " ES";
             categoryRequest.formatted_url = "https://swsan.admin.acme-it.example/";
-            cateId = access.Create(objectId, categoryRequest);
+            access.ObjectId = objectId;
+            access.ObjectRequest = categoryRequest;
+            cateId = access.Create();
 
             //Act: Update the Category
             categoryRequest.title = "Web GUI 2";
@@ -138,12 +117,13 @@ namespace IdoitUnitTests
             categoryRequest.type = " SE";
             categoryRequest.formatted_url = "https://swsan.admin.acme-it.example/";
             categoryRequest.category_id = cateId;
-            access.Update(objectId, categoryRequest);
+            //categoryRequest.category_id = cateId;
+            access.ObjectRequest = categoryRequest;
+            access.Update();
 
             //Act:Read the Category
-            categoryRequest.category_id = cateId;
-            var list = access.Read(objectId);
-
+            var list = access.Read();
+            Assert.IsTrue(list.Length > 0, "No objects found");
             //Assert
             foreach (AccessResponse v in list)
             {
@@ -151,34 +131,38 @@ namespace IdoitUnitTests
             }
 
             //Act:Delete the Object
-            objectRequest.Delete(objectId);
+            objectRequest.ObjectId = objectId;
+            objectRequest.Delete();
         }
 
         //Read
         [TestMethod]
-        public void ReadTest()
+        public void CreateReadTest()
         {
             //Arrange
             int cateId, objectId;
-            Obj objectRequest = new Obj(idoitClient);
+            var objectRequest = new IdoitObjectInstance(idoitClient);
             var categoryRequest = new AccessRequest();
             var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
 
             //Act:Create the Object
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create(IdoitObjectTypes.CLIENT, "My Client");
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Value = "My Client";
+            objectId = objectRequest.Create();
 
             //Act: Create the Category
             categoryRequest.title = "Web GUI";
             categoryRequest.description = "Web GUI description";
             categoryRequest.type = " ES";
             categoryRequest.formatted_url = "https://swsan.admin.acme-it.example/";
-            cateId = access.Create(objectId, categoryRequest);
+            access.ObjectId = objectId;
+            access.ObjectRequest = categoryRequest;
+            cateId = access.Create();
 
             //Act:Read the Category
-            categoryRequest.category_id = cateId;
-            var list = access.Read(objectId);
-
+            var list = access.Read();
+            Assert.IsTrue(list.Length > 0, "No objects found");
             //Assert
             foreach (AccessResponse v in list)
             {
@@ -186,7 +170,8 @@ namespace IdoitUnitTests
             }
 
             //Act:Delete the Object
-            objectRequest.Delete(objectId);
+            objectRequest.ObjectId = objectId;
+            objectRequest.Delete();
         }
     }
 }

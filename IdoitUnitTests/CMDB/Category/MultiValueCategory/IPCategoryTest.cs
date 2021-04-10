@@ -12,42 +12,6 @@ namespace IdoitUnitTests
         {
         }
 
-        //Create
-        [TestMethod]
-        public void CreateTest()
-        {
-            //Arrange
-            int cateId, objectId;
-            var categoryRequest = new IPRequest();
-            var objectRequest = new IdoitObjectInstance(idoitClient);
-            var IP = new IdoitMvcInstance<IPResponse>(idoitClient);
-            //Act:Create the Object
-            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create(IdoitObjectTypes.CLUSTER, "My Cluster");
-
-            //Act: Create the Category
-            categoryRequest.ipv4_address = "1.1.1.2";
-            categoryRequest.description = "Web GUI description";
-            cateId = IP.Create(objectId, categoryRequest);
-
-            //Assert
-            Assert.IsNotNull(cateId);
-
-            //Act: Read the Category
-            categoryRequest.category_id = cateId;
-            var list = IP.Read(objectId);
-
-            //Assert
-            foreach (IPResponse v in list)
-            {
-                Assert.IsNotNull(v.ipv4_address);
-                Assert.IsNotNull(v.id);
-            }
-
-            ////Act:Delete the Object
-            objectRequest.Delete(objectId);
-        }
-
         ////Delete
         //[TestMethod]
         //public void DeleteTest()
@@ -183,7 +147,7 @@ namespace IdoitUnitTests
 
         //Read
         [TestMethod]
-        public void ReadTest()
+        public void CreateReadTest()
         {
             //Arrange
             int cateId, objectId;
@@ -193,24 +157,28 @@ namespace IdoitUnitTests
 
             //Act:Create the Object
             objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objectId = objectRequest.Create(IdoitObjectTypes.CLUSTER, "My Cluster 2");
+            objectRequest.Type = IdoitObjectTypes.CLUSTER;
+            objectRequest.Value = "My Cluster 2";
+            objectId = objectRequest.Create();
 
             //Act: Create the Category
             categoryRequest.ipv4_address = "1.1.1.2";
             categoryRequest.description = "Web GUI description";
-            cateId = IP.Create(objectId, categoryRequest);
+            IP.ObjectId = objectId;
+            IP.ObjectRequest = categoryRequest;
+            cateId = IP.Create();
 
             //Act:Read the Category
-            categoryRequest.category_id = cateId;
-            var list = IP.Read(objectId);
-
+            var list = IP.Read();
+            Assert.IsTrue(list.Length > 0, "No objects found");
             //Assert
             foreach (IPResponse v in list)
             {
                 Assert.IsNotNull(v.ipv4_address.refTitle);
             }
             //Act:Delete the Object
-            objectRequest.Delete(objectId);
+            objectRequest.ObjectId = objectId;
+            objectRequest.Delete();
         }
     }
 }

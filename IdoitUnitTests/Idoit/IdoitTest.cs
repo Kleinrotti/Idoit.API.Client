@@ -4,7 +4,6 @@ using Idoit.API.Client.Idoit;
 using Idoit.API.Client.Idoit.Response;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 
 namespace IdoitUnitTests
 {
@@ -82,29 +81,31 @@ namespace IdoitUnitTests
 
             //Act
             request.CmdbStatus = IdoitCmdbStatus.DEFECT;
-            objID = request.Create(IdoitObjectTypes.PRINTER, "Printer 01");
+            request.Type = IdoitObjectTypes.PRINTER;
+            request.Value = "Printer 01";
+            objID = request.Create();
 
             //Act:Search
-            var lists = idoit.Search(request.Title);
+            var lists = idoit.Search(request.Value);
+            Assert.IsTrue(lists.Length > 0, "No objects found");
+            //Assert
+
+            foreach (var v in lists)
+            {
+                Assert.IsNotNull(v.link);
+                Assert.IsNotNull(v.key);
+                Assert.IsNotNull(v.value);
+            }
 
             //Assert
-            foreach (IdoitSearchResponse[] row in lists)
-            {
-                foreach (IdoitSearchResponse element in row)
-                {
-                    Assert.IsNotNull(element.link);
-                    Assert.IsNotNull(element.key);
-                    Assert.IsNotNull(element.value);
-                }
-            }
-            //Assert
             Assert.IsNotNull(objID);
-            Assert.IsNotNull(request.Title);
+            Assert.IsNotNull(request.Value);
             Assert.IsNotNull(request.Type);
             Assert.IsNotNull(request.CmdbStatus);
 
             //Act:Delete the Object
-            request.Delete(objID);
+            request.ObjectId = objID;
+            request.Delete();
         }
 
         //Constants
@@ -129,7 +130,7 @@ namespace IdoitUnitTests
             //Arrange
             var constants = new IdoitConstantsInstance(idoitClient);
 
-            var lists  = constants.ReadRecordStates();
+            var lists = constants.ReadRecordStates();
             Assert.IsTrue(lists.Count > 0);
             foreach (var pair in lists)
             {

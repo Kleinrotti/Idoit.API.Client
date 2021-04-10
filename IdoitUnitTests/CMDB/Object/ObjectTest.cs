@@ -11,73 +11,27 @@ namespace IdoitUnitTests
         {
         }
 
-        //Create
-        [TestMethod]
-        public void CreateTest()
-        {
-            //Arrange
-            int objID;
-            var request = new IdoitObjectInstance(idoitClient);
-            //Act
-            request.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objID = request.Create(IdoitObjectTypes.APPLICATION, "Chrome");
-            //Assert
-            Assert.IsNotNull(objID);
-            Assert.IsNotNull(request.Title);
-            Assert.IsNotNull(request.Type);
-            Assert.IsNotNull(request.CmdbStatus);
-            //Act:Delete the Object
-            request.Delete(objID);
-        }
-
-        //Delete
-        [TestMethod]
-        public void DeleteTest()
-        {
-            //Arrange
-            int objID;
-            var request = new IdoitObjectInstance(idoitClient);
-            //Act:Create the Object
-            request.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objID = request.Create(IdoitObjectTypes.CLIENT, " My Client");
-            //Act:Delete the Object
-            request.Delete(objID);
-            //Assert
-            Assert.IsNotNull(objID);
-        }
-
         //Delete and than check if the Object is deleted
         [TestMethod]
         public void DeleteTestCheckIfTheObjectDeleted()
         {
             //Arrange
             int objID;
-            var list = new IdoitObjectResult();
+            var result = new IdoitObjectResult();
             var request = new IdoitObjectInstance(idoitClient);
             //Act:Create the Object
             request.CmdbStatus = IdoitCmdbStatus.PLANNED;
-            objID = request.Create(IdoitObjectTypes.CLIENT, "Laptop 001");
-            //Act:Delete the Object
-            request.Delete(objID);
-            //Act:Read the Object
-            list = request.Read(objID);
-            //Assert
-            Assert.AreEqual("4", list.status);
-        }
-
-        //Archive
-        [TestMethod]
-        public void ArchiveTest()
-        {
-            //Arrange
-            int objID;
-            var request = new IdoitObjectInstance(idoitClient);
-            //Act
-            request.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objID = request.Create(IdoitObjectTypes.PRINTER, "HQ Printer");
-            request.Archive(objID);
-            //Assert
+            request.Type = IdoitObjectTypes.CLIENT;
+            request.Value = "Laptop 001";
+            objID = request.Create();
             Assert.IsNotNull(objID);
+            //Act:Delete the Object
+            request.ObjectId = objID;
+            request.Delete();
+            //Act:Read the Object
+            result = request.Read();
+            //Assert
+            Assert.AreEqual(IdoitStatusTypes.Deleted, result.status);
         }
 
         //Archive and than check if the Object is archied
@@ -86,21 +40,24 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            var list = new IdoitObjectResult();
+            var result = new IdoitObjectResult();
             var request = new IdoitObjectInstance(idoitClient);
 
             //Act:Create the Object
             request.CmdbStatus = IdoitCmdbStatus.DEFECT;
-            objID = request.Create(IdoitObjectTypes.ROUTER, "HQ Gateway");
-
+            request.Type = IdoitObjectTypes.ROUTER;
+            request.Value = "HQ Gateway";
+            objID = request.Create();
+            Assert.IsNotNull(objID);
             //Act:Archive the Object
-            request.Archive(objID);
+            request.ObjectId = objID;
+            request.Archive();
 
             //Act:Read the Object
-            list = request.Read(objID);
+            result = request.Read();
 
             //Assert
-            Assert.AreEqual("3", list.status);
+            Assert.AreEqual(IdoitStatusTypes.Archived, result.status);
         }
 
         //Purge
@@ -113,10 +70,12 @@ namespace IdoitUnitTests
 
             //Act:Create the Object
             request.CmdbStatus = IdoitCmdbStatus.STORED;
-            objID = request.Create(IdoitObjectTypes.MONITOR, "TFT 001");
-
+            request.Type = IdoitObjectTypes.MONITOR;
+            request.Value = "TFT 001";
+            objID = request.Create();
+            request.ObjectId = objID;
             //Act:Purge the Object
-            request.Purge(objID);
+            request.Purge();
 
             //Assert
             Assert.IsNotNull(objID);
@@ -128,17 +87,22 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            var list = new IdoitObjectResult();
+            var result = new IdoitObjectResult();
             var request = new IdoitObjectInstance(idoitClient);
             //Act:Create the Object
             request.CmdbStatus = IdoitCmdbStatus.INOPERATION;
-            objID = request.Create(IdoitObjectTypes.SERVER, " Switch Colo A001 02");
+            request.Type = IdoitObjectTypes.SERVER;
+            request.Value = "Switch Colo A001 02";
+            objID = request.Create();
             //Act:Update the Object
-            request.Update(objID, "Switch Colo A001 01");
+            request.ObjectId = objID;
+            request.Value = "Switch Colo A001 01";
+            request.Update();
             //Act:Read the Object
-            list = request.Read(objID);
+            result = request.Read();
             //Assert
-            Assert.AreEqual("Switch Colo A001 01", list.title);
+            Assert.AreEqual("Switch Colo A001 01", result.title);
+            request.Delete();
         }
 
         //Read
@@ -147,20 +111,23 @@ namespace IdoitUnitTests
         {
             //Arrange
             int objID;
-            var list = new IdoitObjectResult();
+            var result = new IdoitObjectResult();
             var request = new IdoitObjectInstance(idoitClient);
             //Act:Create the Object
             request.CmdbStatus = IdoitCmdbStatus.PLANNED;
-            objID = request.Create(IdoitObjectTypes.SERVER, "Ceph Storage Pod A001 01");
+            request.Type = IdoitObjectTypes.SERVER;
+            request.Value = "Ceph Storage Pod A001 01";
+            objID = request.Create();
             //Act:Read the Object
-            list = request.Read(objID);
+            request.ObjectId = objID;
+            result = request.Read();
             //Assert
-            Assert.AreEqual(objID, list.id);
-            Assert.AreEqual("Ceph Storage Pod A001 01", list.title);
-            Assert.IsNotNull(list.title);
-            Assert.IsNotNull(list.cmdbStatus);
+            Assert.AreEqual(objID, result.id);
+            Assert.AreEqual("Ceph Storage Pod A001 01", result.title);
+            Assert.IsNotNull(result.title);
+            Assert.IsNotNull(result.cmdbStatus);
             //Act:Delete the Object
-            request.Purge(objID);
+            request.Delete();
         }
     }
 }
