@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Idoit.API.Client.Idoit.Response
+namespace Idoit.API.Client.Idoit
 {
     /// <summary>
     /// Represents a response from idoit when logging out.

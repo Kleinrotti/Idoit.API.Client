@@ -1,6 +1,4 @@
 ﻿using Idoit.API.Client.CMDB.Dialog;
-using Idoit.API.Client.CMDB.Dialog.Request;
-using Idoit.API.Client.CMDB.Dialog.Response;
 using Idoit.API.Client.Contants;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

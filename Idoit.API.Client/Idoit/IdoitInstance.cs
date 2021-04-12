@@ -1,5 +1,4 @@
-﻿using Idoit.API.Client.Idoit.Response;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Idoit.API.Client.Idoit

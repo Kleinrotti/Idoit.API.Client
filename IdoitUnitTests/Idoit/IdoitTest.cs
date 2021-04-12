@@ -1,7 +1,6 @@
 ﻿using Idoit.API.Client.CMDB.Object;
 using Idoit.API.Client.Contants;
 using Idoit.API.Client.Idoit;
-using Idoit.API.Client.Idoit.Response;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 

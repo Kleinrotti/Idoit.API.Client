@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Idoit.API.Client.CMDB.Dialog.Response
+namespace Idoit.API.Client.CMDB.Dialog
 {
     public sealed class DialogResult
     {

@@ -1,4 +1,4 @@
-﻿namespace Idoit.API.Client.CMDB.Dialog.Request
+﻿namespace Idoit.API.Client.CMDB.Dialog
 {
     public class Port
     {
