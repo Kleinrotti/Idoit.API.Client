@@ -1,23 +1,18 @@
 ## MultiValueCategory namespace
 
 This namespace helps you to create a multi-value category in i-doit by using the method `Create` as well as 
-updating it with the method `Update`, deleting with the method `Delete`, quick purging with the method `Quickpurge` and 
+updating it with the method `Update`, deleting with the method `Delete`, quick purging with the method `Purge` and 
 reading with the method `Read`  
 
 ## Code examples
 
-### Create
+### Create and read
 
 ```cs
-using System;
-using System.Collections.Generic;
 using Idoit.API.Client;
-using System.IO;
-using Access = Idoit.API.Client.CMDB.Category.Access;
-using Requset = Idoit.API.Client.CMDB.Category.Request.Access;
-using Obj = Idoit.API.Client.CMDB.Object.Object;
-using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
-using CmdbStatus = Idoit.API.Client.Contants.CmdbStatus;
+using Idoit.API.Client.CMDB.Category;
+using Idoit.API.Client.CMDB.Object;
+using Idoit.API.Client.Contants;
 
 namespace ConsoleApp
 {
@@ -25,68 +20,37 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            int cateId, objectId;
-            Requset request = new Requset();
-            Client myClient = new Client("https://example.com/src/jsonrpc.php", "Apikey", "en");
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj obj = new Obj(myClient);
-            Access access = new Access(myClient);
-            obj.type = ObjectType.TYPE_CLIENT;
-            obj.title = "Laptop 001";
-            obj.cmdbStatus = CmdbStatus.INOPERATION;
-            objectId = obj.Create();
-            request.title = "Web GUI";
-            request.type = " ES";
-            cateId = access.Create(objectId, request);
-            Console.WriteLine("You have created a category with the id  '" + cateId + "'");
-        }
-    }
-}
-```
-
-### Read
-
-```cs
-using System;
-using System.Collections.Generic;
-using Idoit.API.Client;
-using System.IO;
-using Access = Idoit.API.Client.CMDB.Category.Access;
-using Requset = Idoit.API.Client.CMDB.Category.Request.Access;
-using Obj = Idoit.API.Client.CMDB.Object.Object;
-using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
-using Response = Idoit.API.Client.CMDB.Category.Response.Access;
-using CmdbStatus = Idoit.API.Client.Contants.CmdbStatus;
-
-namespace ConsoleApp
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            int cateId, objectId;
-            Requset request = new Requset();
-            Client myClient = new Client("https://example.com/src/jsonrpc.php", "Apikey", "en");
-            List<Response[]> list = new List<Response[]>();
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-             Obj obj = new Obj(myClient);
-            Access access = new Access(myClient);
-            obj.type = ObjectType.CLIENT;
-            obj.title = "Laptop 001";
-            obj.cmdbStatus = CmdbStatus.INOPERATION;
-            objectId = obj.Create();
-            request.title = "Web GUI";
-            request.type = " ES";
-            cateId = access.Create(objectId, request);
-            list = access.Read(objectId);
-            foreach (Response[] row in list)
+            var idoitClient = new IdoitClient("URL", "APIKEY", "EN")
             {
-                foreach (Response element in row)
-                {
-                    Console.WriteLine("The title is '" +  element.title + "'");
-                }
+                Username = "admin",
+                Password = "admin"
+            };
+            var objectRequest = new IdoitObjectInstance(idoitClient);
+            var categoryRequest = new AccessRequest();
+            //This is a generic class which can be used for all objects which implemented IMultiValueResponse
+            var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
+
+            //Create the Object
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Value = "My Client";
+            var objectId = objectRequest.Create();
+
+            //Create the Category
+            categoryRequest.title = "Web GUI";
+            categoryRequest.description = "Web GUI description";
+            categoryRequest.type = " ES";
+            categoryRequest.formatted_url = "https://swsan.admin.acme-it.example/";
+            access.ObjectId = objectId; //set the id
+            access.ObjectRequest = categoryRequest; //set the AccessRequest
+            var cateId = access.Create();
+            Console.WriteLine("You have created a category with the id  '" + cateId + "'");
+
+            //Read the Category
+            var list = access.Read();
+            foreach (var v in list)
+            {
+                Console.WriteLine(v.title);
             }
         }
     }
@@ -96,15 +60,10 @@ namespace ConsoleApp
 ### Quickpurge
 
 ```cs
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Idoit.API.Client;
-using Access = Idoit.API.Client.CMDB.Category.Access;
-using Requset = Idoit.API.Client.CMDB.Category.Request.Access;
-using Obj = Idoit.API.Client.CMDB.Object.Object;
-using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
-using CmdbStatus = Idoit.API.Client.Contants.CmdbStatus;
+using Idoit.API.Client.CMDB.Category;
+using Idoit.API.Client.CMDB.Object;
+using Idoit.API.Client.Contants;
 
 namespace ConsoleApp
 {
@@ -112,21 +71,33 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            int cateId, objectId;
-            Requset request = new Requset();
-            Client myClient = new Client("https://example.com/src/jsonrpc.php", "Apikey", "en");
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj obj = new Obj(myClient);
-            Access access = new Access(myClient);
-            obj.type = ObjectType.CLIENT;
-            obj.title = "Laptop 001";
-            obj.cmdbStatus = CmdbStatus.INOPERATION;
-            objectId = obj.Create();
-            request.title = "Web GUI";
-            request.type = " ES";
-            cateId = access.Create(objectId, request);
-            access.Quickpurge(objectId, cateId);
+            var idoitClient = new IdoitClient("URL", "APIKEY", "EN")
+            {
+                Username = "admin",
+                Password = "admin"
+            };
+            var objectRequest = new IdoitObjectInstance(idoitClient);
+            var categoryRequest = new AccessRequest();
+            var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
+
+            //Create the Object
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Value = "My Client";
+            var objectId = objectRequest.Create();
+
+            //Create the Category
+            categoryRequest.title = "Web GUI";
+            categoryRequest.description = "Web GUI description";
+            categoryRequest.type = " ES";
+            categoryRequest.formatted_url = "https://swsan.admin.acme-it.example/";
+            access.ObjectId = objectId;
+            access.ObjectRequest = categoryRequest;
+            var cateId = access.Create();
+
+            //Purge the category
+            access.EntryId = cateId;
+            access.Purge();
         }
     }
 }
@@ -135,15 +106,10 @@ namespace ConsoleApp
 ### Delete
 
 ```cs
-using System;
-using System.Collections.Generic;
 using Idoit.API.Client;
-using System.IO;
-using Access = Idoit.API.Client.CMDB.Category.Access;
-using Requset = Idoit.API.Client.CMDB.Category.Request.Access;
-using Obj = Idoit.API.Client.CMDB.Object.Object;
-using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
-using CmdbStatus = Idoit.API.Client.Contants.CmdbStatus;
+using Idoit.API.Client.CMDB.Category;
+using Idoit.API.Client.CMDB.Object;
+using Idoit.API.Client.Contants;
 
 namespace ConsoleApp
 {
@@ -151,21 +117,30 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            int cateId, objectId;
-            Requset request = new Requset();
-            Client myClient = new Client("https://example.com/src/jsonrpc.php", "Apikey", "en");
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj obj = new Obj(myClient);
-            Access access = new Access(myClient);
-            obj.type = ObjectType.CLIENT;
-            obj.title = "Laptop 001";
-            obj.cmdbStatus = CmdbStatus.INOPERATION;
-            objectId = obj.Create();
-            request.title = "Web GUI";
-            request.type = " ES";
-            cateId = access.Create(objectId, request);
-            access.Delete(objectId, cateId);
+            var idoitClient = new IdoitClient("URL", "APIKEY", "EN")
+            {
+                Username = "admin",
+                Password = "admin"
+            };
+            var objectRequest = new IdoitObjectInstance(idoitClient);
+            var categoryRequest = new IPRequest();
+            var IP = new IdoitMvcInstance<IPResponse>(idoitClient);
+
+            //Create the Object
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLUSTER;
+            objectRequest.Value = "My Cluster 2";
+            var objectId = objectRequest.Create();
+
+            //Create the Category
+            categoryRequest.ipv4_address = "1.1.1.2";
+            categoryRequest.description = "Web GUI description";
+            IP.ObjectId = objectId;
+            IP.ObjectRequest = categoryRequest;
+            var cateId = IP.Create();
+            //Delete the category
+            IP.EntryId = objectId;
+            IP.Delete();
         }
     }
 }
@@ -174,16 +149,10 @@ namespace ConsoleApp
 ### Update
 
 ```cs
-using System;
-using System.Collections.Generic;
 using Idoit.API.Client;
-using System.IO;
-using Access = Idoit.API.Client.CMDB.Category.Access;
-using Requset = Idoit.API.Client.CMDB.Category.Request.Access;
-using Obj = Idoit.API.Client.CMDB.Object.Object;
-using ObjectType = Idoit.API.Client.Contants.ObjectTypes;
-using CmdbStatus = Idoit.API.Client.Contants.CmdbStatus;
-using Response = Idoit.API.Client.CMDB.Category.Response.Access;
+using Idoit.API.Client.CMDB.Category;
+using Idoit.API.Client.CMDB.Object;
+using Idoit.API.Client.Contants;
 
 namespace ConsoleApp
 {
@@ -191,33 +160,33 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            int cateId, objectId;
-            List<Response[]> list = new List<Response[]>();
-            Requset request = new Requset();
-            Client myClient = new Client("https://example.com/src/jsonrpc.php", "Apikey", "en");
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            Obj obj = new Obj(myClient);
-            Access access = new Access(myClient);
-            obj.type = ObjectType.CLIENT;
-            obj.title = "Laptop 001";
-            obj.cmdbStatus = CmdbStatus.INOPERATION;
-            objectId = obj.Create();
-            request.title = "Wib GUI";
-            request.type = " WS";
-            cateId = access.Create(objectId, request);
-            request.title = "Web GUI";
-            request.type = " ES";
-            request.category_id = cateId;
-            access.Update(objectId, request);
-            list = access.Read(objectId);
-            foreach (Response[] row in list)
-            {
-                foreach (Response element in row)
-                {
-                    Console.WriteLine("The title is: " + "'" + element.title + "'");
-                }
-            }
+            var objectRequest = new IdoitObjectInstance(idoitClient);
+            var categoryRequest = new AccessRequest();
+            var access = new IdoitMvcInstance<AccessResponse>(idoitClient);
+
+            //Create the Object
+            objectRequest.CmdbStatus = IdoitCmdbStatus.INOPERATION;
+            objectRequest.Type = IdoitObjectTypes.CLIENT;
+            objectRequest.Value = "My Client";
+            var objectId = objectRequest.Create();
+
+            //Create the Category
+            categoryRequest.title = "Web GUI";
+            categoryRequest.description = "Web GUI description";
+            categoryRequest.type = " ES";
+            categoryRequest.formatted_url = "https://swsan.admin.acme-it.example/";
+            access.ObjectId = objectId;
+            access.ObjectRequest = categoryRequest;
+            var cateId = access.Create();
+
+            //Update the Category
+            categoryRequest.title = "Web GUI 2";
+            categoryRequest.description = "Web GUI 2 description";
+            categoryRequest.type = " SE";
+            categoryRequest.formatted_url = "https://swsan.admin.acme-it.example/";
+            categoryRequest.category_id = cateId; //set the id
+            access.ObjectRequest = categoryRequest;
+            access.Update();
         }
     }
 }

@@ -2,18 +2,6 @@
 
 Make your i-doit API calls in C#
 
-[![NuGet package](https://img.shields.io/badge/nuget-Idoit.API.Client-blue.svg)](https://www.nuget.org/packages/Idoit.API.Client/)
-
-## About i-doit
-
-[i-doit](https://www.i-doit.com/en) stands for „I document IT“. By using i-doit you obtain the “point of information” 
-for all your IT processes. Everything, that needs to be documented is centralized in one single spot.
-
-Updates are carried out automatically or manually. This gives you a comprehensive overview of your IT.
-
-However, with i-doit you do not document your hardware only. You also have a full-fledged CMDB at hand, 
-with which you can interrelate all aspects of your IT environment.
- 
 ## Project Details
 
 The `Idoit.API.Client` is going to make your work faster and more efficient, especially in the work relating to Visual studio.
@@ -33,32 +21,46 @@ multi-value categories and single-value categories.
 
 The following requirements are necessary before installing or using the `Idoit.API.Client`.
 
-- A running instance of [i-doit](https://www.i-doit.com/en/i-doit/trial-version/) pro or open, version 1.12.4 or higher
-- i-doit [API add-on](https://www.i-doit.com/en/i-doit/add-ons/api-add-on/), version 1.10.3 or higher
-- Windows 7 or 10
+- A running instance of [i-doit](https://www.i-doit.com/en/i-doit/trial-version/) pro or open, version 1.15 or higher
+- i-doit [API add-on](https://www.i-doit.com/en/i-doit/add-ons/api-add-on/), version 1.11.0 or higher
+- Windows 10
 - Visual Studio 2017 version 15.9 or higher
-- .Net framework version 4.7.2 or higher
+- .Net 5 or higher
 
-## Install and update
-
-- You can find the `Idoit.API.Client` by searching in the NuGet Package Manager,
-  click on the menu bar `Project > Manage NuGet Package`.
-- There is another way for install or update the `Idoit.API.Client` by executing the following code 
-  after clicking on the menu bar `Tools > NuGetPackage Manager > Package Manager Console`
-  
-    `PM> Install-Package Idoit.API.Client`
-
-    or
-
-    `PM> Update-Package Idoit.API.Client`
+## Available types and methods
+| Namespace                      | Remote Procedure Call (RPC)           | Class in API Client Library           | Method                                               |
+| ------------------------------ | ------------------------------------- | ------------------------------------- | ---------------------------------------------------- |
+|`Idoit.API.Client`              | `idoit.login`                         | `IdoitClient`                         | `Login()`                                            |
+|                                | `idoit.logout`                        |                                       | `Logout()`                                           |
+|`Idoit.API.Client.Idoit`        | `idoit.constants`                     | `IdoitConstantsInstance`              | `ReadGlobalCategories()`, `ReadSpecificCategories()` |
+|                                |                                       |                                       | `ReadObjectTypes()`, `ReadRecordStates()`            |
+|                                |                                       |                                       | `ReadRelationTypes()`, `ReadStaticObjects()`         |
+|                                | `idoit.search`                        | `IdoitInstance`                       | `Search()`                                           |
+|                                | `idoit.version`                       |                                       | `Version()`                                          |
+|`Idoit.API.Client.CMDB.Object`  | `cmdb.object.create`                  | `IdoitObjectInstance`                 | `Create()`                                           |
+|                                | `cmdb.object.read`                    |                                       | `Read()`                                             |
+|                                | `cmdb.object.update`                  |                                       | `Update()`                                           |
+|                                | `cmdb.object.archive`                 |                                       | `Archive()`                                          |
+|                                | `cmdb.object.delete`                  |                                       | `Delete()`                                           |
+|                                | `cmdb.object.purge`                   |                                       | `Purge()`                                            |
+|`Idoit.API.Client.CMDB.Objects` | `cmdb.objects.read`                   | `IdoitObjectsInstance`                | `Read()`                                             |
+|`Idoit.API.Client.CMDB.Category`| `cmdb.category.delete`                | `IdoitMvcInstance`                    | `Delete()`                                           |
+|                                | `cmdb.category.read`                  | `IdoitMvcInstance`, `IdoitSvcInstance`| `Read()`                                             |
+|                                | `cmdb.category.update`                |                                       | `Update()`                                           |
+|                                | `cmdb.category.archive`               |                                       | `Archive()`                                          |
+|                                | `cmdb.category.create`                |                                       | `Create()`                                           |
+|                                | `cmdb.category.purge`                 |                                       | `Purge()`                                            |
+| `Idoit.API.Client.CMDB.Dialog` | `cmdb.dialog.create`                  | `IdoitDialogInstance`                 | `Create()`                                           |
+|                                | `cmdb.dialog.read`                    |                                       | `Read()`                                             |
+|                                | `cmdb.dialog.delete`                  |                                       | `Delete()`                                           |
+|                                | `cmdb.dialog.update`                  |                                       | `Update()`                                           |
 
 ## A simple example
 
 ```cs
-using System;
+using Idoit.API.Client.Idoit;
 using Idoit.API.Client;
-using idoit = Idoit.API.Client.Idoit.Idoit;
-using Version = Idoit.API.Client.Idoit.Response.Version;
+using Idoit.API.Client.Idoit.Response;
 
 namespace ConsoleApp
 {
@@ -66,21 +68,21 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            Client myClient = new Client("https://example.com/src/jsonrpc.php", "Apikey", "en");
-            myClient.Username = "admin";
-            myClient.Password = "admin";
-            idoit idoit = new idoit(myClient);
-            Version response = new Version();
-            response = idoit.Version();
-            Console.WriteLine("The  currently i-doit version is: " +"'"+ response.version+"'");
-            Console.WriteLine("The currently i-doit type is: " + "'" + response.type + "'" );
-            Console.WriteLine("The steps are: " + "'" + response.step+"'" );
-            Console.WriteLine("Your userId is: " + "'" + response.login.userId+ "'" );
-            Console.WriteLine("The name is: " + "'" + response.login.name+ "'" );
-            Console.WriteLine("The mail is: " + "'" + response.login.mail+ "'" );
-            Console.WriteLine("The username is: " + "'" + response.login.userName+ "'" );
-            Console.WriteLine("The mandator is: " + "'" + response.login.mandator+ "'" );
-            Console.WriteLine("The language is:  " + "'" + response.login.language+ "'" );
+            var idoitClient = new IdoitClient("URL", "APIKEY", "EN")
+            {
+                Username = "admin",
+                Password = "admin"
+            };
+            var login = idoitClient.Login(); //Not needed, but usefull if you wan't to keep a session open instead of using new ones
+            var idoit = new IdoitInstance(idoitClient);
+            var idoitVersion = idoit.Version();
+            Console.WriteLine("The  currently i-doit version is: " + "'"+ idoitVersion.version +"'");
+            Console.WriteLine("The currently i-doit type is: " + "'" + idoitVersion.type + "'" );
+            Console.WriteLine("Your userId is: " + "'" + idoitVersion.Login.userId + "'" );
+            Console.WriteLine("The name is: " + "'" + idoitVersion.Login.name + "'" );
+            Console.WriteLine("The username is: " + "'" + idoitVersion.Login.userName + "'" );
+            Console.WriteLine("The mandator is: " + "'" + idoitVersion.Login.mandator + "'" );
+            var logout = idoitClient.Logout();
         }
     }
 }
@@ -95,13 +97,8 @@ namespace ConsoleApp
 - Under [cmdb](docs/cmdb/README.md) you can easily work with the objects, object types, categories and
   dialog fields.
 
-## Problems?
 
-Please, report any issues to [our issue tracker](https://github.com/OKT90/Idoit.API.Client/issues). 
-Pull requests are very welcomed. If you like to get involved see file [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
-## Copyright & license
-
-Copyright (C) 2019 [synetics GmbH](https://i-doit.com/en)
+## License
+Forked from https://github.com/OKT90/Idoit.API.Client
 
 [MIT license](LICENSE)

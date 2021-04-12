@@ -8,11 +8,9 @@ updating them with the method `Update`, deleting with the method `Delete` and re
 ### Create
 
 ```cs
-using System;
 using Idoit.API.Client;
-using Idoit.API.Client.CMDB.Dialog.Request;
-using Dialog = Idoit.API.Client.CMDB.Dialog.Dialog;
-using Category = Idoit.API.Client.Contants.Category;
+using Idoit.API.Client.Contants;
+using Idoit.API.Client.CMDB.Dialog;
 
 namespace ConsoleApp
 {
@@ -20,13 +18,16 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            int Id;
-            Client myClient = new Client("https://example.com/src/jsonrpc.php", "Apikey", "en");
-            Dialog request = new Dialog(myClient);
-            request.property = Cpu.Manufacturer;
-            request.value = "Intel";
-            request.category = Category.CPU;
-            Id = request.Create();
+            var idoitClient = new IdoitClient("URL", "APIKEY", "EN")
+            {
+                Username = "admin",
+                Password = "admin"
+            };
+            var request = new IdoitDialogInstance(idoitClient);
+            request.Value = "Athlon XP";
+            request.Category = IdoitCategory.CPU;
+            request.Property = Cpu.Type;
+            var objID = request.Create();
             Console.WriteLine("The Id is" + "'" + Id + "'");
         }
     }
@@ -36,16 +37,9 @@ namespace ConsoleApp
 ### Update
 
 ```cs
-using System;
 using Idoit.API.Client;
-using System.IO;
-using System.Collections.Generic;
-using Dialog = Idoit.API.Client.CMDB.Dialog.Dialog;
-using Category = Idoit.API.Client.Contants.Category;
-using Idoit.API.Client.CMDB.Dialog.Request;
-using Result = Idoit.API.Client.CMDB.Dialog.Response.Result;
-using Idoit.API.Client.CMDB.Object.Response;
-using Idoit.API.Client.CMDB.Object;
+using Idoit.API.Client.CMDB.Dialog;
+using Idoit.API.Client.Contants;
 
 namespace ConsoleApp
 {
@@ -53,35 +47,26 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            int Id;
-            Client myClient = new Client("https://example.com/src/jsonrpc.php", "Apikey", "en");
-            Dialog request = new Dialog(myClient);
-            List<Result[]> lists = new List<Result[]>();
-            request.property = Cpu.Manufacturer;
-            request.value = "IBM";
-            request.category = Category.CPU;
-            Id = request.Create();
-            lists = request.Read();
-            foreach (Result[] row in lists)
+            var idoitClient = new IdoitClient("URL", "APIKEY", "EN")
             {
-                foreach (Result element in row)
-                {
-                    Console.WriteLine("The Id is" + "'" + element.id + "'");
-                    Console.WriteLine("The title is" + "'" + element.title + "'");
-                }
-            }
-            request.property = Cpu.Manufacturer;
-            request.value = "Intel";
-            request.category = Category.CPU;
-            request.Update(Id);
-            lists = request.Read();
-            foreach (Result[] row in lists)
+                Username = "admin",
+                Password = "admin"
+            };
+            var request = new IdoitDialogInstance(idoitClient);
+            //Create some object
+            request.Value = "WLAN23";
+            request.Category = IdoitCategory.PORT;
+            request.Property = Port.PortType;
+            var objID = request.Create();
+            //Update the object
+            request.EntryId = objID; //set entryId with the id you got e.g. from the newly created object
+            request.Value = "WLAN32";
+            request.Update();
+            var result = request.Read();
+            foreach (var v in result)
             {
-                foreach (Result element in row)
-                {
-                    Console.WriteLine("The Id is" + "'" + element.id + "'");
-                    Console.WriteLine("The title is" + "'" + element.title + "'");
-                }
+                Console.WriteLine("The Id is" + "'" + result.id + "'");
+                Console.WriteLine("The new title is" + "'" + result.title + "'");
             }
         }
     }
@@ -92,11 +77,9 @@ namespace ConsoleApp
 ### Delete
 
 ```cs
-using System;
 using Idoit.API.Client;
-using Idoit.API.Client.CMDB.Dialog.Request;
-using Dialog = Idoit.API.Client.CMDB.Dialog.Dialog;
-using Category = Idoit.API.Client.Contants.Category;
+using Idoit.API.Client.CMDB.Dialog;
+using Idoit.API.Client.Contants;
 
 namespace ConsoleApp
 {
@@ -104,14 +87,20 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            int Id;
-            Client myClient = new Client("https://example.com/src/jsonrpc.php", "Apikey", "en");
-            Dialog request = new Dialog(myClient);
-            request.property = Cpu.Manufacturer;
-            request.value = "IBM";
-            request.category = Category.CPU;
-            Id = request.Create();            
-            request.Delete(Id);
+            var idoitClient = new IdoitClient("URL", "APIKEY", "EN")
+            {
+                Username = "admin",
+                Password = "admin"
+            };
+            var request = new IdoitDialogInstance(idoitClient);
+            request.Value = "Athlon XP";
+            request.Category = IdoitCategory.CPU;
+            request.Property = Cpu.Type;
+            var objID = request.Create();
+
+            //Delete the Value
+            request.EntryId = objID; //set entryId with the id you got e.g. from the newly created object
+            request.Delete();
         }
     }
 }
@@ -120,16 +109,9 @@ namespace ConsoleApp
 ### Read
 
 ```cs
-using System;
 using Idoit.API.Client;
-using System.IO;
-using System.Collections.Generic;
-using Dialog = Idoit.API.Client.CMDB.Dialog.Dialog;
-using Category = Idoit.API.Client.Contants.Category;
-using Idoit.API.Client.CMDB.Dialog.Request;
-using Result = Idoit.API.Client.CMDB.Dialog.Response.Result;
-using Idoit.API.Client.CMDB.Object.Response;
-using Idoit.API.Client.CMDB.Object;
+using Idoit.API.Client.CMDB.Dialog;
+using Idoit.API.Client.Contants;
 
 namespace ConsoleApp
 {
@@ -137,19 +119,20 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            Client myClient = new Client("https://example.com/src/jsonrpc.php", "Apikey", "en");
-            Dialog request = new Dialog(myClient);
-            List<Result[]> lists = new List<Result[]>();
-            request.property = Cpu.Frequency;
-            request.category = Category.CPU;
-            lists = request.Read();
-            foreach (Result[] row in lists)
+            var idoitClient = new IdoitClient("URL", "APIKEY", "EN")
             {
-                foreach (Result element in row)
-                {
-                    Console.WriteLine("The Id is" + "'" + element.id + "'");
-                    Console.WriteLine("The title is" + "'" + element.title + "'");
-                }
+                Username = "admin",
+                Password = "admin"
+            };
+            var request = new IdoitDialogInstance(idoitClient);
+            //Act:Read
+            request.Category = IdoitCategory.GLOBAL;
+            request.Property = Global.Category;
+            var result = request.Read();
+            foreach (var v in result)
+            {
+                Console.WriteLine("The Id is" + "'" + result.id + "'");
+                Console.WriteLine("The title is" + "'" + result.title + "'");
             }
         }
     }
