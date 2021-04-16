@@ -6,7 +6,7 @@
         Normal,
         Archived,
         Deleted,
-        Template,
+        Template = 6,
         MassChangeTemplate,
     }
 }
