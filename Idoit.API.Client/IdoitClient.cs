@@ -1,5 +1,5 @@
 ﻿using Anemonis.JsonRpc.ServiceClient;
-using Idoit.API.Client.Idoit.Response;
+using Idoit.API.Client.Idoit;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
