@@ -142,7 +142,7 @@ namespace Idoit.API.Client.CMDB.Object
             parameter.Add("id", ObjectId);
             parameter.Add("status", "C__RECORD_STATUS__ARCHIVED");
             var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
-            ("cmdb.object.delete", parameter);
+                ("cmdb.object.delete", parameter);
             if (!response.success)
             {
                 throw new IdoitBadResponseException(response.message);
@@ -164,6 +164,46 @@ namespace Idoit.API.Client.CMDB.Object
             parameter = Client.Parameters;
             parameter.Add("id", ObjectId);
             response = await Client.GetConnection().InvokeAsync<IdoitObjectResult>("cmdb.object.read", parameter);
+        }
+
+        /// <summary>
+        /// Set object state as template. Property ObjectId has to be set.
+        /// </summary>
+        public void MarkAsTemplate()
+        {
+            Task t = Task.Run(() => { markAsTemplate().Wait(); }); t.Wait();
+        }
+
+        private async Task markAsTemplate()
+        {
+            parameter = Client.Parameters;
+            parameter.Add("id", ObjectId);
+            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
+                ("cmdb.object.markAsTemplate", parameter);
+            if (!response.success)
+            {
+                throw new IdoitBadResponseException(response.message);
+            }
+        }
+
+        /// <summary>
+        /// Set object state as mass change template. Property ObjectId has to be set.
+        /// </summary>
+        public void MarkAsMassChangeTemplate()
+        {
+            Task t = Task.Run(() => { markAsMassTemplate().Wait(); }); t.Wait();
+        }
+
+        private async Task markAsMassTemplate()
+        {
+            parameter = Client.Parameters;
+            parameter.Add("id", ObjectId);
+            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
+                ("cmdb.object.markAsMassChangeTemplate", parameter);
+            if (!response.success)
+            {
+                throw new IdoitBadResponseException(response.message);
+            }
         }
     }
 }
