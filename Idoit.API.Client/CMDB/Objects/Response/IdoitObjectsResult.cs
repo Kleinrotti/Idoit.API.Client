@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Idoit.API.Client.Contants;
+using Newtonsoft.Json;
 
 namespace Idoit.API.Client.CMDB.Objects
 {
@@ -23,10 +24,10 @@ namespace Idoit.API.Client.CMDB.Objects
         public string type_group_title { get; set; }
 
         [JsonProperty("status")]
-        public string status { get; set; }
+        public IdoitStatusTypes status { get; set; }
 
         [JsonProperty("cmdb_status")]
-        public string cmdbStatus { get; set; }
+        public IdoitCmdbStatus cmdbStatus { get; set; }
 
         [JsonProperty("cmdbStatusTitle")]
         public string cmdb_status_title { get; set; }

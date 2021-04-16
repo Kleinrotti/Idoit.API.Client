@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Idoit.API.Client.Idoit
 {
@@ -35,7 +34,7 @@ namespace Idoit.API.Client.Idoit
         /// Search for a specific keyword.
         /// </summary>
         /// <param name="keyword"></param>
-        /// <returns>A <see cref="IList{T}"/> with all objects found.</returns>
+        /// <returns>A <see cref="IdoitSearchResponse"/>[] with all objects found.</returns>
         public IdoitSearchResponse[] Search(string keyword)
         {
             Task t = Task.Run(() => { search(keyword).Wait(); }); t.Wait();

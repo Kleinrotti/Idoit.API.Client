@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Idoit.API.Client.Contants;
+using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Object
 {
@@ -18,9 +19,9 @@ namespace Idoit.API.Client.CMDB.Object
         public string Purpose { get; set; }
 
         /// <summary>
-        /// Type of the object, defined in IdoitCmdbStatus. Optional when creating a new object.
+        /// Type of the object. Optional when creating a new object.
         /// </summary>
-        public string CmdbStatus { get; set; }
+        public IdoitCmdbStatus CmdbStatus { get; set; }
 
         /// <summary>
         /// Description of the object. Optional when creating a new object.

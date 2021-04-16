@@ -1,23 +1,21 @@
 ﻿namespace Idoit.API.Client.Contants
 {
     /// <summary>
-    /// Represents constants of CMDB states idoit provides.
+    /// CMDB states which idoit provides.
     /// </summary>
-    public static class IdoitCmdbStatus
+    public enum IdoitCmdbStatus
     {
-        public const string PLANNED = "C__CMDB_STATUS__PLANNED";
-        public const string ORDERED = "C__CMDB_STATUS__ORDERED";
-        public const string DELIVERED = "C__CMDB_STATUS__DELIVERED";
-        public const string _ASSEMBLED = "C__CMDB_STATUS__ASSEMBLED";
-        public const string TESTED = "C__CMDB_STATUS__TESTED";
-        public const string DEFECT = "C__CMDB_STATUS__DEFECT";
-        public const string UNDER_REPAIR = "C__CMDB_STATUS__UNDER_REPAIR";
-        public const string DELIVERED_FROM_REPAIR = "C__CMDB_STATUS__DELIVERED_FROM_REPAIR";
-        public const string STORED = "C__CMDB_STATUS__STORED";
-        public const string SCRAPPED = "C__CMDB_STATUS__SCRAPPED";
-        public const string INOPERATION = "C__CMDB_STATUS__IN_OPERATION";
-        public const string INOPERATIVE = "C__CMDB_STATUS__INOPERATIVE";
-        public const string TEMPLATE = "C__CMDB_STATUS__IDOIT_STATUS_TEMPLATE";
-        public const string IDOITSTATUS = "C__CMDB_STATUS__IDOIT_STATUS";
+        PLANNED = 1,
+        ORDERED,
+        DELIVERED,
+        ASSEMBLED,
+        TESTED,
+        INOPERATION,
+        DEFECT,
+        UNDER_REPAIR,
+        DELIVERED_FROM_REPAIR,
+        INOPERATIVE,
+        STORED,
+        SCRAPPED,
     }
 }
