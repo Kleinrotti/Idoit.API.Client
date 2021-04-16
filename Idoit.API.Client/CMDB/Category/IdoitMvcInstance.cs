@@ -6,7 +6,7 @@ namespace Idoit.API.Client.CMDB.Category
     /// Represents a class for Idoit MultiValue items.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class IdoitMvcInstance<T> : IdoitCategoryInstance<T>, IDeletable where T : IMultiValueResponse, new()
+    public sealed class IdoitMvcInstance<T> : IdoitCategoryInstance<T>, IDeletable, IRecycable where T : IMultiValueResponse, new()
     {
         /// <summary>
         /// Initializes a new instance of the IdoitMvcInstance class.
@@ -38,6 +38,28 @@ namespace Idoit.API.Client.CMDB.Category
             if (!result.success)
             {
                 throw new IdoitBadResponseException(result.message);
+            }
+        }
+
+        /// <summary>
+        /// Recycle an idoit object. Property ObjectId and EntryId has to be set.
+        /// </summary>
+        public void Recycle()
+        {
+            Task t = Task.Run(() => { recycle().Wait(); }); t.Wait();
+        }
+
+        private async Task recycle()
+        {
+            parameter = Client.Parameters;
+            parameter.Add("object", ObjectId);
+            parameter.Add("category", Category);
+            parameter.Add("entry", EntryId);
+            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
+                ("cmdb.category.recycle", parameter);
+            if (!response.success)
+            {
+                throw new IdoitBadResponseException(response.message);
             }
         }
     }

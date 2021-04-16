@@ -6,7 +6,8 @@ namespace Idoit.API.Client.CMDB.Object
     /// <summary>
     /// Represents an IdoitObject which can be created, updated, read and archived.
     /// </summary>
-    public class IdoitObjectInstance : IdoitInstanceBase, IReadable<IdoitObjectResult>, ICreatable, IUpdatable, IDeletable, IPurgeable, IArchiveable
+    public class IdoitObjectInstance : IdoitInstanceBase, IReadable<IdoitObjectResult>, ICreatable, IUpdatable,
+        IDeletable, IPurgeable, IArchiveable, IRecycable
     {
         /// <summary>
         /// Type of the object, defined in IdoitObjectTypes.
@@ -177,7 +178,7 @@ namespace Idoit.API.Client.CMDB.Object
         private async Task markAsTemplate()
         {
             parameter = Client.Parameters;
-            parameter.Add("id", ObjectId);
+            parameter.Add("object", ObjectId);
             var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
                 ("cmdb.object.markAsTemplate", parameter);
             if (!response.success)
@@ -197,9 +198,29 @@ namespace Idoit.API.Client.CMDB.Object
         private async Task markAsMassTemplate()
         {
             parameter = Client.Parameters;
-            parameter.Add("id", ObjectId);
+            parameter.Add("object", ObjectId);
             var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
                 ("cmdb.object.markAsMassChangeTemplate", parameter);
+            if (!response.success)
+            {
+                throw new IdoitBadResponseException(response.message);
+            }
+        }
+
+        /// <summary>
+        /// Recycle an idoit object. Property ObjectId has to be set.
+        /// </summary>
+        public void Recycle()
+        {
+            Task t = Task.Run(() => { recycle().Wait(); }); t.Wait();
+        }
+
+        private async Task recycle()
+        {
+            parameter = Client.Parameters;
+            parameter.Add("object", ObjectId);
+            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
+                ("cmdb.object.recycle", parameter);
             if (!response.success)
             {
                 throw new IdoitBadResponseException(response.message);
