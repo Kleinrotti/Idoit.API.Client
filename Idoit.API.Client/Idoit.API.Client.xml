@@ -1,0 +1,766 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Idoit.API.Client</name>
+    </assembly>
+    <members>
+        <member name="P:Idoit.API.Client.CMDB.Category.IdoitCategoryInstance`1.Object">
+            <summary>
+            Returns the current <see cref="!:T"/> object
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Category.IdoitCategoryInstance`1.Read">
+            <summary>
+            Reads the given object. Property ObjectId has to be set.
+            </summary>
+            <param name="objectId"></param>
+            <returns>A list of that generic data type</returns>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Category.IdoitCategoryInstance`1.Create">
+            <summary>
+            Create the given object. Property ObjectId and RequestObject has to be set.
+            </summary>
+            <param name="objectId"></param>
+            <param name="request"></param>
+            <returns>An id of that newly created mvc object</returns>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Category.IdoitCategoryInstance`1.Update">
+            <summary>
+            Updates the given object. Property ObjectId and RequestObject has to be set.
+            </summary>
+            <param name="objectId"></param>
+            <param name="request"></param>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Category.IdoitCategoryInstance`1.Purge">
+            <summary>
+            Purge the given object entry. Property ObjectId and EntryId has to be set.
+            </summary>
+            <param name="objectId"></param>
+            <param name="entryID"></param>
+        </member>
+        <member name="T:Idoit.API.Client.CMDB.Category.IdoitMvcInstance`1">
+            <summary>
+            Represents a class for Idoit MultiValue items.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Category.IdoitMvcInstance`1.#ctor(Idoit.API.Client.IdoitClient)">
+            <summary>
+            Initializes a new instance of the IdoitMvcInstance class.
+            </summary>
+            <param name="myClient"></param>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Category.IdoitMvcInstance`1.Delete">
+            <summary>
+            Deletes the given object. Property ObejectId and EntryId has to be set.
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.CMDB.Category.IdoitSvcInstance`1">
+            <summary>
+            Initializes a new instance of the IdoitSvcInstance class. Manage idoit SingleValue items.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance.Create">
+            <summary>
+            Create an idoit dialog object. Property Value, Property and Category has to be set.
+            </summary>
+            <returns>The id of the created object</returns>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance.Update">
+            <summary>
+            Update an idoit dialog object. Property EntryId, Value, Property and Category has to be set.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance.Delete">
+            <summary>
+            Delete an idoit dialog object. Property EntryId, Property and Category has to be set.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance.Read">
+            <summary>
+            Read an idoit dialog object. Property Category and Property has to be set.
+            </summary>
+            <returns>A <see cref="!:DialogResult[]"/> which contains all found objects</returns>
+        </member>
+        <member name="T:Idoit.API.Client.CMDB.IdoitOrderBy">
+            <summary>
+            Use the extension method GetStringValue for the actual values!
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.CMDB.IdoitResponse">
+            <summary>
+            Represents a response from Idoit when executing actions.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.IdoitResponse.id">
+            <summary>
+            Id of the modified or created idoit object.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.IdoitResponse.message">
+            <summary>
+            Response message from idoit
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.IdoitResponse.success">
+            <summary>
+            Requested action was successfull
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.CMDB.IdoitSort">
+            <summary>
+            Use the extension method GetStringValue for the actual values!
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.CMDB.Objects.IdoitObjectsFilter">
+            <summary>
+            Provides possible values to filter an idoit request.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsFilter.ids">
+            <summary>
+            Filter by multiple ids.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsFilter.type">
+            <summary>
+            Filter by Objecttype ID from table isys_obj_type.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsFilter.title">
+            <summary>
+            Filter by name of the object.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsFilter.type_title">
+            <summary>
+            Filter by name of the objecttype.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsFilter.sysid">
+            <summary>
+            Filter by SYS-ID.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsFilter.first_name">
+            <summary>
+            Filter by first name of a person.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsFilter.last_name">
+            <summary>
+            Filter by last name of a person.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsFilter.email">
+            <summary>
+            Filter by email adress.
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.CMDB.Objects.IdoitObjectsInstance">
+            <summary>
+            Provides methods to read multiple objects from idoit. Filtering is also supported
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsInstance.Filter">
+            <summary>
+            Advanced filtering for the searched result.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsInstance.OrderBy">
+            <summary>
+            Order the searched result.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsInstance.Sort">
+            <summary>
+            Sort the searched result.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsInstance.Limit">
+            <summary>
+            Limit the searched result. Where to start and number of elements, i.e. 0 or 0,10.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsInstance.Raw">
+            <summary>
+            Formatts the searched result as raw SQL.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Objects.IdoitObjectsInstance.Read">
+            <summary>
+            Read an idoit object. Set Filter, OrderBy, Sort or Limit Property to filter your result.
+            </summary>
+            <returns>An <see cref="T:Idoit.API.Client.CMDB.Objects.IdoitObjectsResult"/> array with all found objects.</returns>
+        </member>
+        <member name="T:Idoit.API.Client.CMDB.Object.IdoitObjectInstance">
+            <summary>
+            Represents an IdoitObject which can be created, updated, read and archived.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.Type">
+            <summary>
+            Type of the object, defined in IdoitObjectTypes.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.Purpose">
+            <summary>
+            Type of the object, defined in IdoitCategory.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.CmdbStatus">
+            <summary>
+            Type of the object, defined in IdoitCmdbStatus. Optional when creating a new object.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.Description">
+            <summary>
+            Description of the object. Optional when creating a new object.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.Create">
+            <summary>
+            Create a new object. Property Type and Value has to be set.
+            </summary>
+            <returns>The id of the created object</returns>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.Update">
+            <summary>
+            Update the title of an object. Property ObjectId and Value has to be set.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.Delete">
+            <summary>
+            Delete the given object. Property ObjectId has to be set.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.Purge">
+            <summary>
+            Purge the given object. This will remove it completely from the database. Property ObjectId has to be set.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.Archive">
+            <summary>
+            Archive the given object. Property ObjectId has to be set.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.Read">
+            <summary>
+            Read the given object. Property ObjectId has to be set.
+            </summary>
+            <returns>An <see cref="T:Idoit.API.Client.CMDB.Object.IdoitObjectResult"/></returns>
+        </member>
+        <member name="T:Idoit.API.Client.CMDB.Object.IdoitObjectResult">
+            <summary>
+            Represents an object which will be received when reading an object from idoit.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Object.IdoitObjectTypesFilter.id">
+            <summary>
+            Filter by single id.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Object.IdoitObjectTypesFilter.titles">
+            <summary>
+            Filter by multiple titles.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Object.IdoitObjectTypesFilter.enabled">
+            <summary>
+            Filter if object type is enabled in the GUI.
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.Contants.IdoitCategory">
+            <summary>
+            Represents categories which idoit provides.
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.Contants.IdoitCmdbStatus">
+            <summary>
+            CMDB states which idoit provides.
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.Contants.IdoitObjectTypes">
+            <summary>
+            Represents object types which idoit provides.
+            </summary>
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.SERVICE">
+            System Service
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.APPLICATION">
+            Application
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.BUILDING">
+            Building
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.ENCLOSURE">
+            Rack
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.SERVER">
+            Server
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.SYSTEM_SERVICE">
+            SystemService
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.SWITCH">
+            Switch
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.ROUTER">
+            Router
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.FC_SWITCH">
+            Fc Switch
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.SAN">
+            Storage System
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.CLIENT">
+            Client
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.PRINTER">
+            Printer
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.AIR_CONDITION_SYSTEM">
+            Air Condition System
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.WAN">
+            Wan
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.EMERGENCY_PLAN">
+            Emergency Plan
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.KVM_SWITCH">
+            Kvm Switch
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.MONITOR">
+            Monitor
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.APPLIANCE">
+            Appliance
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.TELEPHONE_SYSTEM">
+            Telephone System
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.PRINTBOX">
+            Printbox
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.ROOM">
+            Room
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.ACCESS_POINT">
+            Wireless Access Point
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.MAINTENANCE">
+            Contract
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.FILE">
+            File
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.LOCATION_GENERIC">
+            Generic Location
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.LAYER3_NET">
+            Layer 3-net
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.CELL_PHONE_CONTRACT">
+            Cellular Phone
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.LICENCE">
+            Licenses
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.CONTAINER">
+            Container
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.OPERATING_SYSTEM">
+            Operating System
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.GROUP">
+            Object Group
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.GENERIC_TEMPLATE">
+            Generic Template
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.PHONE">
+            Phone
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.HOST">
+            Host
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.CABLE">
+            Cable
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.CONVERTER">
+            Converter
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.WIRING_SYSTEM">
+            Wiring System
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.PATCH_PANEL">
+            Patch Panel
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.AMPLIFIER">
+            Amplifier
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.IT_SERVICE">
+            Service
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.ESC">
+            Electric Power Company
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.EPS">
+            Emergency Power Supply
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.DISTRIBUTION_BOX">
+            Distribution Box
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.PDU">
+            Power Distribution Unit
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.UPS">
+            Uninterruptible Power Supply
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.SAN_ZONING">
+            San Zoning
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.ORGANIZATION">
+            Organization
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.PERSON">
+            Persons
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.PERSON_GROUP">
+            Person Groups
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.CLUSTER">
+            Cluster
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.CLUSTER_SERVICE">
+            Cluster Services
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.VIRTUAL_CLIENT">
+            Virtual Client
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.VIRTUAL_HOST">
+            Virtual Host
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.VIRTUAL_SERVER">
+            Virtual Server
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.RELATION">
+            Relation
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.DBMS">
+            Dbms
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.DATABASE_SCHEMA">
+            Database Schema
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.PARALLEL_RELATION">
+            Parallel Relations
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.REPLICATION">
+            Replication Object
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.DATABASE_INSTANCE">
+            Database Instance
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.MIDDLEWARE">
+            Middleware
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.SOA_STACK">
+            Soa Stack
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.KRYPTO_CARD">
+            Crypto Card
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.SIM_CARD">
+            Sim Card
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.LAYER2_NET">
+            Layer 2 Net
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.WORKSTATION">
+            Workplace
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.MIGRATION_OBJECT">
+            Migration Objects
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.SWITCH_CHASSIS">
+            Switch Chassis
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.BLADE_CHASSIS">
+            Blade Chassis
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.BLADE_SERVER">
+            Blade Server
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.VOIP_PHONE">
+            Voip Telephone
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.SUPERNET">
+            Supernet
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.NAGIOS_SERVICE">
+            Nagios Service
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.NAGIOS_SERVICE_TPL">
+            Nagios Service-template
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.NAGIOS_HOST_TPL">
+            Nagios Host-template
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.INFORMATION_DOMAIN">
+            Information Domain
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.VEHICLE">
+            Vehicle
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.AIRCRAFT">
+            Aircraft
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.CLUSTER_VRRP_HSRP">
+            Vrrp/hsrp Cluster
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.COUNTRY">
+            Country
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.CITY">
+            City
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.RM_CONTROLLER">
+            Remote Management Controller
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.VRRP">
+            VRRP
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.STACKING">
+            Stacking
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.C__CMDB__OBJTYPE__CABLE_TRAY">
+            Cable Tray
+        </member>
+        <member name="F:Idoit.API.Client.Contants.IdoitObjectTypes.C__CMDB__OBJTYPE__CONDUIT">
+            Conduit
+        </member>
+        <member name="T:Idoit.API.Client.IdoitClient">
+            <summary>
+            Represents an Idoit API client.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.IdoitClient.Url">
+            <summary>
+            Idoit server Url
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.IdoitClient.Apikey">
+            <summary>
+            Idoit API key
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.IdoitClient.Language">
+            <summary>
+            Language
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.IdoitClient.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Idoit.API.Client.IdoitClient"/> class.
+            </summary>
+            <param name="url"></param>
+            <param name="apikey"></param>
+            <param name="language"></param>
+        </member>
+        <member name="M:Idoit.API.Client.IdoitClient.GetClient">
+            <summary>
+            Create an authenticated HttpClient
+            </summary>
+            <returns>A new <see cref="T:System.Net.Http.HttpClient"/></returns>
+        </member>
+        <member name="T:Idoit.API.Client.IdoitInstanceBase">
+            <summary>
+            Reprents a base class for the Idoit API.
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.Idoit.IdoitConstantsInstance">
+            <summary>
+            Provides methods to retrieve idoits constant objects. Categories, RecordStates, ObjectTypes, RelationTypes and StaticObjects.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.Idoit.IdoitConstantsInstance.ReadGlobalCategories">
+            <summary>
+            Read all global idoit categories.
+            </summary>
+            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2"/> with all categories.</returns>
+        </member>
+        <member name="M:Idoit.API.Client.Idoit.IdoitConstantsInstance.ReadSpecificCategories">
+            <summary>
+            Read all specific idoit categories.
+            </summary>
+            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2"/> with all specific idoit categories.</returns>
+        </member>
+        <member name="M:Idoit.API.Client.Idoit.IdoitConstantsInstance.ReadObjectTypes">
+            <summary>
+            Read all idiot object types.
+            </summary>
+            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2"/> with all idoit object types.</returns>
+        </member>
+        <member name="M:Idoit.API.Client.Idoit.IdoitConstantsInstance.ReadRecordStates">
+            <summary>
+            Read all idoit record states.
+            </summary>
+            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2"/> with all idoit record states.</returns>
+        </member>
+        <member name="M:Idoit.API.Client.Idoit.IdoitConstantsInstance.ReadRelationTypes">
+            <summary>
+            Read all idoit relation types.
+            </summary>
+            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2"/> with all idoi relation types.</returns>
+        </member>
+        <member name="M:Idoit.API.Client.Idoit.IdoitConstantsInstance.ReadStaticObjects">
+            <summary>
+            Read all idoit static objects.
+            </summary>
+            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2"/> with all static idoit objects.</returns>
+        </member>
+        <member name="T:Idoit.API.Client.Idoit.IdoitInstance">
+            <summary>
+            Provides methods to retrieve the idoit version and search for objects.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.Idoit.IdoitInstance.Version">
+            <summary>
+            Retrieve the current idoit version.
+            </summary>
+            <returns>A <see cref="T:Idoit.API.Client.Idoit.IdoitVersionResponse"/></returns>
+        </member>
+        <member name="M:Idoit.API.Client.Idoit.IdoitInstance.Search(System.String)">
+            <summary>
+            Search for a specific keyword.
+            </summary>
+            <param name="keyword"></param>
+            <returns>A <see cref="T:Idoit.API.Client.Idoit.IdoitSearchResponse"/>[] with all objects found.</returns>
+        </member>
+        <member name="T:Idoit.API.Client.Idoit.IdoitLoginResponse">
+            <summary>
+            Represents a response from idoit when logging in.
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.Idoit.IdoitLogoutResponse">
+            <summary>
+            Represents a response from idoit when logging out.
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.Idoit.IdoitSearchResponse">
+            <summary>
+            Represents a response from idoit when searching for objects.
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.IClient">
+            <summary>
+            Provides methods to connect to an idoit server.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.IClient.Logout">
+            <summary>
+            Logout the current idoit session.
+            </summary>
+            <returns>An <see cref="T:Idoit.API.Client.Idoit.IdoitLogoutResponse"/></returns>
+        </member>
+        <member name="M:Idoit.API.Client.IClient.Login">
+            <summary>
+            Login to idoit to keep a session connected instead of creating new ones
+            </summary>
+            <returns>An <see cref="T:Idoit.API.Client.Idoit.IdoitLoginResponse"/></returns>
+        </member>
+        <member name="M:Idoit.API.Client.IClient.GetConnection">
+            <summary>
+            Initialize a rpc connection.
+            </summary>
+            <returns>The current <see cref="T:Anemonis.JsonRpc.ServiceClient.JsonRpcClient"/></returns>
+        </member>
+        <member name="P:Idoit.API.Client.IClient.Parameters">
+            <summary>
+            Returns the current used connection parameters
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.IClient.Username">
+            <summary>
+            Idoit username
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.IClient.Password">
+            <summary>
+            Idoit user password
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.ICreatable">
+            <summary>
+            Provides logic to Create an idoit object.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.IFilter.ids">
+            <summary>
+            Filter by multiple ids.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.IFilter.title">
+            <summary>
+            Filter by name of the object.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.IFilter.GetObject">
+            <summary>
+            Returns the current object without null value properties.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Idoit.API.Client.IInstance.Client">
+            <summary>
+            Returns the current <see cref="T:Idoit.API.Client.IdoitClient"/>
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.IInstance.Id">
+            <summary>
+            Returns the Id of the newly created or updated object.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.IInstance.Category">
+            <summary>
+            Returns the unique identifier of the idoit category.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.IInstance.Value">
+            <summary>
+            Value of the object.
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.StringValueAttribute">
+            <summary>
+            This attribute is used to represent a string value
+            for a value in an enum.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.StringValueAttribute.StringValue">
+            <summary>
+            Holds the stringvalue for a value in an enum.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.StringValueAttribute.#ctor(System.String)">
+            <summary>
+            Constructor used to init a StringValue Attribute
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:Idoit.API.Client.GetStringValueExtension.GetStringValue(System.Enum)">
+            <summary>
+            Will get the string value for a given enums value, this will
+            only work if you assign the StringValue attribute to
+            the items in your enum.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
