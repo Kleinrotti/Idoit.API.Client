@@ -122,13 +122,30 @@
             <summary>
             Read idoit logbook entries.
             </summary>
-            <returns></returns>
+            <returns>An <see cref="T:Idoit.API.Client.CMDB.Logbook.IdoitLogbookResponse"/> array.</returns>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Logbook.IdoitLogbookInstance.Read(System.Nullable{System.DateTime},System.Int32)">
+            <summary>
+            Read idoit logbook entries.
+            </summary>
+            <param name="since">List only entries since a specific date.</param>
+            <param name="limit">Limit number of entries.</param>
+            <returns>An <see cref="T:Idoit.API.Client.CMDB.Logbook.IdoitLogbookResponse"/> array.</returns>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Logbook.IdoitLogbookInstance.Read(System.Int32,System.Nullable{System.DateTime},System.Int32)">
+            <summary>
+            Read idoit logbook entries for a specific object.
+            </summary>
+            <param name="objectId">Object identifier.</param>
+            <param name="since">List only entries since a specific date.</param>
+            <param name="limit">Limit number of entries.</param>
+            <returns>An <see cref="T:Idoit.API.Client.CMDB.Logbook.IdoitLogbookResponse"/> array.</returns>
         </member>
         <member name="M:Idoit.API.Client.CMDB.Logbook.IdoitLogbookInstance.Create">
             <summary>
-            Create an idoit logbook entry. Property ObjectId and Message has to be set. Description is optional.
+            Create an idoit logbook entry for a specific object. Property ObjectId and Message has to be set. Description is optional.
             </summary>
-            <returns></returns>
+            <returns>The id of the created entry.</returns>
         </member>
         <member name="T:Idoit.API.Client.CMDB.Objects.IdoitObjectsFilter">
             <summary>
@@ -673,6 +690,12 @@
             </summary>
             <param name="keyword"></param>
             <returns>A <see cref="T:Idoit.API.Client.Idoit.IdoitSearchResponse"/>[] with all objects found.</returns>
+        </member>
+        <member name="M:Idoit.API.Client.Idoit.IdoitInstance.Addons">
+            <summary>
+            Read information about installed addons.
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Idoit.API.Client.Idoit.IdoitLoginResponse">
             <summary>

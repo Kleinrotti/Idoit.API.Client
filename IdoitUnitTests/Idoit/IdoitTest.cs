@@ -30,6 +30,23 @@ namespace IdoitUnitTests
             Assert.IsNotNull(request.login.language);
         }
 
+        [TestMethod]
+        public void AddonTest()
+        {
+            var idoit = new IdoitInstance(idoitClient);
+            var addons = idoit.Addons();
+
+            Assert.IsNotNull(addons);
+        }
+
+        [TestMethod]
+        public void LicenseTest()
+        {
+            var idoit = new IdoitInstance(idoitClient);
+            var license = idoit.License();
+            Assert.IsNotNull(license);
+        }
+
         //Logout
         [TestMethod]
         public void LogoutTest()

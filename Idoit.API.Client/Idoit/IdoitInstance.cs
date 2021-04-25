@@ -41,6 +41,38 @@ namespace Idoit.API.Client.Idoit
             return responseSearch;
         }
 
+        /// <summary>
+        /// Read information about installed addons.
+        /// </summary>
+        /// <returns></returns>
+        public object Addons()
+        {
+            object response = null;
+            Task t = Task.Run(async () =>
+            {
+                parameter = Client.Parameters;
+                response = await Client.GetConnection().InvokeAsync<object>("idoit.addons.read", parameter);
+            });
+            t.Wait();
+            return response;
+        }
+
+        /// <summary>
+        /// Read license information.
+        /// </summary>
+        /// <returns></returns>
+        public object License()
+        {
+            object response = null;
+            Task t = Task.Run(async () =>
+            {
+                parameter = Client.Parameters;
+                response = await Client.GetConnection().InvokeAsync<object>("idoit.license.read", parameter);
+            });
+            t.Wait();
+            return response;
+        }
+
         //Search
         private async Task search(string q)
         {
