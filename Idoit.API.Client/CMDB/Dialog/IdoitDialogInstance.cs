@@ -9,7 +9,7 @@ namespace Idoit.API.Client.CMDB.Dialog
         public int EntryId { get; set; }
         public new string Category { get; set; }
 
-        public IdoitDialogInstance(IdoitClient myClient) : base(myClient)
+        public IdoitDialogInstance(IClient myClient) : base(myClient)
         {
             Client = myClient;
         }

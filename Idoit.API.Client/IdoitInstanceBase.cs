@@ -17,7 +17,7 @@ namespace Idoit.API.Client
 
         protected Dictionary<string, object> parameter;
 
-        public IdoitInstanceBase(IdoitClient myClient)
+        public IdoitInstanceBase(IClient myClient)
         {
             Client = myClient;
         }

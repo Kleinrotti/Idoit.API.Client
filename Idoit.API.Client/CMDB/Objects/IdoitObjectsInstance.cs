@@ -7,7 +7,7 @@ namespace Idoit.API.Client.CMDB.Objects
     /// </summary>
     public class IdoitObjectsInstance : IdoitInstanceBase, IReadable<IdoitObjectsResult[]>
     {
-        public IdoitObjectsInstance(IdoitClient myClient) : base(myClient)
+        public IdoitObjectsInstance(IClient myClient) : base(myClient)
         {
             Client = myClient;
         }

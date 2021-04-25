@@ -33,7 +33,7 @@ namespace Idoit.API.Client.CMDB.Object
 
         private IdoitObjectResult response;
 
-        public IdoitObjectInstance(IdoitClient myClient) : base(myClient)
+        public IdoitObjectInstance(IClient myClient) : base(myClient)
         {
         }
 

@@ -10,7 +10,7 @@ namespace Idoit.API.Client.Idoit
         private IdoitSearchResponse[] responseSearch;
         private IdoitVersionResponse responseVersion;
 
-        public IdoitInstance(IdoitClient myClient) : base(myClient)
+        public IdoitInstance(IClient myClient) : base(myClient)
         {
         }
 
