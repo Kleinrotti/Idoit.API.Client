@@ -16,7 +16,7 @@ namespace Idoit.API.Client.Idoit
         [JsonProperty("username")]
         public string userName { get; set; }
 
-        [JsonProperty("mandator")]
+        [JsonProperty("tenant")]
         public string mandator { get; set; }
 
         [JsonProperty("language")]

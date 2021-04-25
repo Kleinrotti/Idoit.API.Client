@@ -8,9 +8,9 @@ namespace Idoit.API.Client.Idoit
     public sealed class IdoitLogoutResponse
     {
         [JsonProperty("message")]
-        public string message { get; set; }
+        public string message { get; internal set; }
 
         [JsonProperty("result")]
-        public bool result { get; set; }
+        public bool result { get; internal set; }
     }
 }

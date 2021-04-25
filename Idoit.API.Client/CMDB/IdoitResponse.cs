@@ -11,18 +11,18 @@ namespace Idoit.API.Client.CMDB
         /// Id of the modified or created idoit object.
         /// </summary>
         [JsonProperty("id")]
-        public int id { get; set; }
+        public int id { get; internal set; }
 
         /// <summary>
         /// Response message from idoit
         /// </summary>
         [JsonProperty("message")]
-        public string message { get; set; }
+        public string message { get; internal set; }
 
         /// <summary>
         /// Requested action was successfull
         /// </summary>
         [JsonProperty("success")]
-        public bool success { get; set; }
+        public bool success { get; internal set; }
     }
 }

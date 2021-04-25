@@ -20,34 +20,22 @@ namespace IdoitUnitTests
         {
             //Arrange
             var idoit = new IdoitInstance(idoitClient);
-            var request = new IdoitVersionResponse();
-            var logout = new IdoitLogoutResponse();
-            var login = new IdoitLoginResponse();
-
-            //login
-            login = idoitClient.Login();
 
             //Version
-            request = idoit.Version();
-
-            //Logout
-            logout = idoitClient.Logout();
+            var request = idoit.Version();
 
             //Assert
             Assert.IsNotNull(request.version);
             Assert.IsNotNull(request.type);
-            Assert.IsNotNull(request.Login.language);
+            Assert.IsNotNull(request.login.language);
         }
 
         //Logout
         [TestMethod]
         public void LogoutTest()
         {
-            //Arrange
-            var request = new IdoitLogoutResponse();
-
             //Act
-            request = idoitClient.Logout();
+            var request = idoitClient.Logout();
 
             //Assert
             Assert.IsNotNull(request.message);
@@ -58,11 +46,8 @@ namespace IdoitUnitTests
         [TestMethod]
         public void LoginTest()
         {
-            //Arrange
-            var request = new IdoitLoginResponse();
-
             //Act
-            request = idoitClient.Login();
+            var request = idoitClient.Login();
 
             //Assert
             Assert.IsTrue(request.result);

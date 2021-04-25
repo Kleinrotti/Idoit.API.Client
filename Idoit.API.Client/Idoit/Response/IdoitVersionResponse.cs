@@ -4,15 +4,15 @@ namespace Idoit.API.Client.Idoit
 {
     public sealed class IdoitVersionResponse
     {
-        public IdoitVersionLoginResponse Login { get; set; }
+        public IdoitVersionLoginResponse login { get; set; }
 
         [JsonProperty("version")]
-        public string version { get; set; }
+        public string version { get; internal set; }
 
         [JsonProperty("step")]
-        public string step { get; set; }
+        public string step { get; internal set; }
 
         [JsonProperty("type")]
-        public string type { get; set; }
+        public string type { get; internal set; }
     }
 }

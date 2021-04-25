@@ -6,7 +6,7 @@
     <members>
         <member name="P:Idoit.API.Client.CMDB.Category.IdoitCategoryInstance`1.Object">
             <summary>
-            Returns the current <see cref="!:T" /> object
+            Returns the current <see cref="!:T"/> object
             </summary>
         </member>
         <member name="M:Idoit.API.Client.CMDB.Category.IdoitCategoryInstance`1.Read">
@@ -86,7 +86,7 @@
             <summary>
             Read an idoit dialog object. Property Category and Property has to be set.
             </summary>
-            <returns>A <see cref="!:DialogResult[]" /> which contains all found objects</returns>
+            <returns>A <see cref="!:DialogResult[]"/> which contains all found objects</returns>
         </member>
         <member name="T:Idoit.API.Client.CMDB.IdoitOrderBy">
             <summary>
@@ -197,7 +197,7 @@
             <summary>
             Read an idoit object. Set Filter, OrderBy, Sort or Limit Property to filter your result.
             </summary>
-            <returns>An <see cref="T:Idoit.API.Client.CMDB.Objects.IdoitObjectsResult" /> array with all found objects.</returns>
+            <returns>An <see cref="T:Idoit.API.Client.CMDB.Objects.IdoitObjectsResult"/> array with all found objects.</returns>
         </member>
         <member name="T:Idoit.API.Client.CMDB.Object.IdoitObjectInstance">
             <summary>
@@ -254,7 +254,7 @@
             <summary>
             Read the given object. Property ObjectId has to be set.
             </summary>
-            <returns>An <see cref="T:Idoit.API.Client.CMDB.Object.IdoitObjectResult" /></returns>
+            <returns>An <see cref="T:Idoit.API.Client.CMDB.Object.IdoitObjectResult"/></returns>
         </member>
         <member name="M:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.MarkAsTemplate">
             <summary>
@@ -586,7 +586,7 @@
         </member>
         <member name="M:Idoit.API.Client.IdoitClient.#ctor(System.String,System.String,System.String)">
             <summary>
-            Initializes a new instance of the <see cref="T:Idoit.API.Client.IdoitClient" /> class.
+            Initializes a new instance of the <see cref="T:Idoit.API.Client.IdoitClient"/> class.
             </summary>
             <param name="url"></param>
             <param name="apikey"></param>
@@ -596,7 +596,7 @@
             <summary>
             Create an authenticated HttpClient
             </summary>
-            <returns>A new <see cref="T:System.Net.Http.HttpClient" /></returns>
+            <returns>A new <see cref="T:System.Net.Http.HttpClient"/></returns>
         </member>
         <member name="T:Idoit.API.Client.IdoitInstanceBase">
             <summary>
@@ -612,37 +612,37 @@
             <summary>
             Read all global idoit categories.
             </summary>
-            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2" /> with all categories.</returns>
+            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2"/> with all categories.</returns>
         </member>
         <member name="M:Idoit.API.Client.Idoit.IdoitConstantsInstance.ReadSpecificCategories">
             <summary>
             Read all specific idoit categories.
             </summary>
-            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2" /> with all specific idoit categories.</returns>
+            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2"/> with all specific idoit categories.</returns>
         </member>
         <member name="M:Idoit.API.Client.Idoit.IdoitConstantsInstance.ReadObjectTypes">
             <summary>
             Read all idiot object types.
             </summary>
-            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2" /> with all idoit object types.</returns>
+            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2"/> with all idoit object types.</returns>
         </member>
         <member name="M:Idoit.API.Client.Idoit.IdoitConstantsInstance.ReadRecordStates">
             <summary>
             Read all idoit record states.
             </summary>
-            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2" /> with all idoit record states.</returns>
+            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2"/> with all idoit record states.</returns>
         </member>
         <member name="M:Idoit.API.Client.Idoit.IdoitConstantsInstance.ReadRelationTypes">
             <summary>
             Read all idoit relation types.
             </summary>
-            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2" /> with all idoi relation types.</returns>
+            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2"/> with all idoi relation types.</returns>
         </member>
         <member name="M:Idoit.API.Client.Idoit.IdoitConstantsInstance.ReadStaticObjects">
             <summary>
             Read all idoit static objects.
             </summary>
-            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2" /> with all static idoit objects.</returns>
+            <returns>A <see cref="T:System.Collections.Generic.IDictionary`2"/> with all static idoit objects.</returns>
         </member>
         <member name="T:Idoit.API.Client.Idoit.IdoitInstance">
             <summary>
@@ -653,14 +653,14 @@
             <summary>
             Retrieve the current idoit version.
             </summary>
-            <returns>A <see cref="T:Idoit.API.Client.Idoit.IdoitVersionResponse" /></returns>
+            <returns>A <see cref="T:Idoit.API.Client.Idoit.IdoitVersionResponse"/></returns>
         </member>
         <member name="M:Idoit.API.Client.Idoit.IdoitInstance.Search(System.String)">
             <summary>
             Search for a specific keyword.
             </summary>
             <param name="keyword"></param>
-            <returns>A <see cref="T:Idoit.API.Client.Idoit.IdoitSearchResponse" />[] with all objects found.</returns>
+            <returns>A <see cref="T:Idoit.API.Client.Idoit.IdoitSearchResponse"/>[] with all objects found.</returns>
         </member>
         <member name="T:Idoit.API.Client.Idoit.IdoitLoginResponse">
             <summary>
@@ -686,19 +686,19 @@
             <summary>
             Logout the current idoit session.
             </summary>
-            <returns>An <see cref="T:Idoit.API.Client.Idoit.IdoitLogoutResponse" /></returns>
+            <returns>An <see cref="T:Idoit.API.Client.Idoit.IdoitLogoutResponse"/></returns>
         </member>
         <member name="M:Idoit.API.Client.IClient.Login">
             <summary>
             Login to idoit to keep a session connected instead of creating new ones
             </summary>
-            <returns>An <see cref="T:Idoit.API.Client.Idoit.IdoitLoginResponse" /></returns>
+            <returns>An <see cref="T:Idoit.API.Client.Idoit.IdoitLoginResponse"/></returns>
         </member>
         <member name="M:Idoit.API.Client.IClient.GetConnection">
             <summary>
             Initialize a rpc connection.
             </summary>
-            <returns>The current <see cref="T:Anemonis.JsonRpc.ServiceClient.JsonRpcClient" /></returns>
+            <returns>The current <see cref="T:Anemonis.JsonRpc.ServiceClient.JsonRpcClient"/></returns>
         </member>
         <member name="P:Idoit.API.Client.IClient.Parameters">
             <summary>
@@ -738,7 +738,7 @@
         </member>
         <member name="P:Idoit.API.Client.IInstance.Client">
             <summary>
-            Returns the current <see cref="T:Idoit.API.Client.IdoitClient" />
+            Returns the current <see cref="T:Idoit.API.Client.IdoitClient"/>
             </summary>
         </member>
         <member name="P:Idoit.API.Client.IInstance.Id">

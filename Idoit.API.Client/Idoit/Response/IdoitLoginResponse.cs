@@ -8,27 +8,27 @@ namespace Idoit.API.Client.Idoit
     public sealed class IdoitLoginResponse
     {
         [JsonProperty("result")]
-        public bool result { get; set; }
+        public bool result { get; internal set; }
 
         [JsonProperty("userid")]
-        public string userId { get; set; }
+        public string userId { get; internal set; }
 
         [JsonProperty("name")]
-        public string name { get; set; }
+        public string name { get; internal set; }
 
         [JsonProperty("mail")]
-        public string mail { get; set; }
+        public string mail { get; internal set; }
 
         [JsonProperty("username")]
-        public string userName { get; set; }
+        public string userName { get; internal set; }
 
         [JsonProperty("session-id")]
-        public string sessionId { get; set; }
+        public string sessionId { get; internal set; }
 
         [JsonProperty("client-id")]
-        public string clientId { get; set; }
+        public string clientId { get; internal set; }
 
         [JsonProperty("client-name")]
-        public string clientName { get; set; }
+        public string clientName { get; internal set; }
     }
 }
