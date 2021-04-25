@@ -118,6 +118,18 @@
             Use the extension method GetStringValue for the actual values!
             </summary>
         </member>
+        <member name="M:Idoit.API.Client.CMDB.Logbook.IdoitLogbookInstance.Read">
+            <summary>
+            Read idoit logbook entries.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Logbook.IdoitLogbookInstance.Create">
+            <summary>
+            Create an idoit logbook entry. Property ObjectId and Message has to be set. Description is optional.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Idoit.API.Client.CMDB.Objects.IdoitObjectsFilter">
             <summary>
             Provides possible values to filter an idoit request.
