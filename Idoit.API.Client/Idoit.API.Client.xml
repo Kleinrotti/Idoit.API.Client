@@ -55,6 +55,11 @@
             Deletes the given object. Property ObejectId and EntryId has to be set.
             </summary>
         </member>
+        <member name="M:Idoit.API.Client.CMDB.Category.IdoitMvcInstance`1.Recycle">
+            <summary>
+            Recycle an idoit object. Property ObjectId and EntryId has to be set.
+            </summary>
+        </member>
         <member name="T:Idoit.API.Client.CMDB.Category.IdoitSvcInstance`1">
             <summary>
             Initializes a new instance of the IdoitSvcInstance class. Manage idoit SingleValue items.
@@ -211,7 +216,7 @@
         </member>
         <member name="P:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.CmdbStatus">
             <summary>
-            Type of the object, defined in IdoitCmdbStatus. Optional when creating a new object.
+            Type of the object. Optional when creating a new object.
             </summary>
         </member>
         <member name="P:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.Description">
@@ -250,6 +255,21 @@
             Read the given object. Property ObjectId has to be set.
             </summary>
             <returns>An <see cref="T:Idoit.API.Client.CMDB.Object.IdoitObjectResult" /></returns>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.MarkAsTemplate">
+            <summary>
+            Set object state as template. Property ObjectId has to be set.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.MarkAsMassChangeTemplate">
+            <summary>
+            Set object state as mass change template. Property ObjectId has to be set.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Object.IdoitObjectInstance.Recycle">
+            <summary>
+            Recycle an idoit object. Property ObjectId has to be set.
+            </summary>
         </member>
         <member name="T:Idoit.API.Client.CMDB.Object.IdoitObjectResult">
             <summary>
