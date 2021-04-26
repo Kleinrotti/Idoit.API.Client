@@ -1,36 +1,34 @@
-﻿using System.Threading.Tasks;
-
-namespace Idoit.API.Client.CMDB.Reports
+﻿namespace Idoit.API.Client.CMDB.Reports
 {
+    /// <summary>
+    /// Provides methods for Reports.
+    /// </summary>
     public class IdoitReportsInstance : IdoitInstanceBase, IReadable<IdoitReportsResponse[]>
     {
         public IdoitReportsInstance(IClient myClient) : base(myClient)
         {
         }
 
-        private IdoitReportsResponse[] response;
-
+        /// <summary>
+        /// Read all reports.
+        /// </summary>
+        /// <returns>An <see cref="IdoitReportsResponse"/> array.</returns>
         public IdoitReportsResponse[] Read()
         {
-            Task t = Task.Run(async () =>
-            {
-                parameter = Client.Parameters;
-                response = await Client.GetConnection().InvokeAsync<IdoitReportsResponse[]>("cmdb.reports.read", parameter);
-            });
-            t.Wait();
-            return response;
+            parameter = Client.Parameters;
+            return Execute<IdoitReportsResponse[]>("cmdb.reports.read");
         }
 
+        /// <summary>
+        /// Read a specific report.
+        /// </summary>
+        /// <param name="objId"></param>
+        /// <returns></returns>
         public IdoitReportsResponse[] Read(int objId)
         {
-            Task t = Task.Run(async () =>
-            {
-                parameter = Client.Parameters;
-                parameter.Add("id", objId);
-                response = await Client.GetConnection().InvokeAsync<IdoitReportsResponse[]>("cmdb.reports.read", parameter);
-            });
-            t.Wait();
-            return response;
+            parameter = Client.Parameters;
+            parameter.Add("id", objId);
+            return Execute<IdoitReportsResponse[]>("cmdb.reports.read");
         }
     }
 }

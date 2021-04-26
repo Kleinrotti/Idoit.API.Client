@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-
-namespace Idoit.API.Client.CMDB.Category
+﻿namespace Idoit.API.Client.CMDB.Category
 {
     /// <summary>
-    /// Represents a class for Idoit MultiValue items.
+    /// Provides methods for MultiValue category objects.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed class IdoitMvcInstance<T> : IdoitCategoryInstance<T>, IDeletable, IRecycable where T : IMultiValueResponse, new()
+    public sealed class IdoitMvcInstance<T> : IdoitCategoryInstance<T>, IDeletable, IArchiveable, IRecycable where T : IMultiValueResponse, new()
     {
         /// <summary>
         /// Initializes a new instance of the IdoitMvcInstance class.
@@ -19,48 +17,48 @@ namespace Idoit.API.Client.CMDB.Category
         }
 
         /// <summary>
-        /// Deletes the given object. Property ObejectId and EntryId has to be set.
+        /// Deletes a category object. Property ObjectId and CateId has to be set.<br></br>
+        /// Only category entries marked as archived, can be marked as deleted.<br></br>
         /// </summary>
         public void Delete()
         {
-            Task t = Task.Run(() => { Deleting().Wait(); }); t.Wait();
-        }
-
-        private async Task Deleting()
-        {
-            //The return Values as Object from diffrence Classes
             parameter = Client.Parameters;
             parameter.Add("objID", ObjectId);
-            parameter.Add("cateID", EntryId);
+            parameter.Add("cateID", CateId);
             parameter.Add("category", Category);
-            var result = await Client.GetConnection().InvokeAsync<IdoitResponse>
-            ("cmdb.category.delete", parameter);
+            var result = Execute<IdoitResponse>("cmdb.category.delete");
             if (!result.success)
-            {
                 throw new IdoitBadResponseException(result.message);
-            }
         }
 
         /// <summary>
-        /// Recycle an idoit object. Property ObjectId and EntryId has to be set.
+        /// Recycle a category object. Property ObjectId and CateId has to be set. <br></br>
+        /// Only category entries marked as archived or deleted can be recycled.
         /// </summary>
         public void Recycle()
-        {
-            Task t = Task.Run(() => { recycle().Wait(); }); t.Wait();
-        }
-
-        private async Task recycle()
         {
             parameter = Client.Parameters;
             parameter.Add("object", ObjectId);
             parameter.Add("category", Category);
-            parameter.Add("entry", EntryId);
-            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
-                ("cmdb.category.recycle", parameter);
+            parameter.Add("entry", CateId);
+            var response = Execute<IdoitResponse>("cmdb.category.recycle");
             if (!response.success)
-            {
                 throw new IdoitBadResponseException(response.message);
-            }
+        }
+
+        /// <summary>
+        /// Archive a category object. Property ObjectId and CateId has to be set. <br></br>
+        /// Only category entries marked as normal can be marked as archived.
+        /// </summary>
+        public void Archive()
+        {
+            parameter = Client.Parameters;
+            parameter.Add("object", ObjectId);
+            parameter.Add("category", Category);
+            parameter.Add("entry", CateId);
+            var response = Execute<IdoitResponse>("cmdb.category.archive");
+            if (!response.success)
+                throw new IdoitBadResponseException(response.message);
         }
     }
 }

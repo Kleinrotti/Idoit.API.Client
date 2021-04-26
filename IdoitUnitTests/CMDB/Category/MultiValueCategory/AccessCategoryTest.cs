@@ -47,7 +47,7 @@ namespace IdoitUnitTests
                 Assert.IsNotNull(v.title);
                 Assert.IsNotNull(v.id);
             }
-            access.EntryId = cateId;
+            access.CateId = cateId;
             access.Delete();
             objectRequest.ObjectId = objectId;
             objectRequest.Delete();
@@ -79,7 +79,7 @@ namespace IdoitUnitTests
             cateId = access.Create();
 
             //Act
-            access.EntryId = cateId;
+            access.CateId = cateId;
             access.Purge();
 
             objectRequest.ObjectId = objectId;

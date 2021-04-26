@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Idoit.API.Client.Idoit
+﻿namespace Idoit.API.Client.Idoit
 {
     /// <summary>
     /// Provides methods to retrieve the idoit version and search for objects.
@@ -8,7 +6,6 @@ namespace Idoit.API.Client.Idoit
     public class IdoitInstance : IdoitInstanceBase
     {
         private IdoitSearchResponse[] responseSearch;
-        private IdoitVersionResponse responseVersion;
 
         public IdoitInstance(IClient myClient) : base(myClient)
         {
@@ -20,14 +17,8 @@ namespace Idoit.API.Client.Idoit
         /// <returns>A <see cref="IdoitVersionResponse"/></returns>
         public IdoitVersionResponse Version()
         {
-            Task t = Task.Run(() => { version().Wait(); }); t.Wait();
-            return responseVersion;
-        }
-
-        //version
-        private async Task version()
-        {
-            responseVersion = await Client.GetConnection().InvokeAsync<IdoitVersionResponse>("idoit.version", Client.Parameters);
+            parameter = Client.Parameters;
+            return Execute<IdoitVersionResponse>("idoit.version");
         }
 
         /// <summary>
@@ -37,8 +28,9 @@ namespace Idoit.API.Client.Idoit
         /// <returns>A <see cref="IdoitSearchResponse"/>[] with all objects found.</returns>
         public IdoitSearchResponse[] Search(string keyword)
         {
-            Task t = Task.Run(() => { search(keyword).Wait(); }); t.Wait();
-            return responseSearch;
+            parameter = Client.Parameters;
+            parameter.Add("q", keyword);
+            return Execute<IdoitSearchResponse[]>("idoit.search");
         }
 
         /// <summary>
@@ -47,14 +39,8 @@ namespace Idoit.API.Client.Idoit
         /// <returns></returns>
         public object Addons()
         {
-            object response = null;
-            Task t = Task.Run(async () =>
-            {
-                parameter = Client.Parameters;
-                response = await Client.GetConnection().InvokeAsync<object>("idoit.addons.read", parameter);
-            });
-            t.Wait();
-            return response;
+            parameter = Client.Parameters;
+            return Execute<object>("idoit.addons.read");
         }
 
         /// <summary>
@@ -63,22 +49,8 @@ namespace Idoit.API.Client.Idoit
         /// <returns></returns>
         public object License()
         {
-            object response = null;
-            Task t = Task.Run(async () =>
-            {
-                parameter = Client.Parameters;
-                response = await Client.GetConnection().InvokeAsync<object>("idoit.license.read", parameter);
-            });
-            t.Wait();
-            return response;
-        }
-
-        //Search
-        private async Task search(string q)
-        {
             parameter = Client.Parameters;
-            parameter.Add("q", q);
-            responseSearch = await Client.GetConnection().InvokeAsync<IdoitSearchResponse[]>("idoit.search", parameter);
+            return Execute<object>("idoit.license.read");
         }
     }
 }

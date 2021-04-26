@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Idoit.API.Client
 {
@@ -20,6 +21,15 @@ namespace Idoit.API.Client
         public IdoitInstanceBase(IClient myClient)
         {
             Client = myClient;
+        }
+
+        protected T Execute<T>(string idoitNamespace)
+        {
+            var t = Task.Run(async () =>
+            {
+                return await Client.GetConnection().InvokeAsync<T>(idoitNamespace, parameter);
+            });
+            return t.Result;
         }
     }
 }

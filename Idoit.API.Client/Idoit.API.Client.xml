@@ -4,43 +4,36 @@
         <name>Idoit.API.Client</name>
     </assembly>
     <members>
-        <member name="P:Idoit.API.Client.CMDB.Category.IdoitCategoryInstance`1.Object">
-            <summary>
-            Returns the current <see cref="!:T"/> object
-            </summary>
-        </member>
         <member name="M:Idoit.API.Client.CMDB.Category.IdoitCategoryInstance`1.Read">
             <summary>
             Reads the given object. Property ObjectId has to be set.
             </summary>
-            <param name="objectId"></param>
             <returns>A list of that generic data type</returns>
         </member>
         <member name="M:Idoit.API.Client.CMDB.Category.IdoitCategoryInstance`1.Create">
             <summary>
-            Create the given object. Property ObjectId and RequestObject has to be set.
+            Create the given object. Property ObjectId and ObjectRequest has to be set.
             </summary>
-            <param name="objectId"></param>
-            <param name="request"></param>
-            <returns>An id of that newly created mvc object</returns>
+            <returns>The id of that newly created object.</returns>
         </member>
         <member name="M:Idoit.API.Client.CMDB.Category.IdoitCategoryInstance`1.Update">
             <summary>
             Updates the given object. Property ObjectId and RequestObject has to be set.
             </summary>
-            <param name="objectId"></param>
-            <param name="request"></param>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Category.IdoitCategoryInstance`1.QuickPurge">
+            <summary>
+            QuickPurge the given object entry. Property ObjectId and CateId has to be set.
+            </summary>
         </member>
         <member name="M:Idoit.API.Client.CMDB.Category.IdoitCategoryInstance`1.Purge">
             <summary>
-            Purge the given object entry. Property ObjectId and EntryId has to be set.
+            Purge the given object entry. Property ObjectId and CateId has to be set.
             </summary>
-            <param name="objectId"></param>
-            <param name="entryID"></param>
         </member>
         <member name="T:Idoit.API.Client.CMDB.Category.IdoitMvcInstance`1">
             <summary>
-            Represents a class for Idoit MultiValue items.
+            Provides methods for MultiValue category objects.
             </summary>
             <typeparam name="T"></typeparam>
         </member>
@@ -52,19 +45,42 @@
         </member>
         <member name="M:Idoit.API.Client.CMDB.Category.IdoitMvcInstance`1.Delete">
             <summary>
-            Deletes the given object. Property ObejectId and EntryId has to be set.
+            Deletes a category object. Property ObjectId and CateId has to be set.<br></br>
+            Only category entries marked as archived, can be marked as deleted.<br></br>
             </summary>
         </member>
         <member name="M:Idoit.API.Client.CMDB.Category.IdoitMvcInstance`1.Recycle">
             <summary>
-            Recycle an idoit object. Property ObjectId and EntryId has to be set.
+            Recycle a category object. Property ObjectId and CateId has to be set. <br></br>
+            Only category entries marked as archived or deleted can be recycled.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Category.IdoitMvcInstance`1.Archive">
+            <summary>
+            Archive a category object. Property ObjectId and CateId has to be set. <br></br>
+            Only category entries marked as normal can be marked as archived.
             </summary>
         </member>
         <member name="T:Idoit.API.Client.CMDB.Category.IdoitSvcInstance`1">
             <summary>
-            Initializes a new instance of the IdoitSvcInstance class. Manage idoit SingleValue items.
+            Provides methods for SingleValue category objects.
             </summary>
             <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance.Property">
+            <summary>
+            Attribute in category, e.g manufacturer.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance.EntryId">
+            <summary>
+            Entry identifier.
+            </summary>
+        </member>
+        <member name="P:Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance.Category">
+            <summary>
+            Category constant. Found in <see cref="T:Idoit.API.Client.Contants.IdoitCategory"/>.
+            </summary>
         </member>
         <member name="M:Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance.Create">
             <summary>
@@ -74,19 +90,19 @@
         </member>
         <member name="M:Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance.Update">
             <summary>
-            Update an idoit dialog object. Property EntryId, Value, Property and Category has to be set.
+            Update an idoit dialog object. Property CateId, Value, Property and Category has to be set.
             </summary>
         </member>
         <member name="M:Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance.Delete">
             <summary>
-            Delete an idoit dialog object. Property EntryId, Property and Category has to be set.
+            Delete an idoit dialog object. Property CateId, Property and Category has to be set.
             </summary>
         </member>
         <member name="M:Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance.Read">
             <summary>
             Read an idoit dialog object. Property Category and Property has to be set.
             </summary>
-            <returns>A <see cref="!:DialogResult[]"/> which contains all found objects</returns>
+            <returns>A <see cref="T:Idoit.API.Client.CMDB.Dialog.DialogResult"/> array, which contains all found objects.</returns>
         </member>
         <member name="T:Idoit.API.Client.CMDB.IdoitOrderBy">
             <summary>
@@ -194,7 +210,7 @@
         </member>
         <member name="T:Idoit.API.Client.CMDB.Objects.IdoitObjectsInstance">
             <summary>
-            Provides methods to read multiple objects from idoit. Filtering is also supported
+            Provides methods to read multiple objects from idoit. Filtering is also supported.
             </summary>
         </member>
         <member name="P:Idoit.API.Client.CMDB.Objects.IdoitObjectsInstance.Filter">
@@ -319,6 +335,24 @@
             <summary>
             Filter if object type is enabled in the GUI.
             </summary>
+        </member>
+        <member name="T:Idoit.API.Client.CMDB.Reports.IdoitReportsInstance">
+            <summary>
+            Provides methods for Reports.
+            </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Reports.IdoitReportsInstance.Read">
+            <summary>
+            Read all reports.
+            </summary>
+            <returns>An <see cref="T:Idoit.API.Client.CMDB.Reports.IdoitReportsResponse"/> array.</returns>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Reports.IdoitReportsInstance.Read(System.Int32)">
+            <summary>
+            Read a specific report.
+            </summary>
+            <param name="objId"></param>
+            <returns></returns>
         </member>
         <member name="T:Idoit.API.Client.Contants.IdoitCategory">
             <summary>
@@ -694,6 +728,12 @@
         <member name="M:Idoit.API.Client.Idoit.IdoitInstance.Addons">
             <summary>
             Read information about installed addons.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Idoit.API.Client.Idoit.IdoitInstance.License">
+            <summary>
+            Read license information.
             </summary>
             <returns></returns>
         </member>

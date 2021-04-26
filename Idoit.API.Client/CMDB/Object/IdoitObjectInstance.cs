@@ -1,5 +1,4 @@
 ﻿using Idoit.API.Client.Contants;
-using System.Threading.Tasks;
 
 namespace Idoit.API.Client.CMDB.Object
 {
@@ -31,8 +30,6 @@ namespace Idoit.API.Client.CMDB.Object
 
         public int ObjectId { get; set; }
 
-        private IdoitObjectResult response;
-
         public IdoitObjectInstance(IClient myClient) : base(myClient)
         {
         }
@@ -43,12 +40,6 @@ namespace Idoit.API.Client.CMDB.Object
         /// <returns>The id of the created object</returns>
         public int Create()
         {
-            Task t = Task.Run(() => { Creating().Wait(); }); t.Wait();
-            return Id;
-        }
-
-        private async Task Creating()
-        {
             parameter = Client.Parameters;
             parameter.Add("type", Type);
             parameter.Add("title", Value);
@@ -56,13 +47,11 @@ namespace Idoit.API.Client.CMDB.Object
             parameter.Add("cmdb_status", CmdbStatus);
             parameter.Add("description", Description);
             parameter.Add("category", Category);
-            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
-            ("cmdb.object.create", parameter);
-            Id = response.id;
+            var response = Execute<IdoitResponse>("cmdb.object.create");
             if (!response.success)
-            {
                 throw new IdoitBadResponseException(response.message);
-            }
+            Id = response.id;
+            return Id;
         }
 
         /// <summary>
@@ -70,20 +59,12 @@ namespace Idoit.API.Client.CMDB.Object
         /// </summary>
         public void Update()
         {
-            Task t = Task.Run(() => { Updating().Wait(); }); t.Wait();
-        }
-
-        private async Task Updating()
-        {
             parameter = Client.Parameters;
             parameter.Add("id", ObjectId);
             parameter.Add("title", Value);
-            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
-            ("cmdb.object.update", parameter);
+            var response = Execute<IdoitResponse>("cmdb.object.update");
             if (!response.success)
-            {
                 throw new IdoitBadResponseException(response.message);
-            }
         }
 
         /// <summary>
@@ -91,20 +72,12 @@ namespace Idoit.API.Client.CMDB.Object
         /// </summary>
         public void Delete()
         {
-            Task t = Task.Run(() => { Deleting().Wait(); }); t.Wait();
-        }
-
-        private async Task Deleting()
-        {
             parameter = Client.Parameters;
             parameter.Add("id", ObjectId);
             parameter.Add("status", "C__RECORD_STATUS__DELETED");
-            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
-            ("cmdb.object.delete", parameter);
+            var response = Execute<IdoitResponse>("cmdb.object.delete");
             if (!response.success)
-            {
                 throw new IdoitBadResponseException(response.message);
-            }
         }
 
         /// <summary>
@@ -112,21 +85,11 @@ namespace Idoit.API.Client.CMDB.Object
         /// </summary>
         public void Purge()
         {
-            Task t = Task.Run(() => { Purging().Wait(); }); t.Wait();
-        }
-
-        private async Task Purging()
-        {
-            //The return Values as Object from diffrence Classes
             parameter = Client.Parameters;
-            parameter.Add("id", ObjectId);
-            parameter.Add("status", "C__RECORD_STATUS__PURGE");
-            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
-            ("cmdb.object.delete", parameter);
+            parameter.Add("object", ObjectId);
+            var response = Execute<IdoitResponse>("cmdb.object.purge");
             if (!response.success)
-            {
                 throw new IdoitBadResponseException(response.message);
-            }
         }
 
         /// <summary>
@@ -134,20 +97,11 @@ namespace Idoit.API.Client.CMDB.Object
         /// </summary>
         public void Archive()
         {
-            Task t = Task.Run(() => { Archiving().Wait(); }); t.Wait();
-        }
-
-        private async Task Archiving()
-        {
             parameter = Client.Parameters;
-            parameter.Add("id", ObjectId);
-            parameter.Add("status", "C__RECORD_STATUS__ARCHIVED");
-            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
-                ("cmdb.object.delete", parameter);
+            parameter.Add("object", ObjectId);
+            var response = Execute<IdoitResponse>("cmdb.object.archive");
             if (!response.success)
-            {
                 throw new IdoitBadResponseException(response.message);
-            }
         }
 
         /// <summary>
@@ -156,15 +110,9 @@ namespace Idoit.API.Client.CMDB.Object
         /// <returns>An <see cref="IdoitObjectResult"/></returns>
         public IdoitObjectResult Read()
         {
-            Task t = Task.Run(() => { Reading().Wait(); }); t.Wait();
-            return response;
-        }
-
-        private async Task Reading()
-        {
             parameter = Client.Parameters;
             parameter.Add("id", ObjectId);
-            response = await Client.GetConnection().InvokeAsync<IdoitObjectResult>("cmdb.object.read", parameter);
+            return Execute<IdoitObjectResult>("cmdb.object.read");
         }
 
         /// <summary>
@@ -172,19 +120,11 @@ namespace Idoit.API.Client.CMDB.Object
         /// </summary>
         public void MarkAsTemplate()
         {
-            Task t = Task.Run(() => { markAsTemplate().Wait(); }); t.Wait();
-        }
-
-        private async Task markAsTemplate()
-        {
             parameter = Client.Parameters;
             parameter.Add("object", ObjectId);
-            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
-                ("cmdb.object.markAsTemplate", parameter);
+            var response = Execute<IdoitResponse>("cmdb.object.markAsTemplate");
             if (!response.success)
-            {
                 throw new IdoitBadResponseException(response.message);
-            }
         }
 
         /// <summary>
@@ -192,19 +132,11 @@ namespace Idoit.API.Client.CMDB.Object
         /// </summary>
         public void MarkAsMassChangeTemplate()
         {
-            Task t = Task.Run(() => { markAsMassTemplate().Wait(); }); t.Wait();
-        }
-
-        private async Task markAsMassTemplate()
-        {
             parameter = Client.Parameters;
             parameter.Add("object", ObjectId);
-            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
-                ("cmdb.object.markAsMassChangeTemplate", parameter);
+            var response = Execute<IdoitResponse>("cmdb.object.markAsMassChangeTemplate");
             if (!response.success)
-            {
                 throw new IdoitBadResponseException(response.message);
-            }
         }
 
         /// <summary>
@@ -212,19 +144,11 @@ namespace Idoit.API.Client.CMDB.Object
         /// </summary>
         public void Recycle()
         {
-            Task t = Task.Run(() => { recycle().Wait(); }); t.Wait();
-        }
-
-        private async Task recycle()
-        {
             parameter = Client.Parameters;
             parameter.Add("object", ObjectId);
-            var response = await Client.GetConnection().InvokeAsync<IdoitResponse>
-                ("cmdb.object.recycle", parameter);
+            var response = Execute<IdoitResponse>("cmdb.object.recycle");
             if (!response.success)
-            {
                 throw new IdoitBadResponseException(response.message);
-            }
         }
     }
 }

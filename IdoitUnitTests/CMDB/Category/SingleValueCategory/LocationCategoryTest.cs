@@ -40,7 +40,7 @@ namespace IdoitUnitTests
             cateId = Location.Create();
 
             //Act
-            Location.EntryId = cateId;
+            Location.CateId = cateId;
             Location.Purge();
 
             objectRequest.ObjectId = objectId;

@@ -1,7 +1,7 @@
 ﻿namespace Idoit.API.Client.CMDB.Category
 {
     /// <summary>
-    /// Initializes a new instance of the IdoitSvcInstance class. Manage idoit SingleValue items.
+    /// Provides methods for SingleValue category objects.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public sealed class IdoitSvcInstance<T> : IdoitCategoryInstance<T> where T : ISingleValueResponse, new()

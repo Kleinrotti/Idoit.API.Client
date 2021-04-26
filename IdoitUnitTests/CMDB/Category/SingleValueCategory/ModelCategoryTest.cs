@@ -39,7 +39,7 @@ namespace IdoitUnitTests
             cateId = model.Create();
 
             //Act
-            model.EntryId = cateId;
+            model.CateId = cateId;
             model.Purge();
 
             objectRequest.ObjectId = objectId;

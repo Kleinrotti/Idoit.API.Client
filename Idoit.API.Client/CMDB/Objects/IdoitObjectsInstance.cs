@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace Idoit.API.Client.CMDB.Objects
+﻿namespace Idoit.API.Client.CMDB.Objects
 {
     /// <summary>
-    /// Provides methods to read multiple objects from idoit. Filtering is also supported
+    /// Provides methods to read multiple objects from idoit. Filtering is also supported.
     /// </summary>
     public class IdoitObjectsInstance : IdoitInstanceBase, IReadable<IdoitObjectsResult[]>
     {
@@ -11,8 +9,6 @@ namespace Idoit.API.Client.CMDB.Objects
         {
             Client = myClient;
         }
-
-        private IdoitObjectsResult[] response;
 
         /// <summary>
         /// Advanced filtering for the searched result.
@@ -45,20 +41,13 @@ namespace Idoit.API.Client.CMDB.Objects
         /// <returns>An <see cref="IdoitObjectsResult"/> array with all found objects.</returns>
         public IdoitObjectsResult[] Read()
         {
-            Task t = Task.Run(() => { Reading().Wait(); }); t.Wait();
-            return response;
-        }
-
-        private async Task Reading()
-        {
-            //object data = Client.GetData(Filter);
             parameter = Client.Parameters;
             parameter.Add("filter", Filter.GetObject());
             parameter.Add("sort", Sort.GetStringValue());
             parameter.Add("limit", Limit);
             parameter.Add("order_by", OrderBy.GetStringValue());
             parameter.Add("raw", Raw);
-            response = await Client.GetConnection().InvokeAsync<IdoitObjectsResult[]>("cmdb.objects.read", parameter);
+            return Execute<IdoitObjectsResult[]>("cmdb.objects.read");
         }
     }
 }
