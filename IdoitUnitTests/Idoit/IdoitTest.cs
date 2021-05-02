@@ -120,7 +120,7 @@ namespace IdoitUnitTests
             Assert.IsTrue(lists.Count > 0);
             foreach (var pair in lists)
             {
-                Console.WriteLine(pair.Key, pair.Value);
+                Console.WriteLine(pair.Key + " = " + pair.Value);
             }
         }
 
@@ -135,7 +135,7 @@ namespace IdoitUnitTests
             Assert.IsTrue(lists.Count > 0);
             foreach (var pair in lists)
             {
-                Console.WriteLine(pair.Key, pair.Value);
+                Console.WriteLine(pair.Key + " = " + pair.Value);
             }
         }
 
@@ -150,7 +150,7 @@ namespace IdoitUnitTests
             Assert.IsTrue(lists.Count > 0);
             foreach (var pair in lists)
             {
-                Console.WriteLine(pair.Key, pair.Value);
+                Console.WriteLine(pair.Key + @" = """ + pair.Value + @""";");
             }
         }
 
@@ -165,7 +165,7 @@ namespace IdoitUnitTests
             Assert.IsTrue(lists.Count > 0);
             foreach (var pair in lists)
             {
-                Console.WriteLine(pair.Key, pair.Value);
+                Console.WriteLine(pair.Key + @" = """ + pair.Value + @""";");
             }
         }
     }
