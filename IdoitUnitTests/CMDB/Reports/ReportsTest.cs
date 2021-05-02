@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace IdoitUnitTests.CMDB.Reports
+namespace IdoitUnitTests.CMDB
 {
     [TestClass]
     public class ReportsTest : IdoitTestBase

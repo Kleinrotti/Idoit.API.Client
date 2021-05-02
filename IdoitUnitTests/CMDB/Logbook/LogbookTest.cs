@@ -1,7 +1,7 @@
 ﻿using Idoit.API.Client.CMDB.Logbook;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace IdoitUnitTests.CMDB.Logbook
+namespace IdoitUnitTests.CMDB
 {
     [TestClass]
     public class LogbookTest : IdoitTestBase
