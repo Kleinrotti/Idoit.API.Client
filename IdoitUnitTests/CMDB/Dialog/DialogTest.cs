@@ -19,7 +19,7 @@ namespace IdoitUnitTests
             int objID;
             var request = new IdoitDialogInstance(idoitClient);
             request.Value = "Athlon XP";
-            request.Category = IdoitCategory.CPU;
+            request.Category = IdoitGlobalCategories.CPU;
             request.Property = Cpu.Type;
             objID = request.Create();
 
@@ -41,7 +41,7 @@ namespace IdoitUnitTests
             //Arrange
             var request = new IdoitDialogInstance(idoitClient);
             //Act:Read
-            request.Category = IdoitCategory.GLOBAL;
+            request.Category = IdoitGlobalCategories.General;
             request.Property = Global.Category;
             var lists = request.Read();
             Assert.IsTrue(lists.Length > 0, "No objects found");
@@ -63,7 +63,7 @@ namespace IdoitUnitTests
             var request = new IdoitDialogInstance(idoitClient);
             //Act:Create
             request.Value = "WLAN23";
-            request.Category = IdoitCategory.PORT;
+            request.Category = IdoitGlobalCategories.Port;
             request.Property = Port.PortType;
             objID = request.Create();
             //Act:Update

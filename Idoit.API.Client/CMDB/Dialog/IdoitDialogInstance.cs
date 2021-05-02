@@ -15,7 +15,7 @@ namespace Idoit.API.Client.CMDB.Dialog
         public int EntryId { get; set; }
 
         /// <summary>
-        /// Category constant. Found in <see cref="IdoitCategory"/>.
+        /// Category constant. Found in <see cref="IdoitGlobalCategories"/>.
         /// </summary>
         public new string Category { get; set; }
 
