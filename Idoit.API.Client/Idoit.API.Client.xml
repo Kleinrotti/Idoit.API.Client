@@ -79,7 +79,7 @@
         </member>
         <member name="P:Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance.Category">
             <summary>
-            Category constant. Found in <see cref="T:Idoit.API.Client.Contants.IdoitCategory"/>.
+            Category constant. Found in <see cref="T:Idoit.API.Client.Contants.IdoitGlobalCategories"/>.
             </summary>
         </member>
         <member name="M:Idoit.API.Client.CMDB.Dialog.IdoitDialogInstance.Create">
@@ -133,6 +133,12 @@
             <summary>
             Use the extension method GetStringValue for the actual values!
             </summary>
+        </member>
+        <member name="M:Idoit.API.Client.CMDB.Impact.IdoitImpactInstance.Read">
+            <summary>
+            Perform an impact analysis for a specific object by its relation type identifier.
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Idoit.API.Client.CMDB.Logbook.IdoitLogbookInstance.Read">
             <summary>
@@ -354,14 +360,14 @@
             <param name="objId"></param>
             <returns></returns>
         </member>
-        <member name="T:Idoit.API.Client.Contants.IdoitCategory">
-            <summary>
-            Represents categories which idoit provides.
-            </summary>
-        </member>
         <member name="T:Idoit.API.Client.Contants.IdoitCmdbStatus">
             <summary>
             CMDB states which idoit provides.
+            </summary>
+        </member>
+        <member name="T:Idoit.API.Client.Contants.IdoitGlobalCategories">
+            <summary>
+            Represents global categories which idoit provides.
             </summary>
         </member>
         <member name="T:Idoit.API.Client.Contants.IdoitObjectTypes">
